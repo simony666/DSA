@@ -1,21 +1,22 @@
 
 package entity;
 
-import java.io.Serializable;
-import java.util.Objects;
+import adt.ArrayList;
+import adt.ListInterface;
 
-public class Student implements Serializable{
+public class Student{
     private String studentID;
     private String studentName;
     
-    public Student() {}
-
+    private static int nextID = 0;
+    
+    private static ListInterface<Student> studentList = new ArrayList<>();
+    
     public Student(String studentID, String studentName) {
-        this.studentID = studentID;
+        this.studentID = "S" + String.format("%03d", nextID);
         this.studentName = studentName;
+        nextID++;
     }
-    
-    
 
     public String getStudentID() {
         return studentID;
@@ -33,6 +34,14 @@ public class Student implements Serializable{
         this.studentName = studentName;
     }
 
+    public ListInterface<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(ListInterface<Student> studentList) {
+        Student.studentList = studentList;
+    }
+    
     @Override
     public String toString() {
         return "Student{" + "studentID=" + studentID + ", studentName=" + studentName + '}';
