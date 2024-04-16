@@ -4,25 +4,24 @@
  */
 package entity;
 import adt.*;
-import java.util.Objects;
 
 
 public class Assignment {
     private String assignID;
     private String assignName;
     
-    private ListInterface<Student> studentList = new ArrayList<>();
-    private ListInterface<TutorialGroup> tutorialGroupList = new ArrayList<>();
+    private static int nextID = 0;
+    
+    private static ListInterface<Student> assignmentList = new ArrayList<>();
     
     public Assignment() {
         
     }
 
     public Assignment(String assignID, String assignName) {
-        this.assignID = assignID;
+        this.assignID = "A" + String.format("%03d", nextID);
         this.assignName = assignName;
-        this.studentList = new ArrayList<>();
-        this.tutorialGroupList = new ArrayList<>();
+        nextID++;
     }
 
     public String getAssignID() {
@@ -41,25 +40,17 @@ public class Assignment {
         this.assignName = assignName;
     }
 
-    public ListInterface<Student> getStudentList() {
-        return studentList;
+    public static ListInterface<Student> getAssignmentList() {
+        return assignmentList;
     }
 
-    public void setStudentList(ListInterface<Student> studentList) {
-        this.studentList = studentList;
+    public static void setAssignmentList(ListInterface<Student> assignmentList) {
+        Assignment.assignmentList = assignmentList;
     }
-
-    public ListInterface<TutorialGroup> getTutorialGroupList() {
-        return tutorialGroupList;
-    }
-
-    public void setTutorialGroupList(ListInterface<TutorialGroup> tutorialGroupList) {
-        this.tutorialGroupList = tutorialGroupList;
-    }
-
+    
     @Override
     public String toString() {
-        return "Assignment{" + "assignID=" + assignID + ", assignName=" + assignName + ", studentList=" + studentList + ", tutorialGroupList=" + tutorialGroupList + '}';
+        return "Assignment{" + "assignID=" + assignID + ", assignName=" + assignName + '}';
     }
 
     

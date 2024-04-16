@@ -4,7 +4,6 @@
  */
 package entity;
 import adt.*;
-import java.util.Objects;
 /**
  *
  * @author User
@@ -12,7 +11,6 @@ import java.util.Objects;
 public class TutorialGroup {
     private String tutorGroupID;
     private String tutorGroupName;
-    private Student student;
    
     private ListInterface<Student> studentList = new ArrayList<>();
 
@@ -22,10 +20,7 @@ public class TutorialGroup {
     public TutorialGroup(String tutorGroupID, String tutorGroupName) {
         this.tutorGroupID = tutorGroupID;
         this.tutorGroupName = tutorGroupName;
-        this.studentList = new ArrayList<>();
     }
-    
-    
 
     public String getTutorGroupID() {
         return tutorGroupID;
@@ -49,14 +44,6 @@ public class TutorialGroup {
 
     public void setStudentList(ListInterface<Student> studentList) {
         this.studentList = studentList;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
     }
 
     @Override
