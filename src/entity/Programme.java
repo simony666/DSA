@@ -4,7 +4,6 @@
  */
 package entity;
 import adt.*;
-import java.util.Objects;
 
 /**
  *
@@ -14,17 +13,11 @@ public class Programme {
     private String progID;
     private String progName;
     
-    private ListInterface<Courses> coursesList = new ArrayList<>();
-    private ListInterface<TutorialGroup> TutorialGroupList = new ArrayList<>();
-
-    public Programme() {
-    }
+    private static ListInterface<Programme> programmeList = new ArrayList<>();
 
     public Programme(String progID, String progName) {
         this.progID = progID;
         this.progName = progName;
-        this.coursesList = new ArrayList<>();
-        this.TutorialGroupList = new ArrayList<>();
     }
 
     public String getProgID() {
@@ -43,21 +36,14 @@ public class Programme {
         this.progName = progName;
     }
 
-    public ListInterface<Courses> getCoursesList() {
-        return coursesList;
+    public ListInterface<Programme> getProgrammeList() {
+        return programmeList;
     }
 
-    public void setCoursesList(ListInterface<Courses> coursesList) {
-        this.coursesList = coursesList;
+    public void setProgrammeList(ListInterface<Programme> programmeList) {
+        programmeList = programmeList;
     }
-
-    public ListInterface<TutorialGroup> getTutorialGroupList() {
-        return TutorialGroupList;
-    }
-
-    public void setTutorialGroupList(ListInterface<TutorialGroup> TutorialGroupList) {
-        this.TutorialGroupList = TutorialGroupList;
-    }
+    
 
     @Override
     public String toString() {
