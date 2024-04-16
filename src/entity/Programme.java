@@ -41,13 +41,13 @@ public class Programme {
     }
 
     public void setProgrammeList(ListInterface<Programme> programmeList) {
-        programmeList = programmeList;
+        Programme.programmeList = programmeList;
     }
     
 
     @Override
     public String toString() {
-        return "Programme{" + "progID=" + progID + ", progName=" + progName + ", coursesList=" + coursesList + ", TutorialGroupList=" + TutorialGroupList + '}';
+        return "Programme{" + "progID=" + progID + ", progName=" + progName + '}';
     }
 
     
