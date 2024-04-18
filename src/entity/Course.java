@@ -1,7 +1,6 @@
 package entity;
 
 import adt.ArrayList;
-import adt.ListInterface;
 
 public class Course {
     // Variables
@@ -9,10 +8,10 @@ public class Course {
     private String courseCode;
     private String courseName;
     private String courseProgramLeader;
-    private ListInterface<String> coverFaculty;
-    private ListInterface<String> tutorialList;
-    private ListInterface<String> practicalList;
-    private ListInterface<String> lectureList;
+    private ArrayList<String> coverFaculty;
+    private ArrayList<String> tutorialList;
+    private ArrayList<String> practicalList;
+    private ArrayList<String> lectureList;
     private int courseFees;
 
     public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees) {
@@ -27,7 +26,7 @@ public class Course {
         this.lectureList = new ArrayList<>();
     }
 
-    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ListInterface<String> coverList) {
+    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ArrayList<String> coverList) {
         this.courseID = courseID;
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -71,35 +70,35 @@ public class Course {
         this.courseProgramLeader = courseProgramLeader;
     }
 
-    public ListInterface<String> getCoverFaculty() {
+    public ArrayList<String> getCoverFaculty() {
         return coverFaculty;
     }
 
-    public void setCoverFaculty(ListInterface<String> coverFaculty) {
+    public void setCoverFaculty(ArrayList<String> coverFaculty) {
         this.coverFaculty = coverFaculty;
     }
 
-    public ListInterface<String> getTutorialList() {
+    public ArrayList<String> getTutorialList() {
         return tutorialList;
     }
 
-    public void setTutorialList(ListInterface<String> tutorialList) {
+    public void setTutorialList(ArrayList<String> tutorialList) {
         this.tutorialList = tutorialList;
     }
 
-    public ListInterface<String> getPracticalList() {
+    public ArrayList<String> getPracticalList() {
         return practicalList;
     }
 
-    public void setPracticalList(ListInterface<String> practicalList) {
+    public void setPracticalList(ArrayList<String> practicalList) {
         this.practicalList = practicalList;
     }
 
-    public ListInterface<String> getLectureList() {
+    public ArrayList<String> getLectureList() {
         return lectureList;
     }
 
-    public void setLectureList(ListInterface<String> lectureList) {
+    public void setLectureList(ArrayList<String> lectureList) {
         this.lectureList = lectureList;
     }
 
