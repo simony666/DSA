@@ -54,7 +54,7 @@ public class TutorialGroup {
         return studentList;
     }
 
-    public void setStudentList(ListInterface<Student> studentList) {
+    public void setStudentList(ArrayList<Student> studentList) {
         this.studentList = studentList;
     }
 
