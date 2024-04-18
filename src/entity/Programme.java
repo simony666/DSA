@@ -13,6 +13,7 @@ public class Programme {
     private String progID;
     private String progName;
     
+    //store all current entity
     private static ArrayList<Programme> programmeList = new ArrayList<>();
 
     public Programme(String progID, String progName) {
@@ -36,15 +37,15 @@ public class Programme {
         this.progName = progName;
     }
 
-    public ListInterface<Programme> getProgrammeList() {
+    public static ArrayList<Programme> getProgrammeList() {
         return programmeList;
     }
 
-    public void setProgrammeList(ArrayList<Programme> programmeList) {
+    public static void setProgrammeList(ArrayList<Programme> programmeList) {
         Programme.programmeList = programmeList;
     }
-    
 
+    
     @Override
     public String toString() {
         return "Programme{" + "progID=" + progID + ", progName=" + progName + '}';
