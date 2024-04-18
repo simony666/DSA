@@ -17,10 +17,4 @@ public class MessageUI {
       public static void displayEmpty() {
           System.out.println( "\nNot Found, It is Empty.");
       }
-      
-      public static void clearScreen() {
-            // Only can do this in Netbean... sosad
-            System.out.print("\n\n\n\n\n\n\n\n\n\n");
-        }
-
 }

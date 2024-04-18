@@ -2,17 +2,19 @@
 package entity;
 
 import adt.ArrayList;
-import adt.ListInterface;
+import adt.ArrayList;
 
 public class Student{
     private String studentID;
     private String studentName;
     
+    //auto ID
     private static int nextID = 0;
     
-    private static ListInterface<Student> studentList = new ArrayList<>();
+    //store all current entity
+    private static ArrayList<Student> studentList = new ArrayList<>();
     
-    public Student(String studentID, String studentName) {
+    public Student(String studentName) {
         this.studentID = "S" + String.format("%03d", nextID);
         this.studentName = studentName;
         nextID++;
@@ -34,13 +36,23 @@ public class Student{
         this.studentName = studentName;
     }
 
-    public ListInterface<Student> getStudentList() {
+    public static int getNextID() {
+        return nextID;
+    }
+
+    public static void setNextID(int nextID) {
+        Student.nextID = nextID;
+    }
+
+    public static ArrayList<Student> getStudentList() {
         return studentList;
     }
 
-    public void setStudentList(ListInterface<Student> studentList) {
+    public static void setStudentList(ArrayList<Student> studentList) {
         Student.studentList = studentList;
     }
+    
+    
     
     @Override
     public String toString() {

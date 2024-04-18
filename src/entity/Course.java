@@ -1,6 +1,7 @@
 package entity;
 
 import adt.ArrayList;
+import adt.ListInterface;
 
 public class Course {
     // Variables
@@ -74,7 +75,7 @@ public class Course {
     public void setCourseProgramLeader(String courseProgramLeader) {
         this.courseProgramLeader = courseProgramLeader;
     }
-
+  
     public int getCourseFees() {
         return courseFees;
     }
@@ -91,7 +92,7 @@ public class Course {
         this.coverFaculty = coverFaculty;
     }
 
-    public ArrayList<String> getTutorialList() {
+    public ListInterface<String> getTutorialList() {
         return tutorialList;
     }
 
@@ -99,7 +100,7 @@ public class Course {
         this.tutorialList = tutorialList;
     }
 
-    public ArrayList<String> getPracticalList() {
+    public ListInterface<String> getPracticalList() {
         return practicalList;
     }
 
@@ -107,7 +108,7 @@ public class Course {
         this.practicalList = practicalList;
     }
 
-    public ArrayList<String> getLectureList() {
+    public ListInterface<String> getLectureList() {
         return lectureList;
     }
 

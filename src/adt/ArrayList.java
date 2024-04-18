@@ -1,8 +1,6 @@
 package adt;
 
-import java.io.Serializable;
-
-public class ArrayList<T> implements ListInterface<T>, Serializable {
+public class ArrayList<T> implements ListInterface<T>{
 
   private T[] array;
   private int numberOfEntries;
@@ -138,6 +136,17 @@ public class ArrayList<T> implements ListInterface<T>, Serializable {
     }
 
     return outputStr;
+  }
+  
+  public int indexof(T element){
+      if(contains(element)){
+            for (int index = 0; index < numberOfEntries; index++) {
+              if (element.equals(array[index])) {
+                return index;
+              }
+            }
+      }
+      return -1;
   }
 
   /**
