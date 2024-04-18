@@ -1,6 +1,7 @@
 package entity;
 
 import adt.ArrayList;
+import adt.ListInterface;
 
 public class Course {
     // Variables
@@ -8,11 +9,16 @@ public class Course {
     private String courseCode;
     private String courseName;
     private String courseProgramLeader;
+    private int courseFees;
     private ArrayList<String> coverFaculty;
+    
+    //store all tutor belong to this Course, by type of student
     private ArrayList<String> tutorialList;
     private ArrayList<String> practicalList;
     private ArrayList<String> lectureList;
-    private int courseFees;
+    
+    //store all current entity
+    private static ArrayList<Course> courseList = new ArrayList<>();
 
     public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees) {
         this.courseID = courseID;
@@ -26,7 +32,7 @@ public class Course {
         this.lectureList = new ArrayList<>();
     }
 
-    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ArrayList<String> coverList) {
+    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ListInterface<String> coverList) {
         this.courseID = courseID;
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -69,39 +75,7 @@ public class Course {
     public void setCourseProgramLeader(String courseProgramLeader) {
         this.courseProgramLeader = courseProgramLeader;
     }
-
-    public ArrayList<String> getCoverFaculty() {
-        return coverFaculty;
-    }
-
-    public void setCoverFaculty(ArrayList<String> coverFaculty) {
-        this.coverFaculty = coverFaculty;
-    }
-
-    public ArrayList<String> getTutorialList() {
-        return tutorialList;
-    }
-
-    public void setTutorialList(ArrayList<String> tutorialList) {
-        this.tutorialList = tutorialList;
-    }
-
-    public ArrayList<String> getPracticalList() {
-        return practicalList;
-    }
-
-    public void setPracticalList(ArrayList<String> practicalList) {
-        this.practicalList = practicalList;
-    }
-
-    public ArrayList<String> getLectureList() {
-        return lectureList;
-    }
-
-    public void setLectureList(ArrayList<String> lectureList) {
-        this.lectureList = lectureList;
-    }
-
+  
     public int getCourseFees() {
         return courseFees;
     }
@@ -109,6 +83,47 @@ public class Course {
     public void setCourseFees(int courseFees) {
         this.courseFees = courseFees;
     }
+
+    public ArrayList<String> getCoverFaculty() {
+        return coverFaculty;
+    }
+
+    public void setCoverFaculty(ListInterface<String> coverFaculty) {
+        this.coverFaculty = coverFaculty;
+    }
+
+    public ListInterface<String> getTutorialList() {
+        return tutorialList;
+    }
+
+    public void setTutorialList(ListInterface<String> tutorialList) {
+        this.tutorialList = tutorialList;
+    }
+
+    public ListInterface<String> getPracticalList() {
+        return practicalList;
+    }
+
+    public void setPracticalList(ListInterface<String> practicalList) {
+        this.practicalList = practicalList;
+    }
+
+    public ListInterface<String> getLectureList() {
+        return lectureList;
+    }
+
+    public void setLectureList(ListInterface<String> lectureList) {
+        this.lectureList = lectureList;
+    }
+
+    public static ArrayList<Course> getCourseList() {
+        return courseList;
+    }
+
+    public static void setCourseList(ArrayList<Course> courseList) {
+        Course.courseList = courseList;
+    }
+    
     
     
     @Override
