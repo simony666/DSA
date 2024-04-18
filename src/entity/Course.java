@@ -32,7 +32,7 @@ public class Course {
         this.lectureList = new ArrayList<>();
     }
 
-    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ListInterface<String> coverList) {
+    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ArrayList<String> coverList) {
         this.courseID = courseID;
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -88,7 +88,7 @@ public class Course {
         return coverFaculty;
     }
 
-    public void setCoverFaculty(ListInterface<String> coverFaculty) {
+    public void setCoverFaculty(ArrayList<String> coverFaculty) {
         this.coverFaculty = coverFaculty;
     }
 
@@ -96,7 +96,7 @@ public class Course {
         return tutorialList;
     }
 
-    public void setTutorialList(ListInterface<String> tutorialList) {
+    public void setTutorialList(ArrayList<String> tutorialList) {
         this.tutorialList = tutorialList;
     }
 
@@ -104,7 +104,7 @@ public class Course {
         return practicalList;
     }
 
-    public void setPracticalList(ListInterface<String> practicalList) {
+    public void setPracticalList(ArrayList<String> practicalList) {
         this.practicalList = practicalList;
     }
 
@@ -112,7 +112,7 @@ public class Course {
         return lectureList;
     }
 
-    public void setLectureList(ListInterface<String> lectureList) {
+    public void setLectureList(ArrayList<String> lectureList) {
         this.lectureList = lectureList;
     }
 

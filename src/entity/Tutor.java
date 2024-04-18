@@ -9,7 +9,8 @@ public class Tutor{
     
     private static int nextID = 0;
     
-    private ListInterface<Tutor> tutorList = new ArrayList<>();
+    //store all current entity
+    private static ArrayList<Tutor> tutorList = new ArrayList<>();
     
     
     public Tutor(String tutorID, String tutorName) {
@@ -34,13 +35,23 @@ public class Tutor{
         this.tutorName = tutorName;
     }
 
-    public ListInterface<Tutor> getTutorList() {
+    public static int getNextID() {
+        return nextID;
+    }
+
+    public static void setNextID(int nextID) {
+        Tutor.nextID = nextID;
+    }
+
+    public static ArrayList<Tutor> getTutorList() {
         return tutorList;
     }
 
-    public void setTutorList(ListInterface<Tutor> tutorList) {
-        this.tutorList = tutorList;
+    public static void setTutorList(ArrayList<Tutor> tutorList) {
+        Tutor.tutorList = tutorList;
     }
+
+    
     
     @Override
     public String toString(){
