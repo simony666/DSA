@@ -1,6 +1,7 @@
 package entity;
 
 import adt.ArrayList;
+import adt.ListInterface;
 
 public class Course {
     // Variables
@@ -31,7 +32,7 @@ public class Course {
         this.lectureList = new ArrayList<>();
     }
 
-    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ArrayList<String> coverList) {
+    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ListInterface<String> coverList) {
         this.courseID = courseID;
         this.courseCode = courseCode;
         this.courseName = courseName;
@@ -74,7 +75,7 @@ public class Course {
     public void setCourseProgramLeader(String courseProgramLeader) {
         this.courseProgramLeader = courseProgramLeader;
     }
-
+  
     public int getCourseFees() {
         return courseFees;
     }
@@ -87,31 +88,31 @@ public class Course {
         return coverFaculty;
     }
 
-    public void setCoverFaculty(ArrayList<String> coverFaculty) {
+    public void setCoverFaculty(ListInterface<String> coverFaculty) {
         this.coverFaculty = coverFaculty;
     }
 
-    public ArrayList<String> getTutorialList() {
+    public ListInterface<String> getTutorialList() {
         return tutorialList;
     }
 
-    public void setTutorialList(ArrayList<String> tutorialList) {
+    public void setTutorialList(ListInterface<String> tutorialList) {
         this.tutorialList = tutorialList;
     }
 
-    public ArrayList<String> getPracticalList() {
+    public ListInterface<String> getPracticalList() {
         return practicalList;
     }
 
-    public void setPracticalList(ArrayList<String> practicalList) {
+    public void setPracticalList(ListInterface<String> practicalList) {
         this.practicalList = practicalList;
     }
 
-    public ArrayList<String> getLectureList() {
+    public ListInterface<String> getLectureList() {
         return lectureList;
     }
 
-    public void setLectureList(ArrayList<String> lectureList) {
+    public void setLectureList(ListInterface<String> lectureList) {
         this.lectureList = lectureList;
     }
 
