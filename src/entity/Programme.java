@@ -13,7 +13,7 @@ public class Programme {
     private String progID;
     private String progName;
     
-    private static ListInterface<Programme> programmeList = new ArrayList<>();
+    private static ArrayList<Programme> programmeList = new ArrayList<>();
 
     public Programme(String progID, String progName) {
         this.progID = progID;
@@ -40,7 +40,7 @@ public class Programme {
         return programmeList;
     }
 
-    public void setProgrammeList(ListInterface<Programme> programmeList) {
+    public void setProgrammeList(ArrayList<Programme> programmeList) {
         Programme.programmeList = programmeList;
     }
     
