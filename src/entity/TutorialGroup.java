@@ -12,7 +12,7 @@ public class TutorialGroup {
     private String tutorGroupID;
     private String tutorGroupName;
    
-    private ListInterface<Student> studentList = new ArrayList<>();
+    private ArrayList<Student> studentList = new ArrayList<>();
 
     public TutorialGroup() {
     }
@@ -38,11 +38,11 @@ public class TutorialGroup {
         this.tutorGroupName = tutorGroupName;
     }
 
-    public ListInterface<Student> getStudentList() {
+    public ArrayList<Student> getStudentList() {
         return studentList;
     }
 
-    public void setStudentList(ListInterface<Student> studentList) {
+    public void setStudentList(ArrayList<Student> studentList) {
         this.studentList = studentList;
     }
 
