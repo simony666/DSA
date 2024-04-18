@@ -11,7 +11,8 @@ import adt.*;
 public class TutorialGroup {
     private String tutorGroupID;
     private String tutorGroupName;
-    
+    private String programmeId; //This Id is to compare Id with Programme's program id
+
     //store all student belong to this entity
     private ArrayList<Student> studentList = new ArrayList<>();
     
@@ -20,7 +21,8 @@ public class TutorialGroup {
 
     public TutorialGroup() {
     }
-
+   
+    
     public TutorialGroup(String tutorGroupID, String tutorGroupName) {
         this.tutorGroupID = tutorGroupID;
         this.tutorGroupName = tutorGroupName;
@@ -41,6 +43,14 @@ public class TutorialGroup {
     public void setTutorGroupName(String tutorGroupName) {
         this.tutorGroupName = tutorGroupName;
     }
+    
+    public String getProgrammeId() {
+        return programmeId;
+    }
+
+    public void setProgrammeId(String programmeId) {
+        this.programmeId = programmeId;
+    }
 
     public static ArrayList<TutorialGroup> getTutorialGroupList() {
         return tutorialGroupList;
@@ -58,14 +68,10 @@ public class TutorialGroup {
         this.studentList = studentList;
     }
 
-    
-
     @Override
     public String toString() {
-        return "tutorGroupID=" + tutorGroupID + ", tutorGroupName=" + tutorGroupName + ", studentList=" + studentList;
+        return "TutorialGroup{" + "tutorGroupID=" + tutorGroupID + ", tutorGroupName=" + tutorGroupName + '}';
     }
-
-    
-    
-    
 }
+
+ 
