@@ -11,8 +11,12 @@ import adt.*;
 public class TutorialGroup {
     private String tutorGroupID;
     private String tutorGroupName;
-   
-    private ListInterface<Student> studentList = new ArrayList<>();
+    
+    //store all student belong to this entity
+    private ArrayList<Student> studentList = new ArrayList<>();
+    
+    //store all current entity
+    private static ArrayList<TutorialGroup> tutorialGroupList = new ArrayList<>();
 
     public TutorialGroup() {
     }
@@ -38,13 +42,23 @@ public class TutorialGroup {
         this.tutorGroupName = tutorGroupName;
     }
 
-    public ListInterface<Student> getStudentList() {
+    public static ArrayList<TutorialGroup> getTutorialGroupList() {
+        return tutorialGroupList;
+    }
+
+    public static void setTutorialGroupList(ArrayList<TutorialGroup> tutorialGroupList) {
+        TutorialGroup.tutorialGroupList = tutorialGroupList;
+    }
+
+    public ArrayList<Student> getStudentList() {
         return studentList;
     }
 
-    public void setStudentList(ListInterface<Student> studentList) {
+    public void setStudentList(ArrayList<Student> studentList) {
         this.studentList = studentList;
     }
+
+    
 
     @Override
     public String toString() {
