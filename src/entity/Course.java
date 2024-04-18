@@ -8,11 +8,16 @@ public class Course {
     private String courseCode;
     private String courseName;
     private String courseProgramLeader;
+    private int courseFees;
     private ArrayList<String> coverFaculty;
+    
+    //store all tutor belong to this Course, by type of student
     private ArrayList<String> tutorialList;
     private ArrayList<String> practicalList;
     private ArrayList<String> lectureList;
-    private int courseFees;
+    
+    //store all current entity
+    private static ArrayList<Course> courseList = new ArrayList<>();
 
     public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees) {
         this.courseID = courseID;
@@ -70,6 +75,14 @@ public class Course {
         this.courseProgramLeader = courseProgramLeader;
     }
 
+    public int getCourseFees() {
+        return courseFees;
+    }
+
+    public void setCourseFees(int courseFees) {
+        this.courseFees = courseFees;
+    }
+
     public ArrayList<String> getCoverFaculty() {
         return coverFaculty;
     }
@@ -102,13 +115,14 @@ public class Course {
         this.lectureList = lectureList;
     }
 
-    public int getCourseFees() {
-        return courseFees;
+    public static ArrayList<Course> getCourseList() {
+        return courseList;
     }
 
-    public void setCourseFees(int courseFees) {
-        this.courseFees = courseFees;
+    public static void setCourseList(ArrayList<Course> courseList) {
+        Course.courseList = courseList;
     }
+    
     
     
     @Override
