@@ -12,6 +12,8 @@ public class TutorialGroup {
     private String tutorGroupID;
     private String tutorGroupName;
     
+    private Tutor tutor;
+    
     //store all student belong to this entity
     private ArrayList<Student> studentList = new ArrayList<>();
     
@@ -58,6 +60,13 @@ public class TutorialGroup {
         this.studentList = studentList;
     }
 
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
     
 
     @Override

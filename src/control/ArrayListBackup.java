@@ -6,9 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.NoSuchElementException;
 
-public class ArrayList<T> implements ListInterface<T>{
+public class ArrayList<T> implements ListInterface<T>, Serializable {
 
   private T[] array;
   private int numberOfEntries;
@@ -145,17 +144,6 @@ public class ArrayList<T> implements ListInterface<T>{
 
     return outputStr;
   }
-  
-  public int indexof(T element){
-      if(contains(element)){
-            for (int index = 0; index < numberOfEntries; index++) {
-              if (element.equals(array[index])) {
-                return index;
-              }
-            }
-      }
-      return -1;
-  }
 
   /**
    * Task: Makes room for a new entry at newPosition. Precondition: 1 <=
@@ -187,32 +175,6 @@ public class ArrayList<T> implements ListInterface<T>{
     for (int index = removedIndex; index < lastIndex; index++) {
       array[index] = array[index + 1];
     }
-  }
-  
-    @Override
-    public Iterator<T> getIterator() {
-      return new ArrayListIterator();
-  }
-
-  private class ArrayListIterator implements Iterator<T> {
-      private int currentIndex;
-
-      public ArrayListIterator() {
-          currentIndex = 0;
-      }
-
-      @Override
-      public boolean hasNext() {
-          return currentIndex < numberOfEntries;
-      }
-
-      @Override
-      public T next() {
-          if (!hasNext()) {
-              throw new NoSuchElementException();
-          }
-          return array[currentIndex++];
-      }
   }
   
 }

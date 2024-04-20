@@ -12,10 +12,10 @@ public class Course {
     private int courseFees;
     private ArrayList<String> coverFaculty;
     
-    //store all tutor belong to this Course, by type of student
-    private ArrayList<String> tutorialList;
-    private ArrayList<String> practicalList;
-    private ArrayList<String> lectureList;
+    //store all tutor belong to this Course, by type of courseType
+    private ArrayList<Tutor> tutorialList;
+    private ArrayList<Tutor> practicalList;
+    private ArrayList<Tutor> lectureList;
     
     //store all current entity
     private static ArrayList<Course> courseList = new ArrayList<>();
@@ -92,29 +92,31 @@ public class Course {
         this.coverFaculty = coverFaculty;
     }
 
-    public ListInterface<String> getTutorialList() {
+    public ArrayList<Tutor> getTutorialList() {
         return tutorialList;
     }
 
-    public void setTutorialList(ArrayList<String> tutorialList) {
+    public void setTutorialList(ArrayList<Tutor> tutorialList) {
         this.tutorialList = tutorialList;
     }
 
-    public ListInterface<String> getPracticalList() {
+    public ArrayList<Tutor> getPracticalList() {
         return practicalList;
     }
 
-    public void setPracticalList(ArrayList<String> practicalList) {
+    public void setPracticalList(ArrayList<Tutor> practicalList) {
         this.practicalList = practicalList;
     }
 
-    public ListInterface<String> getLectureList() {
+    public ArrayList<Tutor> getLectureList() {
         return lectureList;
     }
 
-    public void setLectureList(ArrayList<String> lectureList) {
+    public void setLectureList(ArrayList<Tutor> lectureList) {
         this.lectureList = lectureList;
     }
+
+    
 
     public static ArrayList<Course> getCourseList() {
         return courseList;
