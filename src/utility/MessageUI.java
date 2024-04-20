@@ -1,6 +1,9 @@
 package utility;
 
+import java.util.Scanner;
+
 public class MessageUI {
+    static Scanner sc = new Scanner(System.in);
     
     public static void displayInvalidChoiceMessage() {
         System.out.println("\nInvalid choice!");
@@ -26,4 +29,29 @@ public class MessageUI {
       public static void displayInvalidIndexMessage() {
         System.out.println("\nInvalid Index Selected!");
       }
+      
+      public static boolean comfirmationMessage(){
+          System.out.println("\nEnter Y to comfirm or Enter N to negate");
+          boolean ans = enterComfirm();
+          return ans;
+      }
+      
+      public static boolean enterComfirm(){
+          String ans = sc.nextLine();
+          ans.toUpperCase();
+          if (ans.equalsIgnoreCase("Y")){
+              return true;
+          }else if (ans.equalsIgnoreCase("N")){
+              return false;
+          }else {
+              displayInvalidChoiceMessage();
+              return false;
+          }
+      }
+      
+      
+              int age = 0;
+
+      
+     
 }
