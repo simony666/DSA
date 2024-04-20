@@ -4,6 +4,9 @@
  */
 package boundary;
 
+import adt.ArrayList;
+import control.AssignmentTeamCrtl;
+import entity.AssignmentTeam;
 import java.util.Scanner;
 import utility.MessageUI;
 
@@ -26,6 +29,7 @@ public class AssignmentTeamUI {
     //a team has many students, Limit the size
     
     private Scanner scanner = new Scanner(System.in);
+    //private AssignmentTeamCrtl ATCrtl = new AssignmentTeamCrtl();
     
     public int getMenuChoice(){
         int choice = 0;
@@ -42,9 +46,11 @@ public class AssignmentTeamUI {
             System.out.println("7. Display Assignment Team");
             System.out.println("8. Display Assignment Team Member");
             System.out.println("9. Report");
+            System.out.println("10. Exit");
+            System.out.println("\nPlease Enter Menu Index(1-10):");
             choice = scanner.nextInt();
             scanner.nextLine();
-            if (choice<=0 || choice >=9){
+            if (choice<=0 || choice >=10){
                 //set choice to invalid to display again
                 MessageUI.clearScreen();
                 MessageUI.displayInvalidChoiceMessage();
@@ -54,10 +60,70 @@ public class AssignmentTeamUI {
         return choice;
     }
     
-    public static void displayCreateTeam(){
+    public AssignmentTeam getNewTeam(){
         System.out.println("===================================");
         System.out.println("=     Create Assignment Team      =");
         System.out.println("===================================");
+        System.out.println("Please Enter Assignment Team Name or \"cancel\" to cancel");
+        String name = scanner.nextLine().trim();
+        System.out.println("");
         
+        if (name.equalsIgnoreCase("cancel")) {
+            System.out.println("Creation of assignment team cancelled.");
+            return null;
+        }
+        
+        System.out.println("Please Enter Team Limit (default: 5) or \"cancel\" to cancel");
+        String limitInput = scanner.nextLine().trim();
+        System.out.println("");
+        
+        int limit = 5;
+        if (limitInput.equalsIgnoreCase("cancel")) {
+            System.out.println("Creation of assignment team cancelled.");
+            return null;
+        }else if(!limitInput.isEmpty()){
+            limit = Integer.parseInt(limitInput);
+        }
+        
+        System.out.println("Limit Set to" + limit);
+        // Create AssignmentTeam object with the provided name
+        AssignmentTeam team = new AssignmentTeam(name,limit);
+        return team;
+    }
+    
+    public AssignmentTeam getRemoveTeam(){
+        int choice = 0;
+        AssignmentTeam team = null;
+        while (choice == 0){
+            System.out.println("===================================");
+            System.out.println("=     Remove Assignment Team      =");
+            System.out.println("===================================");
+            int result = displayATList();
+            System.out.println("\nPlease Enter Team Index or \"999\" to cancel:");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            
+            if (choice == 999){
+                return team;
+            }else if (choice < 0 || choice > result){
+                MessageUI.clearScreen();
+                MessageUI.displayInvalidChoiceMessage();
+                choice = 0;
+            }else{
+                team = new AssignmentTeamCrtl().getAssignmentList().getEntry(choice);
+            }
+            
+        }
+        return team;
+    }
+    
+    public int displayATList(){
+        System.out.println("displaying");
+        ArrayList<AssignmentTeam> list = new AssignmentTeamCrtl().getAssignmentList();
+        int result = list.getNumberOfEntries();
+        for (int i = 1;i<=result;i++){
+            System.out.printf("%3s. %-100s %10s", String.valueOf(i), list.getEntry(i).toString(),"\n");       
+        }
+        return result;
     }
 }
