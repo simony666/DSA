@@ -4,6 +4,7 @@
  */
 package dao;
 
+import control.AssignmentTeamCrtl;
 import entity.*;
 
 /**
@@ -45,6 +46,18 @@ public class AssignmentTeamDao {
         j.addStudent(s9);
         j.addStudent(s10);
         
+        AssignmentTeamCrtl crtl = new AssignmentTeamCrtl();
+        
+        crtl.addAT(a);
+        crtl.addAT(b);
+        crtl.addAT(c);
+        crtl.addAT(d);
+        crtl.addAT(e);
+        crtl.addAT(f);
+        crtl.addAT(g);
+        crtl.addAT(h);
+        crtl.addAT(i);
+        crtl.addAT(j);
         
         
         
