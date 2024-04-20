@@ -13,17 +13,24 @@ public class AssignmentTeam {
     //attribute
     private String assignID;
     private String assignName;
-    private ArrayList<Student> studentList = new ArrayList<>(limit); //store all student under this assignment team
-    
-    //static artribute
-    private static ArrayList<AssignmentTeam> assignmentList = new ArrayList<>(10);//store all current entity
-    private static int limit = 5;//member limit of each assignment
+    private int limit = 5;//member limit of each assignment
+    private ArrayList<Student> studentList; //store all student under this assignment team
+    private TutorialGroup tutorialGroup;
+    private Course course;
     
 
     public AssignmentTeam(String assignName){
         this.assignID = "A" + String.format("%03d", nextID);
         this.assignName = assignName;
-        AssignmentTeam.assignmentList.add(this);
+        this.studentList = new ArrayList<>(limit);
+        nextID++;
+    }
+    
+    public AssignmentTeam(String assignName, int limit){
+        this.assignID = "A" + String.format("%03d", nextID);
+        this.assignName = assignName;
+        this.limit = limit;
+        this.studentList = new ArrayList<>(limit);
         nextID++;
     }
     
@@ -38,9 +45,11 @@ public class AssignmentTeam {
         return result != null;
     }
     
+    public int getStudentCount() {
+        return studentList.getNumberOfEntries();
+    }
     
-    //Getter && Setter
-
+    
     public String getAssignID() {
         return assignID;
     }
@@ -57,6 +66,14 @@ public class AssignmentTeam {
         this.assignName = assignName;
     }
 
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     public ArrayList<Student> getStudentList() {
         return studentList;
     }
@@ -65,27 +82,21 @@ public class AssignmentTeam {
         this.studentList = studentList;
     }
 
-    public static ArrayList<AssignmentTeam> getAssignmentList() {
-        return assignmentList;
+    public TutorialGroup getTutorialGroup() {
+        return tutorialGroup;
     }
 
-    public static void setAssignmentList(ArrayList<AssignmentTeam> assignmentList) {
-        AssignmentTeam.assignmentList = assignmentList;
+    //Getter && Setter
+    public void setTutorialGroup(TutorialGroup tutorialGroup) {
+        this.tutorialGroup = tutorialGroup;
     }
 
-    public static int getLimit() {
-        return limit;
-    }
-
-    public static void setLimit(int limit) {
-        AssignmentTeam.limit = limit;
-    }
-    
-
-    
     @Override
     public String toString() {
-        return "AssignmentTeam{" + "assignID=" + assignID + ", assignName=" + assignName + '}';
+        return "[" + assignID + "] - " + assignName + " <"+tutorialGroup.getTutorGroupID()+">" +
+                    "(Member Count: "+ String.valueOf(this.getStudentCount()) + 
+                    ",Course: "+ course.getCourseName() +
+                    ")";
     }
 
     
