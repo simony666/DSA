@@ -184,6 +184,19 @@ public class HashMap<K, V> implements MapInterface<K, V>, Serializable {
 
             return entries;
         }
+        
+         public LinkedList<V> getAllValue() {
+            LinkedList<V> entries = new LinkedList<>();
+
+            for (Entry<K, V> entry : table) {
+                while (entry != null) {
+                    entries.add(entry.getValue());
+                    entry = entry.getNext();
+                }
+            }
+
+            return entries;
+        }
     
 
 
