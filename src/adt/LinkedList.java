@@ -1,5 +1,8 @@
 package adt;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * LinkedList.java A class that implements the ADT List using a chain of nodes,
  * with the node implemented as an inner class.
