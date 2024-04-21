@@ -172,8 +172,8 @@ public class HashMap<K, V> implements MapInterface<K, V>, Serializable {
         }
     }
     
-        public DynamicLinkedList<KeyValuePair<K, V>> getAllEntries() {
-            DynamicLinkedList<KeyValuePair<K, V>> entries = new DynamicLinkedList<>();
+        public LinkedList<KeyValuePair<K, V>> getAllEntries() {
+            LinkedList<KeyValuePair<K, V>> entries = new LinkedList<>();
 
             for (Entry<K, V> entry : table) {
                 while (entry != null) {

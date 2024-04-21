@@ -9,9 +9,16 @@ public class Tutor{
     
     private static int nextID = 0;
     
+    //store all course belong to this tutor, by type of courseType
+    private ArrayList<Course> tutorialList;
+    private ArrayList<Course> practicalList;
+    private ArrayList<Course> lectureList;
+    
     //store all current entity
     private static ArrayList<Tutor> tutorList = new ArrayList<>();
     
+    //store all tutorialGroup belong to this entity
+    private static ArrayList<TutorialGroup> TutorialGroupList = new ArrayList<>();
     
     public Tutor(String tutorID, String tutorName) {
         this.tutorID = "T" + String.format("%03d", nextID);
@@ -43,12 +50,46 @@ public class Tutor{
         Tutor.nextID = nextID;
     }
 
+    public ArrayList<Course> getTutorialList() {
+        return tutorialList;
+    }
+
+    public void setTutorialList(ArrayList<Course> tutorialList) {
+        this.tutorialList = tutorialList;
+    }
+
+    public ArrayList<Course> getPracticalList() {
+        return practicalList;
+    }
+
+    public void setPracticalList(ArrayList<Course> practicalList) {
+        this.practicalList = practicalList;
+    }
+
+    public ArrayList<Course> getLectureList() {
+        return lectureList;
+    }
+
+    public void setLectureList(ArrayList<Course> lectureList) {
+        this.lectureList = lectureList;
+    }
+    
+    
+
     public static ArrayList<Tutor> getTutorList() {
         return tutorList;
     }
 
     public static void setTutorList(ArrayList<Tutor> tutorList) {
         Tutor.tutorList = tutorList;
+    }
+
+    public static ArrayList<TutorialGroup> getTutorialGroupList() {
+        return TutorialGroupList;
+    }
+
+    public static void setTutorialGroupList(ArrayList<TutorialGroup> TutorialGroupList) {
+        Tutor.TutorialGroupList = TutorialGroupList;
     }
 
     
