@@ -167,6 +167,11 @@ public class LinkedList<T> implements ListInterface<T> {
     }
     return outputStr;
   }
+  
+  @Override
+  public Iterator<T> getIterator() {
+        return new LinkedListIterator();
+  }
 
   private class Node {
 
@@ -183,5 +188,28 @@ public class LinkedList<T> implements ListInterface<T> {
       this.next = next;
     }
   }
+  
+  private class LinkedListIterator implements Iterator<T> {
+        private Node currentNode;
+
+        public LinkedListIterator() {
+            currentNode = firstNode;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentNode != null;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            T data = currentNode.data;
+            currentNode = currentNode.next;
+            return data;
+        }
+    }
 
 }
