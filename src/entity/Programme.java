@@ -16,6 +16,9 @@ public class Programme {
     //store all current entity
     private static ArrayList<Programme> programmeList = new ArrayList<>();
 
+
+    private static ListInterface<Programme> programmeList = new ArrayList<>();
+    
     public Programme(String progID, String progName) {
         this.progID = progID;
         this.progName = progName;

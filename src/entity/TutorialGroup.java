@@ -14,6 +14,9 @@ public class TutorialGroup {
     
     private Tutor tutor;
     
+    private String programmeId; //This Id is to compare Id with Programme's program id in (removeGroup)
+    private String studentId; //This Id is to compare Id with Student's studentID in (removeStudnet)
+
     //store all student belong to this entity
     private ArrayList<Student> studentList = new ArrayList<>();
     
@@ -22,10 +25,12 @@ public class TutorialGroup {
 
     public TutorialGroup() {
     }
-
-    public TutorialGroup(String tutorGroupID, String tutorGroupName) {
+   
+    
+    public TutorialGroup(String tutorGroupID, String tutorGroupName, String studentId) {
         this.tutorGroupID = tutorGroupID;
         this.tutorGroupName = tutorGroupName;
+        this.studentId = studentId;
     }
 
     public String getTutorGroupID() {
@@ -43,7 +48,23 @@ public class TutorialGroup {
     public void setTutorGroupName(String tutorGroupName) {
         this.tutorGroupName = tutorGroupName;
     }
+    
+    public String getProgrammeId() {
+        return programmeId;
+    }
 
+    public void setProgrammeId(String programmeId) {
+        this.programmeId = programmeId;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+    
     public static ArrayList<TutorialGroup> getTutorialGroupList() {
         return tutorialGroupList;
     }
@@ -71,10 +92,10 @@ public class TutorialGroup {
 
     @Override
     public String toString() {
-        return "tutorGroupID=" + tutorGroupID + ", tutorGroupName=" + tutorGroupName + ", studentList=" + studentList;
+        return "TutorialGroup{" + "tutorGroupID=" + tutorGroupID + ", tutorGroupName=" + tutorGroupName + ", programmeId=" + programmeId + '}';
     }
 
     
-    
-    
 }
+
+ 
