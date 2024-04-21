@@ -49,11 +49,6 @@ public class MessageUI {
               return false;
           }
       }
-      
-      
-              int age = 0;
-
-      
      
       public static int displayList(ListInterface list){
         int result = list.getNumberOfEntries();
