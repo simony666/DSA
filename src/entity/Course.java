@@ -1,16 +1,14 @@
 package entity;
 
 import adt.ArrayList;
-import adt.ListInterface;
 
 public class Course {
     // Variables
-    private String courseID;
     private String courseCode;
     private String courseName;
-    private String courseProgramLeader;
-    private int courseFees;
-    private ArrayList<String> coverFaculty;
+    private String faculty;
+    private int creditHours;
+    private String courseStatus;
     
     //store all tutor belong to this Course, by type of courseType
     private ArrayList<Tutor> tutorialList;
@@ -19,37 +17,18 @@ public class Course {
     
     //store all current entity
     private static ArrayList<Course> courseList = new ArrayList<>();
+    private ArrayList<String> linkedCourses;
 
-    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees) {
-        this.courseID = courseID;
+    public Course(String courseCode, String courseName, String faculty, int creditHours, String courseStatus) {
         this.courseCode = courseCode;
         this.courseName = courseName;
-        this.courseProgramLeader = courseProgramLeader;
-        this.courseFees = courseFees;
-        this.coverFaculty = new ArrayList<>();
+        this.faculty = faculty;
+        this.creditHours = creditHours;
+        this.courseStatus = courseStatus;
+        
         this.tutorialList = new ArrayList<>();
         this.practicalList = new ArrayList<>();
         this.lectureList = new ArrayList<>();
-    }
-
-    public Course(String courseID, String courseCode, String courseName, String courseProgramLeader, int courseFees, ArrayList<String> coverList) {
-        this.courseID = courseID;
-        this.courseCode = courseCode;
-        this.courseName = courseName;
-        this.courseProgramLeader = courseProgramLeader;
-        this.courseFees = courseFees;
-        this.coverFaculty = coverList;
-        this.tutorialList = new ArrayList<>();
-        this.practicalList = new ArrayList<>();
-        this.lectureList = new ArrayList<>();
-    }
-
-    public String getCourseID() {
-        return courseID;
-    }
-
-    public void setCourseID(String courseID) {
-        this.courseID = courseID;
     }
 
     public String getCourseCode() {
@@ -68,28 +47,28 @@ public class Course {
         this.courseName = courseName;
     }
 
-    public String getCourseProgramLeader() {
-        return courseProgramLeader;
+    public String getFaculty() {
+        return faculty;
     }
 
-    public void setCourseProgramLeader(String courseProgramLeader) {
-        this.courseProgramLeader = courseProgramLeader;
-    }
-  
-    public int getCourseFees() {
-        return courseFees;
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
     }
 
-    public void setCourseFees(int courseFees) {
-        this.courseFees = courseFees;
+    public int getCreditHours() {
+        return creditHours;
     }
 
-    public ArrayList<String> getCoverFaculty() {
-        return coverFaculty;
+    public void setCreditHours(int creditHours) {
+        this.creditHours = creditHours;
     }
 
-    public void setCoverFaculty(ArrayList<String> coverFaculty) {
-        this.coverFaculty = coverFaculty;
+    public String getCourseStatus() {
+        return courseStatus;
+    }
+
+    public void setCourseStatus(String courseStatus) {
+        this.courseStatus = courseStatus;
     }
 
     public ArrayList<Tutor> getTutorialList() {
@@ -128,15 +107,11 @@ public class Course {
     
     
     
+    
+    
     @Override
     public String toString() {
         // Modify this method to include programList in the output
-        return "Course ID: " + courseID + "\nCourse Code: " + courseCode +
-                "\nCourse Name: " + courseName +
-                "\nProgram Leader: " + courseProgramLeader + "\nCover Faculties: " + coverFaculty +
-                "\nCourse Fees: " + courseFees + "\n" +
-                "\nTutorial List: " + tutorialList +
-                "\nPractical List: " + practicalList +
-                "\nLecture List: " + lectureList;
+        return String.format("| %-10s | %-40s | %-10s | %-10s | %-10s |",courseCode,courseName,faculty,creditHours,courseStatus);
     }
 }
