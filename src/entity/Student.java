@@ -102,7 +102,7 @@ public class Student{
     
     @Override
     public String toString() {
-        return String.format("%-20s %-20s %-20s %-20s %-20s %-30s", studentID, studentName, age, programme.getProgName(), course.getCoverFaculty(), courseRegistered);
+        return String.format("%-20s %-20s %-20s %-20s %-20s %-30s", studentID, studentName, courseRegistered);
     }
     
     
