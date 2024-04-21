@@ -1,5 +1,7 @@
 package utility;
 
+import adt.ListInterface;
+
 public class MessageUI {
     
     public static void displayInvalidChoiceMessage() {
@@ -26,4 +28,12 @@ public class MessageUI {
       public static void displayInvalidIndexMessage() {
         System.out.println("\nInvalid Index Selected!");
       }
+      
+      public static int displayList(ListInterface list){
+        int result = list.getNumberOfEntries();
+        for (int i = 1;i<=result;i++){
+            System.out.printf("%3s. %-100s %10s", String.valueOf(i), list.getEntry(i).toString(),"\n");       
+        }
+        return result;
+    }
 }
