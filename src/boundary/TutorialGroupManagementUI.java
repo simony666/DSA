@@ -32,6 +32,13 @@ public class TutorialGroupManagementUI {
         return choice;
     }
     
+    public void displayTG(){
+        for (int i = 1; i <= TutorialGroup.getTutorialGroupList().getNumberOfEntries(); i++) {
+               TutorialGroup group = TutorialGroup.getTutorialGroupList().getEntry(i);
+               System.out.println(i + ". " + group.getTutorGroupID() + "-" + group.getTutorGroupName());
+           }
+    }
+    
     
 }
     
