@@ -1,6 +1,7 @@
 package utility;
 
 import java.util.Scanner;
+import adt.ListInterface;
 
 public class MessageUI {
     static Scanner sc = new Scanner(System.in);
@@ -54,4 +55,11 @@ public class MessageUI {
 
       
      
+      public static int displayList(ListInterface list){
+        int result = list.getNumberOfEntries();
+        for (int i = 1;i<=result;i++){
+            System.out.printf("%3s. %-100s %10s", String.valueOf(i), list.getEntry(i).toString(),"\n");       
+        }
+        return result;
+    }
 }
