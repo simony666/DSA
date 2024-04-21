@@ -12,14 +12,6 @@ public class Programme {
     public static ListInterface<Programme> programList = new ArrayList<>();
     private ArrayList<String> linkedCourses;
     
-    //store all current entity
-    private static ArrayList<Programme> programmeList = new ArrayList<>();
-    
-    public Programme(String progID, String progName) {
-        this.progID = progID;
-        this.progName = progName;
-    }
-    
     static {
         initializePrograms(programList);
     }
