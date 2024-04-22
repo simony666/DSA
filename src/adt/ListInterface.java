@@ -19,12 +19,11 @@ public interface ListInterface<T> extends Iterable<T> {
     public boolean contains(T anEntry);
 
     public int getNumberOfEntries();
-    
+
     public int indexOf(T element);
 
-  public boolean isFull();
+    public boolean isFull();
 
-  
     public boolean isEmpty();
 
     public Iterator<T> getIterator();

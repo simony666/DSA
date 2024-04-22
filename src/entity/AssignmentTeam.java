@@ -15,7 +15,7 @@ public class AssignmentTeam {
     private String assignID;
     private String assignName;
     private int limit = 5;//member limit of each assignment
-    private ArrayList<Student> studentList; //store all student under this assignment team
+    private ArrayList<Student> studentList = null; //store all student under this assignment team
     private TutorialGroup tutorialGroup;
     private Course course;
     //this.assignID = "A" + String.format("%03d", nextID);
@@ -48,7 +48,6 @@ public class AssignmentTeam {
             Student result = this.studentList.remove(index);
             return result != null;
         } else {
-            // Student not found in the list
             return false;
         }
     }
