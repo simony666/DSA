@@ -1,8 +1,11 @@
 package utility;
 
+import java.util.Scanner;
 import adt.ListInterface;
+import java.io.IOException;
 
 public class MessageUI {
+    static Scanner sc = new Scanner(System.in);
     
     public static void displayInvalidChoiceMessage() {
         System.out.println("\nInvalid choice!");
@@ -29,11 +32,40 @@ public class MessageUI {
         System.out.println("\nInvalid Index Selected!");
       }
       
+      public static boolean comfirmationMessage(){
+          System.out.println("\nEnter <Y> to comfirm or Enter <N> to negate");
+          boolean ans = enterComfirm();
+          return ans;
+      }
+      
+      public static boolean enterComfirm(){
+          String ans = sc.nextLine();
+          ans.toUpperCase();
+          if (ans.equalsIgnoreCase("Y")){
+              return true;
+          }else if (ans.equalsIgnoreCase("N")){
+              return false;
+          }else {
+              displayInvalidChoiceMessage();
+              return false;
+          }
+      }
+     
       public static int displayList(ListInterface list){
         int result = list.getNumberOfEntries();
         for (int i = 1;i<=result;i++){
             System.out.printf("%3s. %-100s %10s", String.valueOf(i), list.getEntry(i).toString(),"\n");       
         }
         return result;
+    }
+      
+      public static void pressEnter(){
+        System.out.print("Press <ENTER> to continue..");
+        try {
+            System.in.read();
+            System.out.println();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

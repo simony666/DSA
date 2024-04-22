@@ -4,6 +4,7 @@
  */
 package boundary;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import utility.MessageUI;
 
@@ -32,8 +33,12 @@ public class StudentUI {
         System.out.println("| 9. View all students                                                              |");
         System.out.println("| 10. Generate summary report                                                       |");
         System.out.println("*-----------------------------------------------------------------------------------*");
+        System.out.println("Select number");
 
-        return MessageUI.getChoice();
+        int index = sc.nextInt();
+        sc.nextLine();
+        return index;
+        //return MessageUI.getChoice();
     }
 
     public void displayEditStudent() {
@@ -64,4 +69,29 @@ public class StudentUI {
 
         System.out.print("Enter your choices (separated by commas): ");
     }
+    
+    public int verifyAge() {
+        int age = 0;
+        try {
+            System.out.print("Please enter studnet age: ");
+            age = sc.nextInt();
+            sc.nextLine();
+            if (age < 18 ) {
+                
+                throw new IllegalArgumentException("Invalid age. Please try again(Age must greater than or equal to 18)");
+            }
+            
+        } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input. Please try again(Age must greater than or equal to 18)");
+                return verifyAge();
+                
+        } catch (InputMismatchException ex) {
+            System.out.println("Invalid input. Please enter a age.");
+            sc.nextLine();
+            return verifyAge();
+        }
+        return age;
+    }
+    
 }
+
