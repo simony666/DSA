@@ -9,7 +9,7 @@ public class Programme {
     private String programCode;
     private String programName;
     private String faculty;
-    public static ListInterface<Programme> programList = new ArrayList<>();
+    public static ArrayList<Programme> programList = new ArrayList<>();
     private ArrayList<String> linkedCourses;
 
     static {
@@ -56,7 +56,7 @@ public class Programme {
         return programList;
     }
 
-    public static void setProgramList(ListInterface<Programme> programList) {
+    public static void setProgramList(ArrayList<Programme> programList) {
         Programme.programList = programList;
     }
 
