@@ -9,14 +9,14 @@ public class CourseUI {
         System.out.println("\nCourse Management Subsystem");
         System.out.println("1. Add a new course");
         System.out.println("2. Remove a course");
-        System.out.println("3. Search courses offered");
-        System.out.println("4. Amend course details");
-        System.out.println("5. List courses taken by different faculties");
+        System.out.println("3. Modify student detail");
+        System.out.println("4. Search student for registered course");
+        System.out.println("5. Add student to course");
         System.out.println("6. List all courses for a program");
         System.out.println("7. Add course to a program");
         System.out.println("8. Remove a course from a program");
         System.out.println("9. Generate summary reports");
-        System.out.println("0. Exit");
+        System.out.println("0. View all student");
     }
 
     public static String promptString(String name, int chars) {

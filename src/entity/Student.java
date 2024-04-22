@@ -9,7 +9,6 @@ public class Student{
     private String studentName;
     private int age;
     private Programme programme;
-    private String faculty;
     private ArrayList<Course> courseList;
     private TutorialGroup tutorialGroup = null;
     
@@ -23,7 +22,6 @@ public class Student{
         this.studentName = studentName;
         this.age = age;
         this.programme = programme;
-        this.faculty = programme.getFaculty();
         this.courseList = new ArrayList<>();
     }
 
@@ -59,14 +57,6 @@ public class Student{
         this.programme = programme;
     }
 
-    public String getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(String faculty) {
-        this.faculty = faculty;
-    }
-
     public ArrayList<Course> getCourseList() {
         return courseList;
     }
@@ -90,6 +80,8 @@ public class Student{
     public String toString() {
         return String.format("%-20s %-20s %-20s %-20s %-20s", studentID, studentName, age, programme.getProgramCode(), programme.getFaculty());
     }
+    
+   
     
     
     

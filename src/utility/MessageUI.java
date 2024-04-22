@@ -2,6 +2,7 @@ package utility;
 
 import java.util.Scanner;
 import adt.ListInterface;
+import java.io.IOException;
 
 public class MessageUI {
     static Scanner sc = new Scanner(System.in);
@@ -32,7 +33,7 @@ public class MessageUI {
       }
       
       public static boolean comfirmationMessage(){
-          System.out.println("\nEnter Y to comfirm or Enter N to negate");
+          System.out.println("\nEnter <Y> to comfirm or Enter <N> to negate");
           boolean ans = enterComfirm();
           return ans;
       }
@@ -56,5 +57,15 @@ public class MessageUI {
             System.out.printf("%3s. %-100s %10s", String.valueOf(i), list.getEntry(i).toString(),"\n");       
         }
         return result;
+    }
+      
+      public static void pressEnter(){
+        System.out.print("Press <ENTER> to continue..");
+        try {
+            System.in.read();
+            System.out.println();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -33,8 +33,12 @@ public class StudentUI {
         System.out.println("| 9. View all students                                                              |");
         System.out.println("| 10. Generate summary report                                                       |");
         System.out.println("*-----------------------------------------------------------------------------------*");
+        System.out.println("Select number");
 
-        return MessageUI.getChoice();
+        int index = sc.nextInt();
+        sc.nextLine();
+        return index;
+        //return MessageUI.getChoice();
     }
 
     public void displayEditStudent() {
@@ -88,5 +92,6 @@ public class StudentUI {
         }
         return age;
     }
+    
 }
 
