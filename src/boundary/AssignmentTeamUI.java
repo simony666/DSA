@@ -5,12 +5,12 @@
 package boundary;
 
 import adt.ArrayList;
-import adt.KeyValuePair;
 import adt.LinkedList;
 import control.AssignmentTeamCrtl;
 import control.CourseMenu;
 import entity.AssignmentTeam;
 import entity.Course;
+import entity.Student;
 import entity.TutorialGroup;
 import java.util.Scanner;
 import utility.MessageUI;
@@ -55,7 +55,7 @@ public class AssignmentTeamUI {
             System.out.println("\nPlease Enter Menu Index(1-10):");
             choice = scanner.nextInt();
             scanner.nextLine();
-            if (choice<=0 || choice >=10){
+            if (choice<1 || choice >10){
                 //set choice to invalid to display again
                 MessageUI.clearScreen();
                 MessageUI.displayInvalidChoiceMessage();
@@ -147,11 +147,11 @@ public class AssignmentTeamUI {
             System.out.println("=     Remove Assignment Team      =");
             System.out.println("===================================");
             int result = displayATList();
-            System.out.println("\nPlease Enter Team Index or \"999\" to cancel:");
+            System.out.println("\nPlease Enter Team Index or \"-1\" to cancel:");
             choice = scanner.nextInt();
             scanner.nextLine();
             
-            if (choice == 999){
+            if (choice == -1){
                 return team;
             }else if (choice < 0 || choice > result){
                 MessageUI.clearScreen();
@@ -169,6 +169,17 @@ public class AssignmentTeamUI {
         //tutotialgroup
         //course
         //limit
+        AssignmentTeam team = getModifyTeam();
+        if (team == null){
+            //cancel modify
+            return null;
+        }
+        
+        //team is the team need to verify now
+        return getModifyPart(team);
+    }
+    
+    private AssignmentTeam getModifyTeam(){
         AssignmentTeam team = null;
         int choice = 0;
         while (choice == 0){
@@ -176,12 +187,13 @@ public class AssignmentTeamUI {
             System.out.println("=     Modify Assignment Team      =");
             System.out.println("===================================");
             int result = displayATList();
-            System.out.println("\nPlease Enter Team Index Need to modify or \"999\" to cancel:");
+            System.out.println("\nPlease Enter Team Index need to modify or \"-1\" to cancel:");
             choice = scanner.nextInt();
             scanner.nextLine();
             
-            if (choice == 999){
-                return false;
+            if (choice == -1){
+                System.out.println("Modification of assignment team cancelled.");
+                return team;
             }else if (choice < 0 || choice > result){
                 MessageUI.clearScreen();
                 MessageUI.displayInvalidChoiceMessage();
@@ -191,11 +203,120 @@ public class AssignmentTeamUI {
             }
             
         }
-        
+        return team;
+    }
+    
+    private AssignmentTeam getModifyPart(AssignmentTeam team){
+        int choice = 0;
+        while (choice == 0){
+            System.out.println("===================================");
+            System.out.println("=     Modify Assignment Team      =");
+            System.out.println("===================================");
+            System.out.println("Selected Team: "+team.toString());
+            System.out.println("");
+            System.out.println("1. Name");
+            System.out.println("2. Tutorial Group");
+            System.out.println("3. Course");
+            System.out.println("4. Student Limit");
+            
+            System.out.println("\nPlease Enter which part need to modify or \"-1\" to cancel:");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            
+            if (choice == -1){
+                System.out.println("Modification of assignment team cancelled.");
+                return null;
+            }else if (choice < 0 || choice > 4){
+                MessageUI.clearScreen();
+                MessageUI.displayInvalidChoiceMessage();
+                choice = 0;
+            }
+        }
+        switch (choice){
+            case 1:
+                //Name
+                System.out.println("\nPlease Enter New Assignment Team Name or \"cancel\" to cancel:");
+                String name = scanner.nextLine().trim();
+                if (name.equals("cancel")){
+                    System.out.println("Modification of assignment team cancelled.");
+                    return null;
+                }
+                team.setAssignName(name);
+                System.out.println("Assignment Team Name Changed!");
+                break;
+            case 2:
+                //Tutorial Group
+                break;
+            case 3:
+                //Course
+                break;
+            case 4:
+                //Student Limit
+                int limit = 0;
+                while (limit == 0){
+                    System.out.println("\nPlease Enter New Assignment Team Name or \"-1\" to cancel:");
+                    limit = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (limit == -1){
+                        System.out.println("Modification of assignment team cancelled.");
+                        return null;
+                    }else if (choice < 0){
+                        MessageUI.clearScreen();
+                        MessageUI.displayInvalidChoiceMessage();
+                        choice = 0;
+                    }
+                }
+                boolean success = team.setLimit(limit);
+                if (success){
+                    System.out.println("Assignment Team limit Changed!");
+                }else{
+                    System.out.println("Assignment Team limit Cannot Change!");
+                }
+                break;
+        }
+        return team;
     }
     
     public int displayATList(){
-        ArrayList<AssignmentTeam> list = new AssignmentTeamCrtl().getAssignmentList();
-        return MessageUI.displayList(list);
+        LinkedList<AssignmentTeam> list = new AssignmentTeamCrtl().getAssignmentList();
+        int result = MessageUI.displayList(list);
+        if (result == 0){
+            MessageUI.displayEmpty();
+        }
+        return result;
+    }
+    
+    public int displayATMemberList(AssignmentTeam at){
+        System.out.println("Member For " + at.getAssignName());
+        ArrayList<Student> list = at.getStudentList();
+        int result = MessageUI.displayList(list);
+        if (result == 0){
+            MessageUI.displayEmpty();
+        }
+        return result;
+    }
+
+    public AssignmentTeam getTeam() {
+        AssignmentTeam team = null;
+        int choice = 0;
+        while (choice == 0){
+            int result = displayATList();
+            System.out.println("\nPlease Select A Team or \"-1\" to cancel:");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            
+            if (choice == -1){
+                return team;
+            }else if (choice < 0 || choice > result){
+                MessageUI.clearScreen();
+                MessageUI.displayInvalidChoiceMessage();
+                choice = 0;
+            }else{
+                team = new AssignmentTeamCrtl().getAssignmentList().getEntry(choice);
+            }
+            
+        }
+        return team;
     }
 }

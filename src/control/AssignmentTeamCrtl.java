@@ -1,14 +1,16 @@
-f/*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package control;
 
 import adt.ArrayList;
+import adt.LinkedList;
 import boundary.AssignmentTeamUI;
 import dao.AssignmentTeamDao;
 import dao.CourseInitializer;
 import entity.AssignmentTeam;
+import entity.Student;
 import java.util.Scanner;
 import utility.MessageUI;
 
@@ -21,7 +23,7 @@ public class AssignmentTeamCrtl {
     private Scanner scanner = new Scanner(System.in);
     private final AssignmentTeamUI ui = new AssignmentTeamUI();
 
-    private static ArrayList<AssignmentTeam> assignmentList = new ArrayList<>(10);//store all current entity
+    private static LinkedList<AssignmentTeam> assignmentList = new LinkedList<>();//store all current entity
 
     public void entry() {
         int choice = ui.getMenuChoice();
@@ -32,8 +34,30 @@ public class AssignmentTeamCrtl {
             case 2:
                 RemoveTeamCrtl();
                 break;
+            case 3:
+                ModifyTeamCrtl();
+                break;
+            case 4:
+                AddStudentCrtl();
+                break;
+            case 5:
+                RemoveStudentCrtl();
+                break;
+            case 6:
+                MergeTeamCrtl();
+                break;
             case 7:
                 ListTeamCrtl();
+                break;
+            case 8:
+                ListTeamMemberCrtl();
+                break;
+            case 9:
+                ReportCrtl();
+                break;
+            case 10:
+                MessageUI.displayExitMessage();
+                break;
             default:
                 System.out.println("Something went wrong!");
                 break;
@@ -50,6 +74,7 @@ public class AssignmentTeamCrtl {
         //10. Exit");
     }
 
+    //case 1
     public void createTeamCrtl() {
         //create New Entity, add into list
         AssignmentTeam newTeam = ui.getNewTeam();
@@ -61,6 +86,7 @@ public class AssignmentTeamCrtl {
         //alway redirect back to main menu
         entry();
     }
+    //case 2
     public void RemoveTeamCrtl() {
         //create New Entity, add into list
         AssignmentTeam oldTeam = ui.getRemoveTeam();
@@ -72,13 +98,110 @@ public class AssignmentTeamCrtl {
         //alway redirect back to main menu
         entry();
     }
+    
+    //case 3
+    public void ModifyTeamCrtl(){
+        ui.modifyTeam();
+
+        //alway redirect back to main menu
+        entry();
+    }
+    
+    //case 4
+    public void AddStudentCrtl() {
+        //getStudent(Student stu);
+
+        //ask assigment id / display all assignment if enter 999 / filter 
+        //
+        //ask student id
+        //get from getstudent controller
+        //if student exist
+    }
+    
+    //case 5
+    public void RemoveStudentCrtl() {
+        //getStudent(Student stu);
+
+        //ask assigment id / display all assignment if enter 999 / filter 
+        //
+        //ask student id
+        //get from getstudent controller
+        //if student exist
+    }
+    
+    //case 6
     public void MergeTeamCrtl() {
+        System.out.println("Please Select A Team To Merge");
+        AssignmentTeam at1 = ui.getTeam();
+        AssignmentTeam at2 = null;
+        
+        boolean go = false;
+        
+        if (at1 == null){
+                //exit
+                go = true;
+        }
+        while (!go){
+            System.out.println("Please Select A Team To Merge");
+             at2 = ui.getTeam();
+            if (at2 == null){
+                //exit
+                go = true;
+            }else if (at1.equals(at2)){
+                MessageUI.clearScreen();
+                System.out.println("Please Select A Diffrent Assignment Team");
+            }
+        }
+        
+        //at1 and at2 is AT object need to merge
+        //at1 or at2 is null == direct exit
+        if (at1 != null && at2 !=null){
+            //need to merge, check the requirements
+            //what is the requirement???
+            boolean canMerge = (at1.getTutorialGroup()==at2.getTutorialGroup() && at1.getCourse() == at2.getCourse());
+            int index = (at1.getLimit() >= at2.getLimit()?1:2);
+            AssignmentTeam mergeTeam = (at1.getLimit() >= at2.getLimit()?at1:at2);
+            int sCount1 = at1.getStudentCount();
+            int sCount2 = at2.getStudentCount();
+            int max = mergeTeam.getLimit();
+            if(!canMerge){
+                //unable to merge due to Programme or Course Not Same
+                System.out.println("Unable To Merge! Course and Programe");
+            }else if (sCount1 + sCount2 <= max){
+                //able to merge
+                ArrayList<Student> sList = at1.getStudentList();
+                ArrayList<Student> s2List = at2.getStudentList();
+                for (int i = 0; i < s2List.getNumberOfEntries(); i++){
+                    if (!sList.contains(s2List.getEntry(i))){
+                        sList.add(s2List.getEntry(i));
+                    }
+                }
+                System.out.println("Success Merge Team!");
+                if (index == 1){
+                    //merge to at1
+                    at1.setStudentList(sList);
+                    removeAT(at2);
+                    System.out.println(at1.toString());
+                }else{
+                    //merge to at2
+                    at2.setStudentList(sList);
+                    removeAT(at1);
+                    System.out.println(at2.toString());
+                }
+            }else{
+                //unable to merge due to exceed limit
+                System.out.println("Unable To Merge! student limit exceed!");
+            }
+            
+        }
+        
         
         
         //alway redirect back to main menu
         entry();
     }
     
+    //case 7
     public void ListTeamCrtl() {
         ui.displayATList();
         
@@ -90,23 +213,37 @@ public class AssignmentTeamCrtl {
         //alway redirect back to main menu
         entry();
     }
-
-    public void addStudentCrtl() {
-        //getStudent(Student stu);
-
-        //ask assigment id / display all assignment if enter 999 / filter 
-        //
-        //ask student id
-        //get from getstudent controller
-        //if student exist
+    
+    //case 8
+    public void ListTeamMemberCrtl() {
+        AssignmentTeam at = ui.getTeam();
+        ui.displayATMemberList(at);
+        
+        System.out.println("Press Enter to continue");
+        scanner.nextLine();
+        MessageUI.clearScreen();
+        
+        
+        //alway redirect back to main menu
+        entry();
     }
+    
+    //case 9
+    public void ReportCrtl() {
+        
+        
+        //alway redirect back to main menu
+        entry();
+    }
+    
+    //own function
     
     public boolean addAT(AssignmentTeam at){
         return AssignmentTeamCrtl.assignmentList.add(at);
     }
     
     public boolean removeAT(AssignmentTeam at) {
-        var position = AssignmentTeamCrtl.assignmentList.indexof(at);
+        var position = AssignmentTeamCrtl.assignmentList.indexOf(at);
         if (position >= 0) {
             return AssignmentTeamCrtl.assignmentList.remove(position) != null;
         }
@@ -114,21 +251,21 @@ public class AssignmentTeamCrtl {
     }
 
 
-    public ArrayList<AssignmentTeam> getAssignmentList() {
+    public LinkedList<AssignmentTeam> getAssignmentList() {
         return AssignmentTeamCrtl.assignmentList;
     }
 
-    public void setAssignmentList(ArrayList<AssignmentTeam> assignmentList) {
+    public void setAssignmentList(LinkedList<AssignmentTeam> assignmentList) {
         AssignmentTeamCrtl.assignmentList = assignmentList;
     }
 
     public static void main(String[] args) {
-        //new AssignmentTeamDao().generate();
+        new AssignmentTeamDao().generate();
         CourseInitializer.initializeCourses();
         AssignmentTeamCrtl crtl = new AssignmentTeamCrtl();
-        AssignmentTeamUI ui = new AssignmentTeamUI();
-        //crtl.entry();
-        ui.displayATList();
+        //AssignmentTeamUI ui = new AssignmentTeamUI();
+        crtl.entry();
+        //ui.displayATList();
     }
 }
 

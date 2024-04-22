@@ -24,5 +24,7 @@ public interface ListInterface <T> {
 
   public boolean isFull();
   
+  public int indexOf(T element);
+  
   public Iterator<T> getIterator();
 }

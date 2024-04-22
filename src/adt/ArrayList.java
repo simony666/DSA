@@ -1,73 +1,38 @@
 package adt;
 
-import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Collection;
+import entity.Student;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class ArrayList<T> implements ListInterface<T>{
+public class ArrayList<T> implements ListInterface<T> {
 
-  private T[] array;
-  private int numberOfEntries;
-  private static final int DEFAULT_CAPACITY = 5;
+    private T[] array;
+    private int numberOfEntries;
+    private static final int DEFAULT_CAPACITY = 5;
 
-  public ArrayList() {
-    this(DEFAULT_CAPACITY);
-  }
-
-  public ArrayList(int initialCapacity) {
-    numberOfEntries = 0;
-    array = (T[]) new Object[initialCapacity];
-  }
-
-  @Override
-  public boolean add(T newEntry) {
-    if (isArrayFull()) {
-      doubleArray();
+    public ArrayList() {
+        this(DEFAULT_CAPACITY);
     }
 
-    array[numberOfEntries] = newEntry;
-    numberOfEntries++;
-    return true;
-  }
-
-  @Override
-  public boolean add(int newPosition, T newEntry) {
-    boolean isSuccessful = true;
-
-    if ((newPosition >= 1) && (newPosition <= numberOfEntries + 1)) {
-      if (isArrayFull()) {
-        doubleArray();
-      }
-      makeRoom(newPosition);
-      array[newPosition - 1] = newEntry;
-      numberOfEntries++;
-    } else {
-      isSuccessful = false;
+    public ArrayList(int initialCapacity) {
+        numberOfEntries = 0;
+        array = (T[]) new Object[initialCapacity];
     }
 
-    return isSuccessful;
-  }
+    @Override
+    public boolean add(T newEntry) {
+        if (isArrayFull()) {
+            doubleArray();
+        }
 
-  @Override
-  public T remove(int givenPosition) {
-    T result = null;
-
-    if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
-      result = array[givenPosition - 1];
-
-      if (givenPosition < numberOfEntries) {
-        removeGap(givenPosition);
-      }
-
-      numberOfEntries--;
+        array[numberOfEntries] = newEntry;
+        numberOfEntries++;
+        return true;
     }
 
-    return result;
-  }
+    @Override
+    public boolean add(int newPosition, T newEntry) {
+        boolean isSuccessful = true;
 
   @Override
   public void clear() {
@@ -153,39 +118,31 @@ public class ArrayList<T> implements ListInterface<T>{
                 return index;
               }
             }
-      }
-      return -1;
-  }
+            makeRoom(newPosition);
+            array[newPosition - 1] = newEntry;
+            numberOfEntries++;
+        } else {
+            isSuccessful = false;
+        }
 
-  /**
-   * Task: Makes room for a new entry at newPosition. Precondition: 1 <=
-   * newPosition <= numberOfEntries + 1; numberOfEntries is array's
-   * numberOfEntries before addition.
-   */
-  private void makeRoom(int newPosition) {
-    int newIndex = newPosition - 1;
-    int lastIndex = numberOfEntries - 1;
-
-    // move each entry to next higher index, starting at end of
-    // array and continuing until the entry at newIndex is moved
-    for (int index = lastIndex; index >= newIndex; index--) {
-      array[index + 1] = array[index];
+        return isSuccessful;
     }
-  }
 
-  /**
-   * Task: Shifts entries that are beyond the entry to be removed to the next
-   * lower position. Precondition: array is not empty; 1 <= givenPosition <
-   * numberOfEntries; numberOfEntries is array's numberOfEntries before removal.
-   */
-  private void removeGap(int givenPosition) {
-    // move each entry to next lower position starting at entry after the
-    // one removed and continuing until end of array
-    int removedIndex = givenPosition - 1;
-    int lastIndex = numberOfEntries - 1;
+    @Override
+    public T remove(int givenPosition) {
+        T result = null;
 
-    for (int index = removedIndex; index < lastIndex; index++) {
-      array[index] = array[index + 1];
+        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+            result = array[givenPosition - 1];
+
+            if (givenPosition < numberOfEntries) {
+                removeGap(givenPosition);
+            }
+
+            numberOfEntries--;
+        }
+
+        return result;
     }
   }
   

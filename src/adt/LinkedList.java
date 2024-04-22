@@ -10,8 +10,7 @@ import java.util.NoSuchElementException;
  * @author Frank M. Carrano
  * @version 2.0
  */
-
-public class LinkedList<T> implements ListInterface<T> { // alter i need to change back
+public class LinkedList<T> implements ListInterface<T> {
 
     private Node firstNode; // reference to first node
     private int numberOfEntries;  	// number of entries in list
@@ -177,6 +176,7 @@ public class LinkedList<T> implements ListInterface<T> { // alter i need to chan
         return new LinkedListIterator();
     }
 
+    @Override
     public int indexOf(T element) {
         Node currentNode = firstNode;
         int index = 1;

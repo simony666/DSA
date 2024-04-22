@@ -24,6 +24,11 @@ public class Tutor{
     private ArrayList<Course> practicalList;
     private ArrayList<Course> lectureList;
     
+    //store all course belong to this tutor, by type of courseType
+    private ArrayList<Course> tutorialList;
+    private ArrayList<Course> practicalList;
+    private ArrayList<Course> lectureList;
+    
     //store all current entity
     private static ArrayList<Tutor> tutorList = new ArrayList<>();
     
