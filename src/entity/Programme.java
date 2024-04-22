@@ -11,7 +11,7 @@ public class Programme {
     private String faculty;
     public static ListInterface<Programme> programList = new ArrayList<>();
     private ArrayList<String> linkedCourses;
-    
+
     static {
         initializePrograms(programList);
     }
@@ -25,9 +25,8 @@ public class Programme {
         this.programName = programName;
         this.faculty = faculty;
         this.linkedCourses = new ArrayList<>();
-        
+
     }
-    
 
     public String getProgramCode() {
         return programCode;
@@ -71,6 +70,19 @@ public class Programme {
 
     public void addLinkedCourse(String courseCode) {
         linkedCourses.add(courseCode);
+    }
+
+    public void removeLinkedCourse(String courseCode) {
+        if (courseCode != null && !courseCode.isEmpty()) {
+            try {
+                int codeAsInt = Integer.parseInt(courseCode);
+                linkedCourses.remove(codeAsInt);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid course code format. Please enter a valid integer.");
+            }
+        } else {
+            System.out.println("Course code cannot be null or empty.");
+        }
     }
 
     @Override

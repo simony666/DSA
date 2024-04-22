@@ -190,6 +190,11 @@ public class LinkedList<T> implements ListInterface<T> {
         return -1;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator();
+    }
+
     private class Node {
 
         private T data;

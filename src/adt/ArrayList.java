@@ -111,38 +111,49 @@ public class ArrayList<T> implements ListInterface<T> {
     return outputStr;
   }
   
-  public int indexof(T element){
-      if(contains(element)){
-            for (int index = 1; index < numberOfEntries; index++) {
-              if (element.equals(array[index-1])) {
-                return index;
-              }
-            }
-            makeRoom(newPosition);
-            array[newPosition - 1] = newEntry;
-            numberOfEntries++;
-        } else {
-            isSuccessful = false;
-        }
-
-        return isSuccessful;
-    }
-
     @Override
-    public T remove(int givenPosition) {
-        T result = null;
-
-        if ((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
-            result = array[givenPosition - 1];
-
-            if (givenPosition < numberOfEntries) {
-                removeGap(givenPosition);
-            }
-
-            numberOfEntries--;
+    public int indexOf(T element) {
+        if (element == null){
+            return -1;
         }
+        if (contains(element)) {
+            for (int index = 0; index < numberOfEntries; index++) {
+                if (element.equals(array[index])) {
+                    return index+1;
+                }
+            }
+        }
+        return -1;
+    }
+  /**
+   * Task: Makes room for a new entry at newPosition. Precondition: 1 <=
+   * newPosition <= numberOfEntries + 1; numberOfEntries is array's
+   * numberOfEntries before addition.
+   */
+  private void makeRoom(int newPosition) {
+    int newIndex = newPosition - 1;
+    int lastIndex = numberOfEntries - 1;
 
-        return result;
+    // move each entry to next higher index, starting at end of
+    // array and continuing until the entry at newIndex is moved
+    for (int index = lastIndex; index >= newIndex; index--) {
+      array[index + 1] = array[index];
+    }
+  }
+
+  /**
+   * Task: Shifts entries that are beyond the entry to be removed to the next
+   * lower position. Precondition: array is not empty; 1 <= givenPosition <
+   * numberOfEntries; numberOfEntries is array's numberOfEntries before removal.
+   */
+  private void removeGap(int givenPosition) {
+    // move each entry to next lower position starting at entry after the
+    // one removed and continuing until end of array
+    int removedIndex = givenPosition - 1;
+    int lastIndex = numberOfEntries - 1;
+
+    for (int index = removedIndex; index < lastIndex; index++) {
+      array[index] = array[index + 1];
     }
   }
   
@@ -150,6 +161,11 @@ public class ArrayList<T> implements ListInterface<T> {
     public Iterator<T> getIterator() {
       return new ArrayListIterator();
   }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayListIterator();
+    }
 
   private class ArrayListIterator implements Iterator<T> {
       private int currentIndex;
