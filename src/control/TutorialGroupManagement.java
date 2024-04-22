@@ -460,10 +460,7 @@ public class TutorialGroupManagement {
            System.out.println("\n========================================");
            System.out.println("Select a Tutorial Group to List Students");
            System.out.println("========================================");
-           for (int i = 1; i <= TutorialGroup.getTutorialGroupList().getNumberOfEntries(); i++) {
-               TutorialGroup group = TutorialGroup.getTutorialGroupList().getEntry(i);
-               System.out.println(i + ". " + group.getTutorGroupID() + "-" + group.getTutorGroupName());
-           }
+           TutorialGroupManagementUI.displayTG();
 
            // Select a tutorial group
            System.out.println("=======================================");

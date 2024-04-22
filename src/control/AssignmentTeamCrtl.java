@@ -1,4 +1,4 @@
-/*
+f/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -7,6 +7,7 @@ package control;
 import adt.ArrayList;
 import boundary.AssignmentTeamUI;
 import dao.AssignmentTeamDao;
+import dao.CourseInitializer;
 import entity.AssignmentTeam;
 import java.util.Scanner;
 import utility.MessageUI;
@@ -72,12 +73,7 @@ public class AssignmentTeamCrtl {
         entry();
     }
     public void MergeTeamCrtl() {
-        //create New Entity, add into list
-        AssignmentTeam oldTeam = ui.getRemoveTeam();
-        if (oldTeam != null){
-            removeAT(oldTeam);
-            System.out.println("Assignment team "+oldTeam.getAssignName()+" remove successfully.");
-        }
+        
         
         //alway redirect back to main menu
         entry();
@@ -109,13 +105,14 @@ public class AssignmentTeamCrtl {
         return AssignmentTeamCrtl.assignmentList.add(at);
     }
     
-    public boolean removeAT(AssignmentTeam at){
-        int index = assignmentList.indexof(at);
-        if(index >= 0){
-            return AssignmentTeamCrtl.assignmentList.remove(index) != null;
+    public boolean removeAT(AssignmentTeam at) {
+        var position = AssignmentTeamCrtl.assignmentList.indexof(at);
+        if (position >= 0) {
+            return AssignmentTeamCrtl.assignmentList.remove(position) != null;
         }
         return false;  
     }
+
 
     public ArrayList<AssignmentTeam> getAssignmentList() {
         return AssignmentTeamCrtl.assignmentList;
@@ -126,10 +123,12 @@ public class AssignmentTeamCrtl {
     }
 
     public static void main(String[] args) {
-        new AssignmentTeamDao().generate();
+        //new AssignmentTeamDao().generate();
+        CourseInitializer.initializeCourses();
         AssignmentTeamCrtl crtl = new AssignmentTeamCrtl();
-        //AssignmentTeamUI ui = new AssignmentTeamUI();
-        crtl.entry();
-        //ui.displayATList();
+        AssignmentTeamUI ui = new AssignmentTeamUI();
+        //crtl.entry();
+        ui.displayATList();
     }
 }
+

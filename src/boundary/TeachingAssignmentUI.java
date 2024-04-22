@@ -1,6 +1,7 @@
 package boundary;
 
 //import entity.Tutor;
+import adt.ArrayList;
 import entity.*;
 import java.util.Scanner;
 
@@ -105,7 +106,16 @@ public class TeachingAssignmentUI {
         System.out.print("Enter Desire Number: ");
 //        int index = Integer.parseInt(scanner.nextLine()) - 1;
         int index = scanner.nextInt();
+        scanner.nextLine();
         return index;
+    }
+    
+    public String getInput() {
+        
+        String Input = scanner.nextLine().trim();
+        
+        return Input;
+        
     }
     
     public String getSearchInput() {
@@ -114,11 +124,6 @@ public class TeachingAssignmentUI {
         return searchInput;
     }
     
-    public String getInput() {
-        
-        String Input = scanner.nextLine();
-        return Input;
-    }
     
     public Tutor inputTutorDetails() {
         String tutorID = inputTutorID();
@@ -127,6 +132,12 @@ public class TeachingAssignmentUI {
         System.out.println();
         return new Tutor(tutorID, tutorName);
     }
+    
+    public static String getAssignedTutorToCourse(Tutor selectedTutor, Course selectedCourse) {
+    
+    return "Successfully assigned tutor " + selectedTutor.getTutorName() 
+            + " to course " + selectedCourse.getCourseName();
+}
     
     
 //    public Courses inputAssignTutorGrpToTutor() {
@@ -147,4 +158,25 @@ public class TeachingAssignmentUI {
     public void displayAllTutorList(String outputTutorList){
         System.out.println("\nList of Tutor:\n" + outputTutorList);
     }
+    
+    public <T> String getAllList(ArrayList<T> list) { //delete
+        StringBuilder outputList = new StringBuilder();
+        for (int i = 0; i <= list.getNumberOfEntries(); ++i) {
+            outputList.append(i + 1).append(".").append(list.getEntry(i)).append("\n");
+        }
+        return outputList.toString();
+    }
+    
+    public <T> void printAllList(ArrayList<T> list) {
+        for (int i = 1; i <= list.getNumberOfEntries(); ++i) {
+            System.out.println((i) + "." + list.getEntry(i));
+        }
+    }
+    
+    
+    
+    public <T> void printSpecificList(T t) {
+        System.out.println(t);
+    }
+    
 }

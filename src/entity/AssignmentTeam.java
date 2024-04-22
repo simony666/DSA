@@ -17,22 +17,23 @@ public class AssignmentTeam {
     private ArrayList<Student> studentList; //store all student under this assignment team
     private TutorialGroup tutorialGroup;
     private Course course;
-    
+    //this.assignID = "A" + String.format("%03d", nextID);
+    //nextID++;
 
-    public AssignmentTeam(String assignName){
-        this.assignID = "A" + String.format("%03d", nextID);
-        this.assignName = assignName;
-        this.studentList = new ArrayList<>(limit);
+    public AssignmentTeam(String assignName, TutorialGroup tutorialGroup, Course course) {
+        this.assignID = "AT" + String.format("%03d", nextID);
         nextID++;
+        this.assignName = assignName;
+        this.tutorialGroup = tutorialGroup;
+        this.course = course;
+        this.studentList = new ArrayList<>(limit);
+    }
+    public AssignmentTeam(String assignName, TutorialGroup tutorialGroup, Course course, int limit) {
+        this(assignName,tutorialGroup,course);
+        this.studentList = new ArrayList<>(limit);
     }
     
-    public AssignmentTeam(String assignName, int limit){
-        this.assignID = "A" + String.format("%03d", nextID);
-        this.assignName = assignName;
-        this.limit = limit;
-        this.studentList = new ArrayList<>(limit);
-        nextID++;
-    }
+    
     
     //own method
     

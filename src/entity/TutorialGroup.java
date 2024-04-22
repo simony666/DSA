@@ -22,6 +22,9 @@ public class TutorialGroup {
     
     //store all current entity
     private static ArrayList<TutorialGroup> tutorialGroupList = new ArrayList<>();
+    
+    //store all Course & Tutor belong to this entity 
+    private static HashMap<Course, ArrayList<Tutor>> TutorialGrpTeachingList= new HashMap();
 
     public TutorialGroup() {
     }
@@ -88,7 +91,14 @@ public class TutorialGroup {
     public void setTutor(Tutor tutor) {
         this.tutor = tutor;
     }
-    
+
+    public static HashMap<Course, ArrayList<Tutor>> getTutorialGrpTeachingList() {
+        return TutorialGrpTeachingList;
+    }
+
+    public static void setTutorialGrpTeachingList(HashMap<Course, ArrayList<Tutor>> TutorialGrpTeachingList) {
+        TutorialGroup.TutorialGrpTeachingList = TutorialGrpTeachingList;
+    }
 
     @Override
     public String toString() {

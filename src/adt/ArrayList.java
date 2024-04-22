@@ -148,8 +148,8 @@ public class ArrayList<T> implements ListInterface<T>{
   
   public int indexof(T element){
       if(contains(element)){
-            for (int index = 0; index < numberOfEntries; index++) {
-              if (element.equals(array[index])) {
+            for (int index = 1; index < numberOfEntries; index++) {
+              if (element.equals(array[index-1])) {
                 return index;
               }
             }
