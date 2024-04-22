@@ -7,7 +7,32 @@ public class Tutor{
     private String tutorID;
     private String tutorName;
     
-    private static int nextID = 0;
+    private static int nextID = 1;
+    
+    //store all course belong to this tutor, by type of courseType
+    private ArrayList<Course> tutorialList = new ArrayList<>();
+    private ArrayList<Course> practicalList = new ArrayList<>();
+    private ArrayList<Course> lectureList = new ArrayList<>();
+    
+    //store all course belong to this tutor, by type of courseType
+    private ArrayList<Course> tutorialList;
+    private ArrayList<Course> practicalList;
+    private ArrayList<Course> lectureList;
+    
+    //store all course belong to this tutor, by type of courseType
+    private ArrayList<Course> tutorialList;
+    private ArrayList<Course> practicalList;
+    private ArrayList<Course> lectureList;
+    
+    //store all course belong to this tutor, by type of courseType
+    private ArrayList<Course> tutorialList;
+    private ArrayList<Course> practicalList;
+    private ArrayList<Course> lectureList;
+    
+    //store all course belong to this tutor, by type of courseType
+    private ArrayList<Course> tutorialList;
+    private ArrayList<Course> practicalList;
+    private ArrayList<Course> lectureList;
     
     //store all course belong to this tutor, by type of courseType
     private ArrayList<Course> tutorialList;

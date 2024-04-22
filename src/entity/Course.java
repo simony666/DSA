@@ -104,11 +104,7 @@ public class Course {
     public static void setCourseList(ArrayList<Course> courseList) {
         Course.courseList = courseList;
     }
-    
-    
-    
-    
-    
+
     @Override
     public String toString() {
         // Modify this method to include programList in the output

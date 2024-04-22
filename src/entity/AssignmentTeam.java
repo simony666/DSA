@@ -3,7 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entity;
-import adt.*;
+
+import adt.ArrayList;
 
 
 public class AssignmentTeam {
@@ -17,22 +18,24 @@ public class AssignmentTeam {
     private ArrayList<Student> studentList; //store all student under this assignment team
     private TutorialGroup tutorialGroup;
     private Course course;
-    
+    //this.assignID = "A" + String.format("%03d", nextID);
+    //nextID++;
 
-    public AssignmentTeam(String assignName){
-        this.assignID = "A" + String.format("%03d", nextID);
-        this.assignName = assignName;
-        this.studentList = new ArrayList<>(limit);
+    public AssignmentTeam(String assignName, TutorialGroup tutorialGroup, Course course) {
+        this.assignID = "AT" + String.format("%03d", nextID);
         nextID++;
+        this.assignName = assignName;
+        this.tutorialGroup = tutorialGroup;
+        this.course = course;
+        this.studentList = new ArrayList<>(limit);
     }
     
-    public AssignmentTeam(String assignName, int limit){
-        this.assignID = "A" + String.format("%03d", nextID);
-        this.assignName = assignName;
-        this.limit = limit;
+    public AssignmentTeam(String assignName, TutorialGroup tutorialGroup, Course course, int limit) {
+        this(assignName,tutorialGroup,course);
         this.studentList = new ArrayList<>(limit);
-        nextID++;
     }
+    
+    
     
     //own method
     
@@ -40,9 +43,22 @@ public class AssignmentTeam {
         return this.studentList.add(stu);
     }
     public boolean removeStudent(Student stu){
-        int index = this.studentList.indexof(stu);
-        Student result = this.studentList.remove(index);
-        return result != null;
+        int index = this.studentList.indexOf(stu);
+        if (index != -1) {
+            Student result = this.studentList.remove(index);
+            return result != null;
+        } else {
+            // Student not found in the list
+            return false;
+        }
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
     
     public int getStudentCount() {
@@ -70,8 +86,18 @@ public class AssignmentTeam {
         return limit;
     }
 
-    public void setLimit(int limit) {
+    public boolean setLimit(int limit) {
+        if (studentList.getNumberOfEntries() > limit) {
+            return false;
+        }
+        
+        ArrayList<Student> newList = new ArrayList<>(limit);
+        for (int i = 0; i < this.studentList.getNumberOfEntries(); i++) {
+          newList.add(this.studentList.getEntry(i));
+        }
         this.limit = limit;
+        this.studentList = newList;
+        return true;
     }
 
     public ArrayList<Student> getStudentList() {
