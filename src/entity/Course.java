@@ -9,6 +9,7 @@ public class Course {
     private String faculty;
     private int creditHours;
     private String courseStatus;
+    private int courseFee;
     
     //store all tutor belong to this Course, by type of courseType
     private ArrayList<Tutor> tutorialList;
@@ -19,12 +20,13 @@ public class Course {
     private static ArrayList<Course> courseList = new ArrayList<>();
     private ArrayList<String> linkedCourses;
 
-    public Course(String courseCode, String courseName, String faculty, int creditHours, String courseStatus) {
+    public Course(String courseCode, String courseName, String faculty, int creditHours, String courseStatus, int courseFee) {
         this.courseCode = courseCode;
         this.courseName = courseName;
         this.faculty = faculty;
         this.creditHours = creditHours;
         this.courseStatus = courseStatus;
+        this.courseFee = courseFee;
         
         this.tutorialList = new ArrayList<>();
         this.practicalList = new ArrayList<>();
@@ -71,6 +73,15 @@ public class Course {
         this.courseStatus = courseStatus;
     }
 
+    public double getCourseFee() {
+        return courseFee;
+    }
+
+    public void setCourseFee(int courseFee) {
+        this.courseFee = courseFee;
+    }
+    
+
     public ArrayList<Tutor> getTutorialList() {
         return tutorialList;
     }
@@ -95,7 +106,6 @@ public class Course {
         this.lectureList = lectureList;
     }
 
-    
 
     public static ArrayList<Course> getCourseList() {
         return courseList;
@@ -108,6 +118,6 @@ public class Course {
     @Override
     public String toString() {
         // Modify this method to include programList in the output
-        return String.format("| %-10s | %-40s | %-10s | %-10s | %-10s |",courseCode,courseName,faculty,creditHours,courseStatus);
+        return String.format("| %-10s | %-40s | %-10s | %-5s | %-10s | %-10s",courseCode,courseName,faculty,creditHours,courseStatus, courseFee);
     }
 }

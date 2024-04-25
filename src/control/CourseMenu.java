@@ -7,15 +7,13 @@ import adt.ListInterface;
 import adt.ArrayList;
 import adt.HashMap;
 import adt.KeyValuePair;
-import adt.DynamicLinkedList;
-import adt.LinkedList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CourseMenu {
 //        public static HashMap<String, Course> courseMap = new HashMap<>();
 
-    public static HashMap<String, Course> courseMap = CourseInitializer.initializeCourses();
+    public static HashMap<String, Course> courseMap = new HashMap<>();
     public static ListInterface<Programme> programList = Programme.programList;
 
     public void updateCourseMap(HashMap<String, Course> newCourseMap) {
@@ -93,8 +91,9 @@ public class CourseMenu {
         String faculty = CourseUI.promptString("Faculty", 10);
         int creditHours = CourseUI.promptCH("Credit Hours");
         String courseStatus = CourseUI.promptCourseStatus("Course Status");
+        int courseFee = CourseUI.promptCourseFee("Course Fee");
 
-        Course newCourse = new Course(courseCode, courseName, faculty, creditHours, courseStatus);
+        Course newCourse = new Course(courseCode, courseName, faculty, creditHours, courseStatus, courseFee);
         courseMap.put(courseCode, newCourse);
 
         System.out.println("Course added successfully.");
@@ -117,16 +116,16 @@ public class CourseMenu {
 
     //3.Search Course
     private static void searchCourses(Scanner scanner) {
-        System.out.println("Enter course code to search: ");
+        System.out.println("\nEnter course code to search: ");
         String courseCode = scanner.nextLine();
 
         Course foundCourse = courseMap.get(courseCode);
 
         System.err.println(CourseUI.listHeader());
         if (foundCourse != null) {
-            System.out.printf("| %-10s | %-40s | %-10s | %-12d | %5s \n",
+            System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     foundCourse.getCourseCode(), foundCourse.getCourseName(),
-                    foundCourse.getFaculty(), foundCourse.getCreditHours(), foundCourse.getCourseStatus());
+                    foundCourse.getFaculty(), foundCourse.getCreditHours(), foundCourse.getCourseStatus(), foundCourse.getCourseFee());
             System.out.println(CourseUI.listSeperator());
         } else {
             System.out.println("Course not found.");
@@ -142,9 +141,10 @@ public class CourseMenu {
         if (courseToAmend != null) {
 
             System.out.println(CourseUI.listHeader());
-            System.out.printf("| %-10s | %-40s | %-10s | %-15d |\n",
+            System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     courseToAmend.getCourseCode(), courseToAmend.getCourseName(),
-                    courseToAmend.getFaculty(), courseToAmend.getCreditHours());
+                    courseToAmend.getFaculty(), courseToAmend.getCreditHours(),courseToAmend.getCourseStatus(),
+                    courseToAmend.getCourseFee());
             System.out.println(CourseUI.listSeperator());
 
             boolean exitAmendMenu = false;
@@ -189,6 +189,12 @@ public class CourseMenu {
                             System.out.println("Credit hours amended successfully.");
                             break;
 
+                        case 5:
+                            int newCourseFee = CourseUI.promptCourseFee("new Course Fee");
+                            courseToAmend.setCourseFee(newCourseFee);
+                            System.out.println("Course Fee amended successfully.");
+                            break;
+
                         case 0:
                             System.out.println("Returning to Course Management Menu...");
                             exitAmendMenu = true;
@@ -221,9 +227,9 @@ public class CourseMenu {
             Course course = entry.getValue();
             if (course != null && course.getFaculty().equalsIgnoreCase(facultyToSearch)) {
                 found = true;
-                System.out.printf("| %-10s | %-40s | %-10s | %-12d | %5s \n",
+                System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                         course.getCourseCode(), course.getCourseName(),
-                        course.getFaculty(), course.getCreditHours(), course.getCourseStatus());
+                        course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
             }
         }
 
@@ -257,9 +263,9 @@ public class CourseMenu {
                 for (String courseCode : linkedCourses) {
                     Course course = courseMap.get(courseCode);
                     if (course != null) {
-                        System.out.printf("| %-10s | %-40s | %-10s | %-12d | %5s \n",
+                        System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                                 course.getCourseCode(), course.getCourseName(),
-                                course.getFaculty(), course.getCreditHours(), course.getCourseStatus());
+                                course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
                     }
                 }
 
@@ -354,6 +360,7 @@ public class CourseMenu {
     public static void main(String[] args) {
 
         CourseMenu CouserMenu = new CourseMenu();
+        courseMap = CourseInitializer.initializeCourses();
 
         CourseMenu.courseMenu();
 

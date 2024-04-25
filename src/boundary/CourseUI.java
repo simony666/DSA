@@ -57,28 +57,52 @@ public class CourseUI {
 
     public static String promptCourseStatus(String courseStatus) {
         Scanner scanner = new Scanner(System.in);
-        String prompt;
+        String CS;
 
         while (true) {
             System.out.print("\nEnter Course Status (repeat/resit/main/elective): ");
-            prompt = scanner.nextLine().trim().toLowerCase();
+            CS = scanner.nextLine().trim().toLowerCase();
 
-            if (prompt.equals("repeat") || prompt.equals("resit") || prompt.equals("main") || prompt.equals("elective")) {
+            if (CS.equals("repeat") || CS.equals("resit") || CS.equals("main") || CS.equals("elective")) {
                 break;
             } else {
                 System.out.println("Error: Course status should be repeat, resit, main, or elective.");
             }
         }
 
-        return prompt;
+        return CS;
+    }
+
+    public static int promptCourseFee(String name) {
+        Scanner scanner = new Scanner(System.in);
+
+        int courseFee;
+        while (true) {
+            try {
+                System.out.print("\nEnter course fee: ");
+                courseFee = Integer.parseInt(scanner.nextLine().trim());
+                if (courseFee >= 0) {
+                    break;  // Exit loop if valid input
+                } else {
+                    System.out.println("Error: Course fee cannot be negative.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Error: Please enter a valid number for the course fee.");
+            }
+        }
+
+        return courseFee;
     }
 
     public static String listHeader() {
-        return String.format("===================================================================================\n" + "| %-10s | %-40s | %-10s | %-10s | %-5s |\n" + "===================================================================================", "Code", "Course Name", "Faculty", "Credit Hours", "Status");
+        return String.format("==================================================================================================================\n" + 
+                             "| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n" + 
+                             "==================================================================================================================", 
+                             "Code", "Course Name", "Faculty", "Credit Hours", "Status", "Course Fee");
     }
 
     public static String listSeperator() {
-        return String.format("========================================================================================");
+        return String.format("==================================================================================================================");
     }
 
     public static void amendMenu() {
@@ -87,6 +111,7 @@ public class CourseUI {
         System.out.println("2. Course Name");
         System.out.println("3. Faculty");
         System.out.println("4. Credit Hours");
+        System.out.println("5. Course Fee");
         System.out.println("0. Cancel Amendment");
         System.out.print("Enter your choice: ");
     }

@@ -74,11 +74,10 @@ public class Programme {
 
     public void removeLinkedCourse(String courseCode) {
         if (courseCode != null && !courseCode.isEmpty()) {
-            try {
-                int codeAsInt = Integer.parseInt(courseCode);
-                linkedCourses.remove(codeAsInt);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid course code format. Please enter a valid integer.");
+            for (int i = 1; i <= linkedCourses.getNumberOfEntries(); i++) {
+                if (linkedCourses.getEntry(i).equals(courseCode)) {
+                    linkedCourses.remove(i);
+                }
             }
         } else {
             System.out.println("Course code cannot be null or empty.");
