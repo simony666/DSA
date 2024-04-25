@@ -21,7 +21,7 @@ public class TeachingAssignment {
 
     ArrayList<Tutor> tutorList = Tutor.getTutorList();
 
-    ArrayList<TutorialGroup> tutorialGroupList = TutorialGroup.getTutorialGroupList();
+    ArrayList<TutorialGroup> tutorialGroupList = TutorialGroupManagement.getTutorialGroupList();
     
     HashMap<String, Course> courseMap = CourseInitializer.initializeCourses();
     
