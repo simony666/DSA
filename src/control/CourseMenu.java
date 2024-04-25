@@ -143,7 +143,7 @@ public class CourseMenu {
             System.out.println(CourseUI.listHeader());
             System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     courseToAmend.getCourseCode(), courseToAmend.getCourseName(),
-                    courseToAmend.getFaculty(), courseToAmend.getCreditHours(),courseToAmend.getCourseStatus(),
+                    courseToAmend.getFaculty(), courseToAmend.getCreditHours(), courseToAmend.getCourseStatus(),
                     courseToAmend.getCourseFee());
             System.out.println(CourseUI.listSeperator());
 
@@ -326,8 +326,16 @@ public class CourseMenu {
 
     //9.Generate Summary Report
     private static void generateSummaryReport() {
-        System.out.println("\nSummary Report:");
-        System.out.println("=======================================");
+        System.out.println("\n                                                Summary Report:");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+        System.err.println(CourseUI.listHeader());
+        for (KeyValuePair<String, Course> entry : courseMap.getAllEntries()) {
+            Course course = entry.getValue();
+            System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
+                    course.getCourseCode(), course.getCourseName(),
+                    course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
+        }
+        System.err.println(CourseUI.listSeperator());
 
         int totalCourses = courseMap.size();
         System.out.println("Total Number of Courses: " + totalCourses);
@@ -340,22 +348,10 @@ public class CourseMenu {
             int linkedCoursesCount = programme.getLinkedCourses().getNumberOfEntries();
             System.out.println(programme.getProgramCode() + ": " + linkedCoursesCount);
         }
-
-        double averageLinkedCourses = calculateAverageLinkedCourses(programList);
-        System.out.println("Average Linked Courses per Program: " + averageLinkedCourses);
-
-        System.out.println("=======================================");
-    }
-
-    private static double calculateAverageLinkedCourses(ListInterface<Programme> programList) {
-
-        int totalLinkedCourses = 0;
-        for (Programme program : programList) {
-            totalLinkedCourses += program.getLinkedCourses().getNumberOfEntries();
-        }
-
-        return (double) totalLinkedCourses / programList.getNumberOfEntries();
-    }
+        
+    System.out.println("\n\n                                       End Of Course Summary Report");
+    System.out.println("-------------------------------------------------------------------------------------------------------------------");
+}
 
     public static void main(String[] args) {
 
