@@ -2,8 +2,6 @@ package entity;
 
 import adt.ArrayList;
 import adt.ListInterface;
-import dao.ProgramInitializer;
-import dao.TGInitializer;
 
 public class Programme {
 
@@ -12,15 +10,7 @@ public class Programme {
     private String faculty;
     public static ArrayList<Programme> programList = new ArrayList<>();
     private ArrayList<String> linkedCourses; 
-    public static ArrayList<TutorialGroup> tutorialGroupList = TGInitializer.initializeGroup();
-    
-    static {
-        initializePrograms(programList);
-    }
-
-    private static void initializePrograms(ListInterface<Programme> programList) {
-        ProgramInitializer.initializePrograms(programList);
-    }
+    public ArrayList<TutorialGroup> tutorialGroupList = new ArrayList<>();
 
     public Programme(String programCode, String programName, String faculty) {
         this.programCode = programCode;
@@ -98,12 +88,12 @@ public class Programme {
         }
     }
     
-    public static ArrayList<TutorialGroup> getTutorialGroupList() {
+    public ArrayList<TutorialGroup> getTutorialGroupList() {
         return tutorialGroupList;
     }
 
-    public static void setTutorialGroupList(ArrayList<TutorialGroup> tutorialGroupList) {
-        Programme.tutorialGroupList = tutorialGroupList;
+    public void setTutorialGroupList(ArrayList<TutorialGroup> tutorialGroupList) {
+        this.tutorialGroupList = tutorialGroupList;
     }
     
     @Override

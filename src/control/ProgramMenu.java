@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Scanner;
-import dao.ProgramInitializer;
 import adt.DynamicLinkedList;
 import adt.DynamicLinkedListInterface;
 import entity.Course;
@@ -16,15 +15,7 @@ import entity.TutorialGroup;
 
 public class ProgramMenu {
 
-    public static ListInterface<Programme> programList = new ArrayList<>();
-
-    static {
-        initializePrograms(programList);
-    }
-
-    private static void initializePrograms(ListInterface<Programme> programList) {
-        ProgramInitializer.initializePrograms(programList);
-    }
+    public static ArrayList<Programme> programList = new ArrayList<>();
 
     static void removeCourseFromPrograms(String course) {
         // Iterate through all programs and remove the course from linkedCourses

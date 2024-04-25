@@ -1,12 +1,12 @@
 package control;
 
 import boundary.CourseUI;
-import dao.*;
 import entity.*;
 import adt.ListInterface;
 import adt.ArrayList;
 import adt.HashMap;
 import adt.KeyValuePair;
+import dao.MainDao;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,7 +14,7 @@ public class CourseMenu {
 //        public static HashMap<String, Course> courseMap = new HashMap<>();
 
     public static HashMap<String, Course> courseMap = new HashMap<>();
-    public static ListInterface<Programme> programList = Programme.programList;
+    public static ListInterface<Programme> programList = ProgramMenu.programList;
 
     public void updateCourseMap(HashMap<String, Course> newCourseMap) {
         this.courseMap = newCourseMap;
@@ -354,11 +354,8 @@ public class CourseMenu {
 }
 
     public static void main(String[] args) {
-
-        CourseMenu CouserMenu = new CourseMenu();
-        courseMap = CourseInitializer.initializeCourses();
-
-        CourseMenu.courseMenu();
+        new MainDao().generate();
+        new CourseMenu().courseMenu();
 
     }
 

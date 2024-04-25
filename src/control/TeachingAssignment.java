@@ -19,13 +19,12 @@ public class TeachingAssignment {
 //    ArrayList<Course> courseList = Course.getCourseList();
     ArrayList<Course> courseList = new ArrayList<>();
 
-    ArrayList<Tutor> tutorList = Tutor.getTutorList();
+    public static ArrayList<Tutor> tutorList = new ArrayList<>();
 
     ArrayList<TutorialGroup> tutorialGroupList = TutorialGroupManagement.getTutorialGroupList();
     
-    HashMap<String, Course> courseMap = CourseInitializer.initializeCourses();
-    
 
+    HashMap<String, Course> courseMap = CourseMenu.courseMap;
     private final TeachingAssignmentUI teachingAssignmentUI = new TeachingAssignmentUI();
     
        //----------------------------Testing--------------------------------------
@@ -1444,8 +1443,9 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
         
         TeachingAssignment taUI = new TeachingAssignment();
         
-        taUI.TestingValue();
-        taUI.displayTesting();
+        //taUI.TestingValue();
+        //taUI.displayTesting();
+        new MainDao().generate();
         taUI.entry();      
          
          

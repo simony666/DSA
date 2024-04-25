@@ -5,7 +5,6 @@ import adt.LinkedList;
 import adt.ListInterface;
 import java.util.Scanner;
 import boundary.TutorialGroupManagementUI;
-import dao.*;
 import entity.TutorialGroup;
 import entity.Programme;
 import entity.Tutor;
@@ -18,14 +17,13 @@ public class TutorialGroupManagement {
     
 //    private ArrayList<Student> studentList = new ArrayList<>();
     
-    private TGInitializer tginitializer = new TGInitializer();
     private static Scanner scan = new Scanner(System.in);
     private TutorialGroupManagementUI TutorialGroupManagementUI = new TutorialGroupManagementUI();
     
     //store all current entity
-    public static ArrayList<TutorialGroup> tutorialGroupList = TGInitializer.initializeGroup();
+    public static ArrayList<TutorialGroup> tutorialGroupList = new ArrayList<>();
     
-    ListInterface<Student> studentList = TGInitializer.initializeStudent();
+    ListInterface<Student> studentList = StudentController.getStudentList();
     
     public TutorialGroupManagement() {
  
@@ -160,7 +158,7 @@ public class TutorialGroupManagement {
 //    5.Print Successfull Remove.
         public void removeGroup() {
        // Reference of getting all Programme
-        int totalGroup = Programme.getTutorialGroupList().getNumberOfEntries();
+        int totalGroup = ProgramMenu.getTutorialGroupList().getNumberOfEntries();
         if (totalGroup == 0) { // If no Tutorial Group Exists, Print Error.
             System.out.println("No Tutorial Group Available.");
             System.out.println("Press \"Enter\" to Exit...");

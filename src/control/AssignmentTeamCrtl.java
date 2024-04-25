@@ -7,8 +7,7 @@ package control;
 import adt.ArrayList;
 import adt.LinkedList;
 import boundary.AssignmentTeamUI;
-import dao.AssignmentTeamDao;
-import dao.CourseInitializer;
+import dao.MainDao;
 import entity.AssignmentTeam;
 import entity.Student;
 import java.util.Scanner;
@@ -272,8 +271,8 @@ public class AssignmentTeamCrtl {
     }
 
     public static void main(String[] args) {
-        new AssignmentTeamDao().generate();
-        CourseInitializer.initializeCourses();
+        new MainDao().generate();
+        //CourseInitializer.initializeCourses();
         AssignmentTeamCrtl crtl = new AssignmentTeamCrtl();
         //AssignmentTeamUI ui = new AssignmentTeamUI();
         crtl.entry();

@@ -7,6 +7,7 @@ package control;
 import adt.*;
 import entity.*;
 import boundary.*;
+import dao.MainDao;
 import java.util.Scanner;
 import utility.MessageUI;
 
@@ -17,7 +18,7 @@ public class StudentController {
     StudentUI studentUI = new StudentUI(); 
     CourseUI courseUI = new CourseUI();
     
-    public static ListInterface<Student> studentList = new LinkedList<>();
+    public static LinkedList<Student> studentList = new LinkedList<>();
     // private ListInterface<Enrollment> enrollments = new LinkedList<>();
     private ArrayList<Course> courseList = new ArrayList<>();
     
@@ -638,16 +639,17 @@ public class StudentController {
         return null;
     }
 
-    public static ListInterface<Student> getStudentList() {
+    public static LinkedList<Student> getStudentList() {
         return studentList;
     }
 
-    public static void setStudentList(ListInterface<Student> studentList) {
+    public static void setStudentList(LinkedList<Student> studentList) {
         StudentController.studentList = studentList;
     }
     
     
     public static void main(String[] args) {
+        new MainDao().generate();
         new StudentController().runStudentController();
     }
 }
