@@ -15,6 +15,7 @@ public class StudentController {
     
     Scanner sc = new Scanner(System.in);
     StudentUI studentUI = new StudentUI(); 
+    CourseUI courseUI = new CourseUI();
     
     public static ListInterface<Student> studentList = new LinkedList<>();
     // private ListInterface<Enrollment> enrollments = new LinkedList<>();
@@ -256,9 +257,9 @@ public class StudentController {
                     newProgramme.setFaculty(oldStudent.getProgramme().getFaculty());
                 }
             
-                System.out.println("Student ID"  + oldStudent.getStudentID() + 
-                                "\tName: " + newStudentName + "\tAge: " + newStudentAge + 
-                                "\tProgramme: " + newProgramme.getProgramCode() + "\tFaculty: " + newProgramme.getFaculty());
+                System.out.println("Student ID: "  + oldStudent.getStudentID() + 
+                                "\nName: " + newStudentName + "\nAge: " + newStudentAge + 
+                                "\nProgramme: " + newProgramme.getProgramCode() + "\nFaculty: " + newProgramme.getFaculty());
                 boolean ans = MessageUI.comfirmationMessage();
         
                 if (ans == true){
@@ -294,85 +295,100 @@ public class StudentController {
     }
     
     private void searchStudentRegisteredCourse(){
-        viewAllStudent();
-        System.out.println("Please select a student that you want search for registed courses: ");
-        int selectedIndex = sc.nextInt();
-        sc.nextLine();
-        
-        //check the Index and display selected student detail
-        if(selectedIndex <= studentList.getNumberOfEntries()){
-            Student selectedStudent = studentList.getEntry(selectedIndex);
-            selectedStudent.toString();
-            
-            ArrayList<Course> registeredCourse = selectedStudent.getCourseList();
-                System.out.println(registeredCourse.toString());
-        }else{
-            MessageUI.displayNotRelated();
-            System.out.println("Do you want continue search student for registered courses? <Y|N>");
-            boolean answer = MessageUI.enterComfirm();
-            if (answer = true){
-                searchStudentRegisteredCourse();
-            }else{
-                runStudentController();
-            }
-        }
-    }
-    
-    
-    private void addStudentToCourse(){
-        viewAllStudent();
-        System.out.println("Please select a student for register course: ");
-        int selectedIndex = sc.nextInt();
-        sc.nextLine();
-        
-        //check the Index and display selected student detail
-        if(selectedIndex >=1 && selectedIndex <= studentList.getNumberOfEntries()){
-            Student studentDetail = studentList.getEntry(selectedIndex);
-            
-            System.out.println("Selected student detail");
-            System.out.println(studentDetail);
-        
-            System.out.println("List all available course");
-            
-            ArrayList<Course> registeredCourse = studentDetail.getCourseList();
-            String faculty = studentDetail.getProgramme().getFaculty();
-            ArrayList<Course> availableCourse = new ArrayList<>();
-            LinkedList<Course> allCourse = CourseMenu.courseMap.getAllValue();
-            
-            for (int i = 1; i <= allCourse.getNumberOfEntries(); i++){
-                if (allCourse.getEntry(i).getFaculty().equals(faculty)){
-                    for (int j = 1; j <= registeredCourse.getNumberOfEntries(); j++){
-                        if (allCourse.getEntry(i).equals(registeredCourse.getEntry(j))){
-                            break;
-                        }
-                    }
-                    availableCourse.add(allCourse.getEntry(i));
-                } 
-            }
-            System.out.println("Available Course");
-                System.out.println(availableCourse.toString());
-            
-            System.out.println("Please select a course that you want to register");
-            int courseIndex = sc.nextInt();
+        if (studentList.getNumberOfEntries() >= 1) {
+            viewAllStudent();
+            System.out.println("Please select a student that you want search for registed courses");
+            int selectedIndex = sc.nextInt();
             sc.nextLine();
-            
-            System.out.println(availableCourse.getEntry(courseIndex).toString());
-            boolean ans = MessageUI.comfirmationMessage();
-            
-            if (ans = true){
-                studentList.getEntry(selectedIndex).getCourseList().add(availableCourse.getEntry(courseIndex));
-                System.out.println("Student registered course successfully!");
-                runStudentController();
-            }else{
-                System.out.println("Do you want register again? <Y/N>");
+
+            //check the Index and display selected student detail
+            if (selectedIndex <= studentList.getNumberOfEntries()) {
+                if (studentList.getEntry(selectedIndex).getCourseList().getNumberOfEntries() >= 1) {
+                    Student selectedStudent = studentList.getEntry(selectedIndex);
+                    selectedStudent.toString();
+
+                    ArrayList<Course> registeredCourse = selectedStudent.getCourseList();
+                    courseUI.listHeader();
+                    System.out.println(registeredCourse.toString());
+                } else {
+                    MessageUI.displayEmpty();
+                }
+            } else {
+                MessageUI.displayNotRelated();
+                System.out.println("Do you want continue search student for registered courses? <Y|N>");
                 boolean answer = MessageUI.enterComfirm();
-                if (answer = true){
-                    addStudentToCourse();
-                }else{
-                    MessageUI.displayExitMessage();
+                if (answer = true) {
+                    searchStudentRegisteredCourse();
+                } else {
                     runStudentController();
                 }
             }
+        } else {
+            MessageUI.displayEmpty();
+        }
+    }
+    
+    private void addStudentToCourse() {
+        if (studentList.getNumberOfEntries() >= 1) {
+            viewAllStudent();
+            System.out.print("Please select a student for register course: ");
+            int selectedIndex = sc.nextInt();
+            sc.nextLine();
+
+            //check the Index and display selected student detail
+            if (selectedIndex >= 1 && selectedIndex <= studentList.getNumberOfEntries()) {
+                Student studentDetail = studentList.getEntry(selectedIndex);
+
+                System.out.println("Selected student detail: ");
+                studentUI.header();
+                System.out.println("   " + studentDetail);
+
+                ArrayList<Course> registeredCourse = studentDetail.getCourseList();
+                String faculty = studentDetail.getProgramme().getFaculty();
+                LinkedList<Course> availableCourse = new LinkedList<>();
+                LinkedList<Course> allCourse = CourseMenu.courseMap.getAllValue();
+                System.out.println(allCourse.getNumberOfEntries());
+
+                for (int i = 1; i <= allCourse.getNumberOfEntries(); i++) {
+                    if (allCourse.getEntry(i).getFaculty().equals(faculty)) {
+                        if (registeredCourse.getNumberOfEntries() >= 1) {
+                            for (int j = 1; j <= registeredCourse.getNumberOfEntries(); j++) {
+                                if (!allCourse.getEntry(i).equals(registeredCourse.getEntry(j))) {
+                            availableCourse.add(allCourse.getEntry(i));
+                                   
+                                }
+                            }
+                        }
+                    }
+                }
+                System.out.println("Available Course");
+                System.out.println(availableCourse.getNumberOfEntries());
+                System.out.println(availableCourse.toString());
+
+                System.out.println("Please select a course that you want to register");
+                int courseIndex = sc.nextInt();
+                sc.nextLine();
+
+                System.out.println(availableCourse.getEntry(courseIndex).toString());
+                boolean ans = MessageUI.comfirmationMessage();
+
+                if (ans = true) {
+                    studentList.getEntry(selectedIndex).getCourseList().add(availableCourse.getEntry(courseIndex));
+                    System.out.println("Student registered course successfully!");
+                    runStudentController();
+                } else {
+                    System.out.println("Do you want register again? <Y/N>");
+                    boolean answer = MessageUI.enterComfirm();
+                    if (answer = true) {
+                        addStudentToCourse();
+                    } else {
+                        MessageUI.displayExitMessage();
+                        runStudentController();
+                    }
+                }
+            }
+        } else {
+            MessageUI.displayEmpty();
         }
     }
 
