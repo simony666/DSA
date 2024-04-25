@@ -8,7 +8,6 @@ public class Programme {
     private String programCode;
     private String programName;
     private String faculty;
-    public static ArrayList<Programme> programList = new ArrayList<>();
     private ArrayList<String> linkedCourses; 
     public ArrayList<TutorialGroup> tutorialGroupList = new ArrayList<>();
 
@@ -54,14 +53,6 @@ public class Programme {
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
-    }
-
-    public static ListInterface<Programme> getProgramList() {
-        return programList;
-    }
-
-    public static void setProgramList(ArrayList<Programme> programList) {
-        Programme.programList = programList;
     }
 
     public ArrayList<String> getLinkedCourses() {

@@ -15,11 +15,8 @@ public class Tutor{
     private ArrayList<Course> lectureList = new ArrayList<>();
     
     
-    //store all current entity
-    private static ArrayList<Tutor> tutorList = new ArrayList<>();
-    
     //store all tutorialGroup belong to this entity
-    private static ArrayList<TutorialGroup> TutorialGroupList = new ArrayList<>();
+    private ArrayList<TutorialGroup> TutorialGroupList = new ArrayList<>();
     
     public Tutor(String tutorID, String tutorName) {
         this.tutorID = "T" + String.format("%03d", nextID);
@@ -75,22 +72,13 @@ public class Tutor{
         this.lectureList = lectureList;
     }
     
-    
 
-    public static ArrayList<Tutor> getTutorList() {
-        return tutorList;
-    }
-
-    public static void setTutorList(ArrayList<Tutor> tutorList) {
-        Tutor.tutorList = tutorList;
-    }
-
-    public static ArrayList<TutorialGroup> getTutorialGroupList() {
+    public ArrayList<TutorialGroup> getTutorialGroupList() {
         return TutorialGroupList;
     }
 
-    public static void setTutorialGroupList(ArrayList<TutorialGroup> TutorialGroupList) {
-        Tutor.TutorialGroupList = TutorialGroupList;
+    public void setTutorialGroupList(ArrayList<TutorialGroup> TutorialGroupList) {
+        this.TutorialGroupList = TutorialGroupList;
     }
 
     
