@@ -9,6 +9,7 @@ import adt.LinkedList;
 import control.AssignmentTeamCrtl;
 import control.CourseMenu;
 import control.StudentController;
+import control.TutorialGroupManagement;
 import entity.AssignmentTeam;
 import entity.Course;
 import entity.Student;
@@ -96,7 +97,7 @@ public class AssignmentTeamUI {
         
         //select Tutorial group
         int choice = 0;
-        ArrayList<TutorialGroup> TGList = TutorialGroup.getTutorialGroupList();
+        ArrayList<TutorialGroup> TGList = TutorialGroupManagement.getTutorialGroupList();
         while(choice == 0){
             int total = MessageUI.displayList(TGList);
             System.out.println("Please Select A Tutorial Group For this Team [1-"+total +"] or \"-1\" to cancel");
@@ -251,7 +252,7 @@ public class AssignmentTeamUI {
                     System.out.println("Unable to change! Student List Must Be Empty!");
                     return null;
                 }
-                ArrayList<TutorialGroup> TGList = TutorialGroup.getTutorialGroupList();
+                ArrayList<TutorialGroup> TGList = TutorialGroupManagement.getTutorialGroupList();
                 int TGchoice = 0;
                 while (TGchoice == 0){
                     int result = MessageUI.displayList(TGList);

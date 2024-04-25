@@ -96,6 +96,8 @@ public class Programme {
         } else {
             System.out.println("Course code cannot be null or empty.");
         }
+    }
+    
     public static ArrayList<TutorialGroup> getTutorialGroupList() {
         return tutorialGroupList;
     }
