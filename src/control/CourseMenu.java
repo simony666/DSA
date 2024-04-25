@@ -7,6 +7,8 @@ import adt.ArrayList;
 import adt.HashMap;
 import adt.KeyValuePair;
 import dao.MainDao;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -328,6 +330,7 @@ public class CourseMenu {
     private static void generateSummaryReport() {
         System.out.println("\n                                                Summary Report:");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
+        System.out.println("Generated at: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy, h:mma")));
         System.err.println(CourseUI.listHeader());
         for (KeyValuePair<String, Course> entry : courseMap.getAllEntries()) {
             Course course = entry.getValue();
@@ -348,10 +351,10 @@ public class CourseMenu {
             int linkedCoursesCount = programme.getLinkedCourses().getNumberOfEntries();
             System.out.println(programme.getProgramCode() + ": " + linkedCoursesCount);
         }
-        
-    System.out.println("\n\n                                       End Of Course Summary Report");
-    System.out.println("-------------------------------------------------------------------------------------------------------------------");
-}
+
+        System.out.println("\n\n                                       End Of Course Summary Report");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+    }
 
     public static void main(String[] args) {
         new MainDao().generate();
