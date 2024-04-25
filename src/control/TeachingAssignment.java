@@ -1,9 +1,11 @@
 
 package control;
 
+import dao.*;
 import adt.ListInterface;
 import adt.HashMap;
 import adt.ArrayList;
+import adt.LinkedList;
 import entity.Course;
 import entity.Tutor;
 import boundary.TeachingAssignmentUI;
@@ -14,13 +16,14 @@ import java.util.Iterator;
 import utility.MessageUI;
 
 public class TeachingAssignment {
-    ArrayList<Course> courseList = Course.getCourseList();
+//    ArrayList<Course> courseList = Course.getCourseList();
+    ArrayList<Course> courseList = new ArrayList<>();
 
     ArrayList<Tutor> tutorList = Tutor.getTutorList();
 
     ArrayList<TutorialGroup> tutorialGroupList = TutorialGroup.getTutorialGroupList();
     
-//    HashMap<Course, ArrayList<Tutor>> TutorialGrpTeachingList = new HashMap();
+    HashMap<String, Course> courseMap = CourseInitializer.initializeCourses();
     
 
     private final TeachingAssignmentUI teachingAssignmentUI = new TeachingAssignmentUI();
@@ -35,9 +38,9 @@ public class TeachingAssignment {
        tutorList.add(new Tutor("3", "Tutor3"));
         
 
-        courseList.add(new Course("C1", "DSA", "SUPER", 10, "Yee"));
-        courseList.add(new Course("C2", "RearchM", "MyGuru", 15, "WOW"));
-        courseList.add(new Course("C3", "IS", "BAIDU" , 20, "Shit"));
+//        courseList.add(new Course("C1", "DSA", "SUPER", 10, "Yee"));
+//        courseList.add(new Course("C2", "RearchM", "MyGuru", 15, "WOW"));
+//        courseList.add(new Course("C3", "IS", "BAIDU" , 20, "Shit"));
 
         tutorialGroupList.add(new TutorialGroup("TG1","tutorialGroup1", "S1"));
         tutorialGroupList.add(new TutorialGroup("TG2","tutorialGroup2", "S2"));
@@ -53,8 +56,11 @@ public class TeachingAssignment {
        //----------------------------Testing--------------------------------------
 
     public void entry() {
+        boolean transferCourseData = false;
+        getHashMapCourseList(transferCourseData);
         int choice = 0;
         do {
+            
             choice = teachingAssignmentUI.getTAMenuChoice();
             switch (choice) {
                 case 0:
@@ -73,28 +79,46 @@ public class TeachingAssignment {
                 case 3: // Add tutors to a tutorial group for a course
                         // Which tutorial group is under course validate by case 1 assigned, 
                         //the tutorial group assigned the course and add tutor into it with validate courseType
-                    addTutorToTutorialGrpForACourse();
+                        addTutorToTutorialGrpForACourse();
                     break;
                 case 4: // Search course under a tutor
-                    searchCourseUnderTutor();
+                        searchCourseUnderTutor();
                     break;
                 case 5: // Search tutors for a course (T, P, L)
-                    searchTutorsForCourseType();
+                        searchTutorsForCourseType();
                     break;
                 case 6: // List tutors and tutorial groups for a course
-//                    listTutorsAndTutorialGroupsForCourse();
+                        listTutorsAndTutorialGroupsForCourse();
                     break;
                 case 7: // List course for each tutor
                       listCourseForEachTutor();
                     break;
                 case 8: // Filter tutors based on criterion
-                    filterTutorsBasedOnCriterion();
+                        filterTutorsBasedOnCriterion();
+                    break;
+                    
+                case 9: //Generate Report
+                        generateReports();
                     break;
                 default:
                     MessageUI.displayInvalidChoiceMessage();
                     break;
             }
         } while (choice != 0);
+    }
+    
+    public void getHashMapCourseList(boolean transferCourseData) {
+            
+            if (transferCourseData == true){
+                return;
+            }
+            
+            LinkedList<Course> allCourse = courseMap.getAllValue();
+            for (int i = 1; i <= allCourse.getNumberOfEntries(); i++){
+                    courseList.add(allCourse.getEntry(i));
+
+            }
+            transferCourseData = true;
     }
     
     
@@ -165,7 +189,7 @@ public class TeachingAssignment {
                                     
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         selectedCourse.getTutorialList().replace(selectedTutorIndex, selectedTutor);
-//                                        selectedTutor.getTutorialList().replace(selectedCourseIndex, selectedCourse);
+                                        selectedTutor.getTutorialList().replace(selectedCourseIndex, selectedCourse);
                                         TeachingAssignmentUI.getAssignedTutorToCourse(selectedTutor, selectedCourse);
                                     }
                                 
@@ -179,8 +203,7 @@ public class TeachingAssignment {
                                         
                                         selectedCourse.getTutorialList().add(selectedTutor);
                                         selectedTutor.getTutorialList().add(selectedCourse);
-                                        System.out.println("Testing 1" + selectedTutor.getTutorialList());
-                                        System.out.println("Testing 2" + selectedCourse.getTutorialList());
+                                       
                                         TeachingAssignmentUI.getAssignedTutorToCourse(selectedTutor, selectedCourse);
                                     }
                                     
@@ -205,6 +228,7 @@ public class TeachingAssignment {
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         
                                         selectedCourse.getPracticalList().replace(selectedTutorIndex, selectedTutor);
+                                        selectedTutor.getPracticalList().replace(selectedCourseIndex, selectedCourse);
                                         TeachingAssignmentUI.getAssignedTutorToCourse(selectedTutor, selectedCourse);
                                     }
                                 
@@ -217,6 +241,7 @@ public class TeachingAssignment {
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         
                                         selectedCourse.getPracticalList().add(selectedTutor);
+                                        selectedTutor.getPracticalList().add(selectedCourse);
                                         TeachingAssignmentUI.getAssignedTutorToCourse(selectedTutor, selectedCourse);
                                     }
                                     
@@ -239,6 +264,7 @@ public class TeachingAssignment {
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         
                                         selectedCourse.getLectureList().replace(selectedTutorIndex, selectedTutor);
+                                        selectedTutor.getLectureList().replace(selectedCourseIndex, selectedCourse);
                                         TeachingAssignmentUI.getAssignedTutorToCourse(selectedTutor, selectedCourse);
                                     }
                                 
@@ -251,6 +277,7 @@ public class TeachingAssignment {
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         
                                         selectedCourse.getLectureList().add(selectedTutor);
+                                        selectedTutor.getLectureList().add(selectedCourse);
                                         TeachingAssignmentUI.getAssignedTutorToCourse(selectedTutor, selectedCourse);
                                     }
                                     
@@ -373,65 +400,194 @@ public class TeachingAssignment {
                         MessageUI.displayExitMessage();
                     break;
                     case 1: //  Select Tutorial of tutor to add to Tutorial Group
-                                
-//                                printTutorialList(selectedCourse);
-                                
-//                                for (int j = 1; j <= tutorList.getNumberOfEntries(); j++){
-//                
-//                                    Tutor getTutor = tutorList.getEntry(j);
-//                                    
-//                                    if (getTutor.getTutorialList().equals(selectedCourse.getTutorialList())){
-//
-//                                        System.out.println((j) + ". " + getTutor.getTutorialList());
-//                                    }
-//                                }
                         
-//                                for (int j = 1; j <= tutorList.getNumberOfEntries(); j++) {
-//                                        Tutor getTutor = tutorList.getEntry(j);
-//    
-//                                    // Check if the tutorial lists are equal
-//                                    if (areArrayListsEqual(getTutor.getTutorialList(), selectedCourse.getTutorialList())) {
-//                                        System.out.println((j) + ". " + getTutor.getTutorialList());
-//                                    }
-//                                }
+                            if (selectedCourse.getTutorialList().isEmpty()){
+                                System.out.println("No Tutor available to assign this Tutorial");
+                                break;
+                            }
+                                
+                            int selectTutorialOfTutorIndex;
+                            
+                                do {
+                                    for (int i = 1; i <= selectedCourse.getTutorialList().getNumberOfEntries(); i++) {
+                                            Tutor getTutor = selectedCourse.getTutorialList().getEntry(i);
+                                            System.out.println((i) + ". " + getTutor);
+                                        }
+                                
+                                selectTutorialOfTutorIndex = teachingAssignmentUI.getIndex();
+                                
+                                if (selectTutorialOfTutorIndex <= 0 || selectTutorialOfTutorIndex > tutorList.getNumberOfEntries()){
+                                    MessageUI.displayInvalidChoiceMessage();
+                                }
+                                
+                                } while (selectTutorialOfTutorIndex <= 0 || selectTutorialOfTutorIndex > tutorList.getNumberOfEntries());
                                 
                                 
-                                int selectTutorIndex = teachingAssignmentUI.getIndex();
                                 
-                                if (selectTutorIndex > 0 && selectTutorIndex <= tutorList.getNumberOfEntries()) {
+                            
+                                
+                                
+                                
+                                do{
+                                if (!selectedTutorialGroup.getTutorialGrpTutorialList().isEmpty()) {
+                                
+                                    System.out.println("It is assigned by tutor, are you sure want to replace it? (Y/N)");
+                                    confirmChoice = teachingAssignmentUI.getInput();
                                     
+                                    if (confirmChoice.equalsIgnoreCase("y")){
+                                        selectedTutorialGroup.getTutorialGrpTutorialList().put(selectedCourse, selectedCourse.getTutorialList());
+                                        System.out.println( "Testing Tutorial " + selectedTutorialGroup.getTutorialGrpTutorialList().get(selectedCourse));
+                                    }
                                 
+                                }
                                 
-                                
-                                    
+                                else {
                                     System.out.println("Are you sure you want to add it? (Y/N)");
                                     confirmChoice = teachingAssignmentUI.getInput();
                                     
                                     if (confirmChoice.equalsIgnoreCase("y")){
-                                         
                                         
-                                        selectedTutorialGroup.getTutorialGrpTeachingList().put(selectedCourse, selectedCourse.getTutorialList());
-                                        
-                         
+                                        selectedTutorialGroup.getTutorialGrpTutorialList().put(selectedCourse, selectedCourse.getTutorialList());
+                                        System.out.println( "Testing Tutorial " + selectedTutorialGroup.getTutorialGrpTutorialList().get(selectedCourse));
+
                                         
                                     }
                                     
-                                    System.out.println(selectedTutorialGroup.getTutorialGrpTeachingList().get(selectedCourse));
-                                    
                                 }
-                                    
                                 
-        
+                               if (!(confirmChoice.equalsIgnoreCase("y") || confirmChoice.equalsIgnoreCase("n"))){
+                                   MessageUI.displayInvalidChoiceMessage();
+                               }        
                                 
-                        
-                        
-                        
-                        
+                        }while(!(confirmChoice.equalsIgnoreCase("y") || confirmChoice.equalsIgnoreCase("n")));
+                                
+
                     break;
                     case 2: // Assign Tutor to Practical
+                        
+                        if (selectedCourse.getTutorialList().isEmpty()){
+                                System.out.println("No Tutor available to assign this Practical");
+                                break;
+                            }
+                                
+                            int selectPracticalOfTutorIndex;
+                            
+                                do {
+
+                                  for (int i = 1; i <= selectedCourse.getPracticalList().getNumberOfEntries(); i++) {
+                                            Tutor getTutor = selectedCourse.getPracticalList().getEntry(i);
+                                            System.out.println((i) + ". " + getTutor);
+                                        }
+                                
+                                selectPracticalOfTutorIndex = teachingAssignmentUI.getIndex();
+                                
+                                if (selectPracticalOfTutorIndex <= 0 || selectPracticalOfTutorIndex > tutorList.getNumberOfEntries()){
+                                    MessageUI.displayInvalidChoiceMessage();
+                                }
+                                
+                                } while (selectPracticalOfTutorIndex <= 0 || selectPracticalOfTutorIndex > tutorList.getNumberOfEntries());
+                                
+                                
+                                
+                            
+                                
+                                
+                                
+                                do{
+                                if (!selectedTutorialGroup.getTutorialGrpPracticalList().isEmpty()) {
+                                
+                                    System.out.println("It is assigned by tutor, are you sure want to replace it? (Y/N)");
+                                    confirmChoice = teachingAssignmentUI.getInput();
+                                    
+                                    if (confirmChoice.equalsIgnoreCase("y")){
+                                        selectedTutorialGroup.getTutorialGrpPracticalList().put(selectedCourse, selectedCourse.getPracticalList());
+                                        System.out.println( "Testing Practical " + selectedTutorialGroup.getTutorialGrpPracticalList().get(selectedCourse));
+                                    }
+                                
+                                }
+                                
+                                else {
+                                    System.out.println("Are you sure you want to add it? (Y/N)");
+                                    confirmChoice = teachingAssignmentUI.getInput();
+                                    
+                                    if (confirmChoice.equalsIgnoreCase("y")){
+                                        
+                                        selectedTutorialGroup.getTutorialGrpPracticalList().put(selectedCourse, selectedCourse.getPracticalList());
+                                        System.out.println( "Testing Practical " + selectedTutorialGroup.getTutorialGrpPracticalList().get(selectedCourse));
+
+                                        
+                                    }
+                                    
+                                }
+                                
+                               if (!(confirmChoice.equalsIgnoreCase("y") || confirmChoice.equalsIgnoreCase("n"))){
+                                   MessageUI.displayInvalidChoiceMessage();
+                               }        
+                                
+                        }while(!(confirmChoice.equalsIgnoreCase("y") || confirmChoice.equalsIgnoreCase("n")));
 
                     break;
                     case 3: // Assign Tutor to Lecture
+                        
+                        if (selectedCourse.getTutorialList().isEmpty()){
+                                System.out.println("No Tutor available to assign this Lecture");
+                                break;
+                            }
+                                
+                            int selectLectureOfTutorIndex;
+                            
+                                do {
+                                    for (int i = 1; i <= selectedCourse.getLectureList().getNumberOfEntries(); i++) {
+                                            Tutor getTutor = selectedCourse.getLectureList().getEntry(i);
+                                            System.out.println((i) + ". " + getTutor);
+                                        }
+                                
+                                selectLectureOfTutorIndex = teachingAssignmentUI.getIndex();
+                                
+                                if (selectLectureOfTutorIndex <= 0 || selectLectureOfTutorIndex > tutorList.getNumberOfEntries()){
+                                    MessageUI.displayInvalidChoiceMessage();
+                                }
+                                
+                                } while (selectLectureOfTutorIndex <= 0 || selectLectureOfTutorIndex > tutorList.getNumberOfEntries());
+                                
+                                
+                                
+                            
+                                
+                                
+                                
+                                do{
+                                if (!selectedTutorialGroup.getTutorialGrpLectureList().isEmpty()) {
+                                
+                                    System.out.println("It is assigned by tutor, are you sure want to replace it? (Y/N)");
+                                    confirmChoice = teachingAssignmentUI.getInput();
+                                    
+                                    if (confirmChoice.equalsIgnoreCase("y")){
+                                        selectedTutorialGroup.getTutorialGrpLectureList().put(selectedCourse, selectedCourse.getLectureList());
+                                        System.out.println( "Lecture " + selectedTutorialGroup.getTutorialGrpLectureList().get(selectedCourse));
+                                    }
+                                
+                                }
+                                
+                                else {
+                                    System.out.println("Are you sure you want to add it? (Y/N)");
+                                    confirmChoice = teachingAssignmentUI.getInput();
+                                    
+                                    if (confirmChoice.equalsIgnoreCase("y")){
+                                        
+                                        selectedTutorialGroup.getTutorialGrpLectureList().put(selectedCourse, selectedCourse.getLectureList());
+                                        System.out.println( "Lecture " + selectedTutorialGroup.getTutorialGrpLectureList().get(selectedCourse));
+
+                                        
+                                    }
+                                    
+                                }
+                                
+                               if (!(confirmChoice.equalsIgnoreCase("y") || confirmChoice.equalsIgnoreCase("n"))){
+                                   MessageUI.displayInvalidChoiceMessage();
+                               }        
+                                
+                        }while(!(confirmChoice.equalsIgnoreCase("y") || confirmChoice.equalsIgnoreCase("n")));
   
                     break;
                 
@@ -457,68 +613,6 @@ public class TeachingAssignment {
     }
     return;
 }
-    
-//    public void addTutorToTutorialGrpForACourse() {
-//    if (tutorialGroupList.isEmpty()) {
-//        teachingAssignmentUI.TutorGrpIsEmpty();
-//            return;
-//    }
-//    
-//    teachingAssignmentUI.listAllTutorialGroup(getAllTutorialGroups());
-//    int selectedTutorialGroupIndex = teachingAssignmentUI.getIndex();
-//
-//    if (selectedTutorialGroupIndex > 0 && selectedTutorialGroupIndex <= tutorialGroupList.getNumberOfEntries()) {
-//        TutorialGroup selectedTutorialGroup = tutorialGroupList.getEntry(selectedTutorialGroupIndex);
-//
-//           if (courseList.isEmpty()) {
-//            teachingAssignmentUI.CourseIsEmpty();
-//            return;
-//        }
-//
-//        teachingAssignmentUI.listAllCourse(getAllCourse());
-//        int selectedCourseIndex = teachingAssignmentUI.getIndex();
-//        
-//        if (selectedCourseIndex > 0 && selectedCourseIndex <= courseList.getNumberOfEntries()) {
-//            Course selectedCourse = courseList.getEntry(selectedCourseIndex);
-//
-//           if (courseList.isEmpty()) {
-//                teachingAssignmentUI.CourseIsEmpty();
-//                
-//                return;
-//            }
-//           TutorialGrpTeachingList.put(selectedCourse, null);
-//           
-//           
-//            
-//            int selectedTutorIndex = teachingAssignmentUI.getIndex(); // Subtract 1 to adjust for 0-based index
-//
-//            if (selectedTutorIndex > 0 && selectedTutorIndex <= tutorList.getNumberOfEntries()) {
-//                Tutor selectedTutor = selectedCourse.getTutorialList().getEntry(selectedTutorIndex);
-//                ArrayList<Tutor> tutorsForCourse = TutorialGrpTeachingList.get(selectedCourse);
-////                tutorsForCourse.add(selectedTutor);
-//                
-//                TutorialGrpTeachingList.(selectedCourse,  tutorsForCourse);
-//                
-//                System.out.println (TutorialGrpTeachingList.get(selectedCourse));
-//                
-//                System.out.println("Successfully added tutor " + selectedTutor.getTutorName() + " to tutorial group " 
-//                        + selectedTutorialGroup.getTutorGroupName() 
-//                        + " for course " + selectedCourse.getCourseName());
-//            } else {
-//                teachingAssignmentUI.TutorNotFound();
-//                return;
-//                
-//            }
-//        } else {
-//            teachingAssignmentUI.CourseNotFound();
-//            return;
-//        }
-//    } else {
-//        teachingAssignmentUI.TutorGrpNotFound();
-//        return;
-//    }
-//    return;
-//}
     
 public void searchCourseUnderTutor() {
     if (courseList.isEmpty()) {
@@ -651,18 +745,131 @@ public void searchTutorsForCourseType() {
     return;
 }
 
-//private void listTutorsAndTutorialGroupsForCourse() {
-//        teachingAssignmentUI.listAllCourse(getAllCourse());
-//        int courseIndex = teachingAssignmentUI.getIndex() - 1;
-//
-//        if (courseIndex >= 0 && courseIndex < courseList.getNumberOfEntries()) {
-//            Course selectedCourse = courseList.getEntry(courseIndex + 1);
-//            teachingAssignmentUI.displayTutors(selectedCourse.getTutors());
-//            teachingAssignmentUI.displayTutorialGroups(selectedCourse.getTutorialGroups());
-//        } else {
-//            MessageUI.displayInvalidIndexMessage(); //Course
-//        }
+public void listTutorsAndTutorialGroupsForCourse() {
+    if (courseList.isEmpty()) {
+        teachingAssignmentUI.TutorIsEmpty();
+        return;
+    }
+
+    for (int i = 1; i <= courseList.getNumberOfEntries(); i++) {
+        Course getCourse = courseList.getEntry(i);
+        System.out.println( "\n" + i + "Course :" + getCourse.getCourseName() + ":");
+
+        if (getCourse.getTutorialList().isEmpty()
+    && getCourse.getPracticalList().isEmpty()
+    && getCourse.getLectureList().isEmpty()
+    && (TutorialGroup.getTutorialGrpTutorialList().isEmpty() 
+        || !(TutorialGroup.getTutorialGrpTutorialList().containsKey(getCourse)))
+    && (TutorialGroup.getTutorialGrpPracticalList().isEmpty() 
+        || !(TutorialGroup.getTutorialGrpPracticalList().containsKey(getCourse)))
+    && (TutorialGroup.getTutorialGrpLectureList().isEmpty() 
+        || !(TutorialGroup.getTutorialGrpLectureList().containsKey(getCourse)))) {
+            System.out.println("No tutors assigned to this course.");
+            
+        } else {
+            
+    
+            
+                
+            for (int j = 1; j <= getCourse.getTutorialList().getNumberOfEntries(); j++) {
+                int index = 0;
+                
+                TutorialGroup getTutorialGroup = tutorialGroupList.getEntry(j);  
+                
+                if (getTutorialGroup.getTutorialGrpTutorialList().containsKey(getCourse)
+                    || getTutorialGroup.getTutorialGrpPracticalList().containsKey(getCourse)
+                    || getTutorialGroup.getTutorialGrpLectureList().containsKey(getCourse)){
+                    
+                    System.out.println( ++index + ". \n" + getTutorialGroup);
+                    
+                    if (getCourse.getTutorialList().equals(getTutorialGroup.getTutorialGrpTutorialList().get(getCourse))){
+                    System.out.println( " Tutorial Of Tutor: " 
+                                        + getTutorialGroup.getTutorialGrpTutorialList().get(getCourse));
+                    }
+
+                    if (getCourse.getPracticalList().equals(getTutorialGroup.getTutorialGrpPracticalList().get(getCourse))){
+                    System.out.println(" Practical Of Tutor: " 
+                                        + getTutorialGroup.getTutorialGrpPracticalList().get(getCourse));
+                    }
+
+                    if (getCourse.getLectureList().equals(getTutorialGroup.getTutorialGrpLectureList().get(getCourse))){
+                    System.out.println(" Lectture Of Lecture: " 
+                                        + getTutorialGroup.getTutorialGrpLectureList().get(getCourse));
+                    }
+
+                    
+
+                }
+                
+            }
+                
+            }
+        }
+
+}
+
+//public void listTutorsAndTutorialGroupsForCourse() {
+//    if (courseList.isEmpty()) {
+//        teachingAssignmentUI.TutorIsEmpty();
+//        return;
 //    }
+//
+//    for (int i = 1; i <= courseList.getNumberOfEntries(); i++) {
+//        Course getCourse = courseList.getEntry(i);
+//        System.out.println( "\n" + i + "Course :" + getCourse.getCourseName() + ":");
+//
+//        if (getCourse.getTutorialList().isEmpty()
+//            && getCourse.getPracticalList().isEmpty()
+//            && getCourse.getLectureList().isEmpty()
+//            && TutorialGroup.getTutorialGrpTutorialList().isEmpty() 
+//            || !(TutorialGroup.getTutorialGrpTutorialList().containsKey(getCourse))
+//            && TutorialGroup.getTutorialGrpPracticalList().isEmpty() 
+//            || !(TutorialGroup.getTutorialGrpPracticalList().containsKey(getCourse))
+//            && TutorialGroup.getTutorialGrpLectureList().isEmpty() 
+//            || !(TutorialGroup.getTutorialGrpLectureList().containsKey(getCourse))) {
+//            System.out.println("No tutors assigned to this course.");
+//            
+//        } else {
+//            
+//    
+//            
+//                
+//            for (int j = 1; j <= getCourse.getTutorialList().getNumberOfEntries(); j++) {
+//                int index = 0;
+//                
+//                TutorialGroup getTutorialGroup = tutorialGroupList.getEntry(j);  
+//                
+//                if (getTutorialGroup.getTutorialGrpTeachingList().containsKey(getCourse)){
+//                    
+//                    System.out.println( ++index + ". \n" + getTutorialGroup);
+//                    
+//                    if (getCourse.getTutorialList().equals(getTutorialGroup.getTutorialGrpTeachingList().get(getCourse))){
+//                    System.out.println( " Tutorial Of Tutor: " 
+//                                        + getTutorialGroup.getTutorialGrpTeachingList().get(getCourse));
+//                    }
+//
+//                    if (getCourse.getPracticalList().equals(getTutorialGroup.getTutorialGrpTeachingList().get(getCourse))){
+//                    System.out.println(" Practical Of Tutor: " 
+//                                        + getTutorialGroup.getTutorialGrpTeachingList().get(getCourse));
+//                    }
+//
+//                    if (getCourse.getLectureList().equals(getTutorialGroup.getTutorialGrpTeachingList().get(getCourse))){
+//                    System.out.println(" Lectture Of Lecture: " 
+//                                        + getTutorialGroup.getTutorialGrpTeachingList().get(getCourse));
+//                    }
+//
+//                    
+//
+//                }
+//                
+//            }
+//                
+//            }
+//        }
+//
+//}
+
+
 
 public void listCourseForEachTutor() {
     
@@ -717,6 +924,7 @@ public void listCourseForEachTutor() {
 }
 
 public void filterTutorsBasedOnCriterion() { // need more improvement
+    System.out.println("Enter Criterion: ");
     String Searching = teachingAssignmentUI.getInput();
     int index = 0;
     
@@ -727,51 +935,17 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
     
     for (int i = 1; i <= tutorList.getNumberOfEntries(); i++) {
         Tutor tutorGetEntry = tutorList.getEntry(i);
-        if (tutorGetEntry.getTutorID().contains(Searching) 
-                || tutorGetEntry.getTutorName().contains(Searching) 
-                ){
+            if (tutorGetEntry.getTutorID().contains(Searching) 
+                || tutorGetEntry.getTutorName().contains(Searching)){
 //            tutorList.contains(tutorGetEntry)
                 System.out.println(tutorGetEntry);
+                
             
         }
     }
+    
 
 }
-
-//public void listCourseForEachTutor() {
-//    
-//    if (tutorList.isEmpty()) {//        TteachingAssignmentUI.TutorIsEmpty();
-//        return;
-//    }
-//
-//    for (int i = 1; i <= tutorList.getNumberOfEntries(); i++) {
-//        Boolean courseExist = false;
-//        Tutor tutor = tutorList.getEntry(i);
-//         Course courseGetEntry = courseList.getEntry(i);
-//
-//        System.out.println("\nTutor ID: " + tutor.getTutorID() + ", Tutor Name: " + tutor.getTutorName());
-//        System.out.println("Course:");
-//
-//        for (int j = 1; j <= tutorList.getNumberOfEntries(); j++) {
-//                int index = 0; 
-//                
-//                Tutor tutorGetEntry = tutorList.getEntry(j);
-//                
-//                if (courseGetEntry.getTutor() != null && courseGetEntry.getTutor().equals(tutorGetEntry)) {
-//                    courseExist = true;
-//                    ++index;              
-//                    System.out.println(index  + ". " + courseGetEntry);
-//                    System.out.println();
-//                }
-//                
-//                
-//            }
-//        if (courseExist == false) {
-//            System.out.print("No Assigged yet");
-//            System.out.println();
-//        }
-//    }
-//}
     
     public String getAllTutors() {
         
@@ -807,6 +981,449 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
                 
         }
 
+    }
+    
+    public void generateReports(){
+        // report generate menu choice
+        int choice;
+        do{
+            choice = teachingAssignmentUI.reportMenu();
+            switch(choice){
+                case 1:
+                    TutorialGrolupReport();
+                    break;
+                case 2:
+                    tgPReport();
+                    break;
+                default:
+                    MessageUI.displayExitMessage();
+                    break;
+            }
+        }while(choice > 0 && choice < 3);
+    }
+    
+    public void TutorialGrolupReport(){
+        String content = "";
+        // get report ui
+        content += teachingAssignmentUI.generateReport1(content);
+        // get report content
+        content += String.format("\n%-4s %-8s\n",
+                "", "TutorID ", "Name");
+
+        for (int i = 1; i <= tutorList.getNumberOfEntries() ; i++){
+            Tutor getTutorEntry = tutorList.getEntry(i); 
+            String getTutor = "";
+            
+            
+            content += String.format("%-4s %-10s\n", 
+                    Integer.toString(i) + ".", getTutorEntry);
+        }
+        content += teachingAssignmentUI.SeparateLine()
+                + getHighestTutorAssignedCourse()
+                + getHighestTutorAssignedTutorial()
+//                + getLowestTutorAssignedTutorial()
+                + getHighestTutorAssignedPractical()
+//                + getLowestTutorAssignedPractical()
+                + getHighestTutorAssignedLecture()
+//                + getLowestTutorAssignedLecture()
+//                + getAmountOfTutorNoAssigned()
+                + teachingAssignmentUI.ReportFooter();
+        // generate it
+        generateTypeChoice(content);
+    }
+    
+    public String getHighestTutorAssignedCourse(){
+        String BuildString = "\n\nHighest Of Tutor Assigned Course: ";
+        int HighestNum = 0;
+        int num = 0;
+        int temporalNumber;
+        
+        Tutor highestTutor = null;
+        
+        HashMap<Tutor, Integer> countAssignedCourse = new HashMap<>();
+        
+        
+        for (int i = 1; i <= tutorList.getNumberOfEntries(); i++){
+            Tutor getTutor = tutorList.getEntry(i);
+            
+             
+            for (int j = 1; j <= getTutor.getTutorialList().getNumberOfEntries(); j++){
+                Course getTutorialUnderCourse = getTutor.getTutorialList().getEntry(j);
+                
+                 if (getTutor.getTutorialList().getEntry(j) == null) {
+                    continue; // Skip to the next iteration
+                }
+
+                if (getTutorialUnderCourse == null) {
+                    continue; // Skip to the next iteration
+                }
+                for (int k = 1; k <= courseList.getNumberOfEntries(); k++){
+                    Course getCourse = courseList.getEntry(k);
+                    if (getTutorialUnderCourse.equals(getCourse)){
+                        
+                        if ( countAssignedCourse.containsKey(getTutor)){
+                            
+                            temporalNumber = countAssignedCourse.get(getTutor);
+                            temporalNumber += 1;
+                            countAssignedCourse.put(getTutor, temporalNumber);
+                        }
+                        
+                        else {countAssignedCourse.put(getTutor, ++num);}
+                    }
+                }
+            }
+            
+            for (int l = 1; l <= getTutor.getPracticalList().getNumberOfEntries(); l++){
+                Course getTutorialUnderCourse = getTutor.getPracticalList().getEntry(l);
+                
+                if (getTutor.getPracticalList().getEntry(l) == null) {
+                    continue; // Skip to the next iteration
+                }
+
+                if (getTutorialUnderCourse == null) {
+                    continue; // Skip to the next iteration
+                }
+                for (int m = 1; m <= courseList.getNumberOfEntries(); m++){
+                    
+                    Course getCourse = courseList.getEntry(m);
+                    if (getTutorialUnderCourse.equals(getCourse)){
+                        if ( countAssignedCourse.containsKey(getTutor)){
+                            
+                            temporalNumber = countAssignedCourse.get(getTutor);
+                            temporalNumber += 1;
+                            countAssignedCourse.put(getTutor, temporalNumber);
+                        }
+                        
+                        else {countAssignedCourse.put(getTutor, ++num);}
+                        
+                        
+                    }
+                    
+                }
+            }
+            
+            for (int n = 1; n <= getTutor.getLectureList().getNumberOfEntries(); n++){
+                Course getTutorialUnderCourse = getTutor.getLectureList().getEntry(n);
+                
+                if (getTutor.getLectureList().getEntry(n) == null) {
+                    continue; // Skip to the next iteration
+                }
+
+                if (getTutorialUnderCourse == null) {
+                    continue; // Skip to the next iteration
+                }
+                for (int p = 1; p <= courseList.getNumberOfEntries(); p++){
+                    Course getCourse = courseList.getEntry(p);
+                    if (getTutorialUnderCourse.equals(getCourse)){
+
+                        if ( countAssignedCourse.containsKey(getTutor)){
+                            
+                            temporalNumber = countAssignedCourse.get(getTutor);
+                            temporalNumber += 1;
+                            countAssignedCourse.put(getTutor, temporalNumber);
+                        }
+                        
+                        else {countAssignedCourse.put(getTutor, ++num);}
+                    }
+                }
+            }
+        
+        }
+        
+           for (int i = 1; i <= countAssignedCourse.size(); i++) {
+               Tutor getTutor = tutorList.getEntry(i);
+               Tutor tutor = null;
+               
+               if (countAssignedCourse.get(getTutor) != null){
+                   tutor = getTutor;
+               }
+               
+               Integer countInteger = countAssignedCourse.get(getTutor);
+                if (countInteger != null && tutor != null) {
+                int count = countInteger.intValue();
+                if (count > HighestNum) {
+                HighestNum = count;
+                highestTutor = getTutor;
+                }
+        }
+
+    }
+
+    if (highestTutor != null) {
+        BuildString += highestTutor + 
+                       "\nTotal Courses Assigned: " + HighestNum;
+    } else {
+        BuildString += "\nNo Tutors Found.";
+    }
+
+    return BuildString;
+}
+    
+    public String getHighestTutorAssignedTutorial(){
+        String BuildString = "\n\nHighest Of Tutor Assigned Tutorial Course: ";
+        int HighestNum = 0;
+        int num = 0;
+        int temporalNumber;
+        
+        Tutor highestTutor = null;
+        
+        HashMap<Tutor, Integer> countAssignedTutorial = new HashMap<>();
+        
+        
+        for (int i = 1; i <= tutorList.getNumberOfEntries(); i++){
+            Tutor getTutor = tutorList.getEntry(i);
+            
+             
+            for (int j = 1; j <= getTutor.getTutorialList().getNumberOfEntries(); j++){
+                Course getTutorialUnderCourse = getTutor.getTutorialList().getEntry(j);
+                
+                 if (getTutor.getTutorialList().getEntry(j) == null) {
+                    continue; // Skip to the next iteration
+                }
+
+                if (getTutorialUnderCourse == null) {
+                    continue; // Skip to the next iteration
+                }
+                for (int k = 1; k <= courseList.getNumberOfEntries(); k++){
+                    Course getCourse = courseList.getEntry(k);
+                    if (getTutorialUnderCourse.equals(getCourse)){
+                        
+                        if ( countAssignedTutorial.containsKey(getTutor)){
+                            
+                            temporalNumber = countAssignedTutorial.get(getTutor);
+                            temporalNumber += 1;
+                            countAssignedTutorial.put(getTutor, temporalNumber);
+                        }
+                        
+                        else {countAssignedTutorial.put(getTutor, ++num);}
+                    }
+                }
+            }            
+        
+        }
+        
+           for (int i = 1; i <= countAssignedTutorial.size(); i++) {
+               Tutor getTutor = tutorList.getEntry(i);
+               Tutor tutor = null;
+               
+               if (countAssignedTutorial.get(getTutor) != null){
+                   tutor = getTutor;
+               }
+               
+               Integer countInteger = countAssignedTutorial.get(getTutor);
+                if (countInteger != null && tutor != null) {
+                int count = countInteger.intValue();
+                if (count > HighestNum) {
+                HighestNum = count;
+                highestTutor = getTutor;
+                }
+        }
+
+    }
+
+    if (highestTutor != null) {
+        BuildString += highestTutor + 
+                       "\nThe Most Higher Number of Tutor Assigned Course: " + HighestNum;
+    } else {
+        BuildString += "\nNo Tutorial Of Tutors found.";
+    }
+
+    return BuildString;
+}
+    
+    public String getHighestTutorAssignedPractical(){
+        String BuildString = "\n\nHighest Of Tutor Assigned Practical Course: ";
+        int HighestNum = 0;
+        int num = 0;
+        int temporalNumber;
+        
+        Tutor highestTutor = null;
+        
+        HashMap<Tutor, Integer> countAssignedPractical = new HashMap<>();
+        
+        
+        for (int i = 1; i <= tutorList.getNumberOfEntries(); i++){
+            Tutor getTutor = tutorList.getEntry(i);
+            
+            
+            for (int l = 1; l <= getTutor.getPracticalList().getNumberOfEntries(); l++){
+                Course getTutorialUnderCourse = getTutor.getPracticalList().getEntry(l);
+                
+                if (getTutor.getPracticalList().getEntry(l) == null) {
+                    continue; // Skip to the next iteration
+                }
+
+                if (getTutorialUnderCourse == null) {
+                    continue; // Skip to the next iteration
+                }
+                for (int m = 1; m <= courseList.getNumberOfEntries(); m++){
+                    
+                    Course getCourse = courseList.getEntry(m);
+                    if (getTutorialUnderCourse.equals(getCourse)){
+                        if ( countAssignedPractical.containsKey(getTutor)){
+                            
+                            temporalNumber = countAssignedPractical.get(getTutor);
+                            temporalNumber += 1;
+                            countAssignedPractical.put(getTutor, temporalNumber);
+                        }
+                        
+                        else {countAssignedPractical.put(getTutor, ++num);}
+                        
+                        
+                    }
+                    
+                }
+            }
+        
+        }
+        
+           for (int i = 1; i <= countAssignedPractical.size(); i++) {
+               Tutor getTutor = tutorList.getEntry(i);
+               Tutor tutor = null;
+               
+               if (countAssignedPractical.get(getTutor) != null){
+                   tutor = getTutor;
+               }
+               
+               Integer countInteger = countAssignedPractical.get(getTutor);
+                if (countInteger != null && tutor != null) {
+                int count = countInteger.intValue();
+                if (count > HighestNum) {
+                HighestNum = count;
+                highestTutor = getTutor;
+                }
+        }
+
+    }
+
+    if (highestTutor != null) {
+        BuildString += highestTutor + 
+                       "\nTotal Courses Assigned: " + HighestNum;
+    } else {
+        BuildString += "\nNo Tutors Found.";
+    }
+
+    return BuildString;
+}
+    
+    
+    public String getHighestTutorAssignedLecture(){
+        String BuildString = "\n\nHighest Of Tutor Assigned Lecture Course: ";
+        int HighestNum = 0;
+        int num = 0;
+        int temporalNumber;
+        
+        Tutor highestTutor = null;
+        
+        HashMap<Tutor, Integer> countLectureCourse = new HashMap<>();
+        
+        
+        for (int i = 1; i <= tutorList.getNumberOfEntries(); i++){
+            Tutor getTutor = tutorList.getEntry(i);
+            
+            for (int n = 1; n <= getTutor.getLectureList().getNumberOfEntries(); n++){
+                Course getTutorialUnderCourse = getTutor.getLectureList().getEntry(n);
+                
+                if (getTutor.getLectureList().getEntry(n) == null) {
+                    continue; // Skip to the next iteration
+                }
+
+                if (getTutorialUnderCourse == null) {
+                    continue; // Skip to the next iteration
+                }
+                for (int p = 1; p <= courseList.getNumberOfEntries(); p++){
+                    Course getCourse = courseList.getEntry(p);
+                    if (getTutorialUnderCourse.equals(getCourse)){
+
+                        if ( countLectureCourse.containsKey(getTutor)){
+                            
+                            temporalNumber = countLectureCourse.get(getTutor);
+                            temporalNumber += 1;
+                            countLectureCourse.put(getTutor, temporalNumber);
+                        }
+                        
+                        else {countLectureCourse.put(getTutor, ++num);}
+                    }
+                }
+            }
+        
+        }
+        
+           for (int i = 1; i <= countLectureCourse.size(); i++) {
+               Tutor getTutor = tutorList.getEntry(i);
+               Tutor tutor = null;
+               
+               if (countLectureCourse.get(getTutor) != null){
+                   tutor = getTutor;
+               }
+               
+               Integer countInteger = countLectureCourse.get(getTutor);
+                if (countInteger != null && tutor != null) {
+                int count = countInteger.intValue();
+                if (count > HighestNum) {
+                HighestNum = count;
+                highestTutor = getTutor;
+                }
+        }
+
+    }
+
+    if (highestTutor != null) {
+        BuildString += highestTutor + 
+                       "\nTotal Courses Assigned: " + HighestNum;
+    } else {
+        BuildString += "\nNo Tutors Found.";
+    }
+
+    return BuildString;
+}
+    
+
+    
+    // report 2
+    public void tgPReport(){
+//        String content = "";
+//        // get report ui
+//        content += ui.report2(content);
+//        // get report content
+//        content += String.format("\n%-4s %-15s %-30s\n",
+//                "", "Programme ID", "Number Of Tutorial Groups");
+//        int i = 0;
+//        Iterator<Programme> pIt = programmeList.getIterator();
+//        while(pIt.hasNext()){
+//            i++;
+//            int amount = 0;
+//            Programme p = pIt.next();
+//            Iterator<TutorialGroup> tgIt = tgList.getIterator();
+//            while(tgIt.hasNext()){
+//                TutorialGroup tg = tgIt.next();
+//                if(p.getTgList().contains(tg)){
+//                    amount++;
+//                }
+//            }
+//            content += String.format("%-4s %-15s %-8d\n", 
+//                    Integer.toString(i) + ".", p.getProgrammeID(), amount);
+//        }
+//        content += ui.longBrakeLine()
+//                + getLargestTGinP()
+//                + getSmallestTGinP()
+//                + checkAmountOfProgrammeNoHasTG()
+//                + ui.longBrakeLine();
+//        // generate it
+//        generateTypeChoice(content);
+    }
+    
+    public void generateTypeChoice(String content){
+        int typeChoice = teachingAssignmentUI.reoportOutputTypeMenu();
+        switch (typeChoice){
+            case 1:
+                teachingAssignmentUI.generateConsoleReport(content);
+                break;
+            case 2:
+                teachingAssignmentUI.generateWindowReport(content);
+            default:
+                MessageUI.displayInvalidChoiceMessage();
+        }
     }
     
     private static <T> boolean areArrayListsEqual(ArrayList<T> list1, ArrayList<T> list2) {

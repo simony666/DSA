@@ -22,8 +22,12 @@ public class TutorialGroup {
     
     
     //store all Course & Tutor belong to this entity 
-    private static HashMap<Course, ArrayList<Tutor>> TutorialGrpTeachingList = new HashMap(); 
-            
+    private static HashMap<Course, ArrayList<Tutor>> TutorialGrpTutorialList = new HashMap();
+    private static HashMap<Course, ArrayList<Tutor>> TutorialGrpPracticalList = new HashMap();
+    private static HashMap<Course, ArrayList<Tutor>> TutorialGrpLectureList = new HashMap();
+
+    public TutorialGroup() {
+    }
    
     
     public TutorialGroup(String tutorGroupID, String tutorGroupName,String programmeCODE) {
@@ -103,13 +107,31 @@ public class TutorialGroup {
         this.tutor = tutor;
     }
 
-    public static HashMap<Course, ArrayList<Tutor>> getTutorialGrpTeachingList() {
-        return TutorialGrpTeachingList;
+    public static HashMap<Course, ArrayList<Tutor>> getTutorialGrpTutorialList() {
+        return TutorialGrpTutorialList;
     }
 
-    public static void setTutorialGrpTeachingList(HashMap<Course, ArrayList<Tutor>> TutorialGrpTeachingList) {
-        TutorialGroup.TutorialGrpTeachingList = TutorialGrpTeachingList;
+    public static void setTutorialGrpTutorialList(HashMap<Course, ArrayList<Tutor>> TutorialGrpTutorialList) {
+        TutorialGroup.TutorialGrpTutorialList = TutorialGrpTutorialList;
     }
+
+    public static HashMap<Course, ArrayList<Tutor>> getTutorialGrpPracticalList() {
+        return TutorialGrpPracticalList;
+    }
+
+    public static void setTutorialGrpPracticalList(HashMap<Course, ArrayList<Tutor>> TutorialGrpPracticalList) {
+        TutorialGroup.TutorialGrpPracticalList = TutorialGrpPracticalList;
+    }
+
+    public static HashMap<Course, ArrayList<Tutor>> getTutorialGrpLectureList() {
+        return TutorialGrpLectureList;
+    }
+
+    public static void setTutorialGrpLectureList(HashMap<Course, ArrayList<Tutor>> TutorialGrpLectureList) {
+        TutorialGroup.TutorialGrpLectureList = TutorialGrpLectureList;
+    }
+
+    
 
     @Override
     public String toString() {

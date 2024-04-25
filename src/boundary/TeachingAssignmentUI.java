@@ -3,7 +3,11 @@ package boundary;
 //import entity.Tutor;
 import adt.ArrayList;
 import entity.*;
+import java.awt.Font;
 import java.util.Scanner;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class TeachingAssignmentUI {
     
@@ -41,6 +45,115 @@ public class TeachingAssignmentUI {
         scanner.nextLine();
         System.out.println();
         return choice;
+    }
+    
+    public int reportMenu(){
+        System.out.println();
+        System.out.println("Report Generate Menu\n");
+        System.out.println("1. Generate Tutors report");
+        System.out.println("2. Generate Tutorial groups report");
+        System.out.println();
+        System.out.print("Enter number : ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        return choice;
+    }
+    
+    public int reoportOutputTypeMenu(){
+        System.out.println();
+        System.out.println("Report Outpot Type Menu\n");
+        System.out.println("1. Console Output Format");
+        System.out.println("2. Window Output Format");
+        System.out.println();
+        System.out.print("Enter number : ");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        return choice;
+    }
+    
+    public String generateReport1(String content) {
+        String BuildString ="";
+        BuildString += ReportTop() + ReportTitle();
+        
+        return BuildString;
+    }
+    
+    public String generateReport2(String content) {
+        String BuildString ="";
+        BuildString += ReportTop() + ReportTitle();
+        
+        return BuildString;
+    }
+    
+    public String ReportTop() {
+        String BuildString = "";
+        BuildString += "=====================================================================================";
+        BuildString += "\n          TUNKU ABDUL RAHMAN UNIVERSITY OF MANAGEMENT AND TECHNOLOGY";
+        BuildString += "\n";
+
+        return BuildString;
+    }
+    
+    public String ReportTitle() {
+        String BuildString = "";
+        BuildString += "                        Teaching Assignment SUMMARY REPORT";
+        BuildString += "\n                      ----------------------------------";
+        return BuildString;
+    }
+    
+    public String ReportFooter(){
+        String BuildString = "";
+        BuildString += "\n";
+        BuildString += "\n            END OF THE Teaching Assignment SUMMARY REPORT";
+        BuildString += "\n====================================================================================";
+        return BuildString;
+    }
+    
+    public String SeparateLine(){
+        String output = "";
+        
+        output += "\n------------------------------------------------------------------------------------\n";
+        
+        return output;
+    }
+    
+    public void generateConsoleReport(String report){
+        System.out.println(report);
+    }
+    
+    // report output type 2
+    public void generateWindowReport(String report){
+        generateReportWindowOutoput(report);
+    }
+    
+    public void generateReportWindowOutoput(String reportContent){
+        // Create a JFrame (window)
+        JFrame frame = new JFrame("Report Generate");
+
+        // Create a JTextArea (text area) to display text
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false); // Make the text area non-editable
+
+        // Set a monospaced font for the text area
+        Font font = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        textArea.setFont(font);
+
+        // Add the text area to a JScrollPane (scrollable pane)
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        // Add the scroll pane to the frame
+        frame.getContentPane().add(scrollPane);
+
+        // Set the size and close operation of the frame
+        frame.setSize(1200, 800); // Set the size of the window
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close operation
+
+        // Display the frame (window)
+        frame.setVisible(true);
+
+        // Example: Set text in the text area
+        String outputText = reportContent;
+        textArea.setText(outputText);
     }
     
     public static void listAllTutors(String outputStr) {
