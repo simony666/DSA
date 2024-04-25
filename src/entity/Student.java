@@ -13,7 +13,7 @@ public class Student{
     private TutorialGroup tutorialGroup = null;
     
     //auto ID
-    private static int nextID = 0;
+    private static int nextID = 1;
     
     
     public Student(String studentName, int age, Programme programme) {
@@ -78,7 +78,7 @@ public class Student{
     
     @Override
     public String toString() {
-        return String.format("%-20s %-20s %-20s %-20s %-20s", studentID, studentName, age, programme.getProgramCode(), programme.getFaculty());
+        return String.format("| %-10s | %-20s | %-11s | %-10s | %-10s |\n", studentID, studentName, age, programme.getProgramCode(), programme.getFaculty());
     }
     
    
