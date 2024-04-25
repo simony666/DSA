@@ -43,8 +43,8 @@ public class TutorialGroupManagementUI {
     //Display Exists Programs
     public void displayPG() {
         // Display all existing programme
-    for (int i = 1; i <= Programme.getProgramList().getNumberOfEntries(); i++) {
-        System.out.println(i + ". " + Programme.getProgramList().getEntry(i));
+    for (int i = 1; i <= ProgramMenu.getProgramList().getNumberOfEntries(); i++) {
+        System.out.println(i + ". " + ProgramMenu.getProgramList().getEntry(i));
         }
     }
     

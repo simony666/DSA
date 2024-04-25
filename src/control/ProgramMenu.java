@@ -33,4 +33,14 @@ public class ProgramMenu {
         return null; // Program not found
     }
 
+    public static ArrayList<Programme> getProgramList() {
+        return programList;
+    }
+
+    public static void setProgramList(ArrayList<Programme> programList) {
+        ProgramMenu.programList = programList;
+    }
+    
+    
+
 }
