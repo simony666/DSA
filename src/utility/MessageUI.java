@@ -34,7 +34,8 @@ public class MessageUI {
       
       public static boolean comfirmationMessage(){
           System.out.println("\nEnter <Y> to comfirm or Enter <N> to negate");
-          boolean ans = enterComfirm();
+          boolean ans = false;
+          ans = enterComfirm();
           return ans;
       }
       

@@ -14,6 +14,13 @@ import utility.MessageUI;
  */
 public class StudentUI {
         Scanner sc = new Scanner(System.in);
+        
+    public void header(){
+        System.out.println("================================================================================");
+        System.out.println("                                    Student List                                ");
+        System.out.println("================================================================================");
+        System.out.printf("   | %-10s | %-20s | %-10s | %-10s | %-10s |\n", "Student ID", "Student Name", "Student Age", "Programme", "Faculty");
+    }
 
     public int getMenuChoice() {
         System.out.println("                        Student Registration Management");
@@ -22,6 +29,7 @@ public class StudentUI {
         System.out.println("*-----------------------------------------------------------------------------------*");
         System.out.println("|                                    Student                                        |");
         System.out.println("|-----------------------------------------------------------------------------------|");
+        System.out.println("| 0. View all students                                                              |");
         System.out.println("| 1. Add new students                                                               |");
         System.out.println("| 2. Remove a student                                                               |");
         System.out.println("| 3. Ammend student details                                                         |");
@@ -30,10 +38,9 @@ public class StudentUI {
         System.out.println("| 6. Remove student from a courses                                                  |");
         System.out.println("| 7. Fee paid for registered courses                                                |");
         System.out.println("| 8. Filters student                                                                |");
-        System.out.println("| 9. View all students                                                              |");
-        System.out.println("| 10. Generate summary report                                                       |");
+        System.out.println("| 9. Generate summary report                                                       |");
         System.out.println("*-----------------------------------------------------------------------------------*");
-        System.out.println("Select number");
+        System.out.print("Select number: ");
 
         int index = sc.nextInt();
         sc.nextLine();
@@ -92,6 +99,7 @@ public class StudentUI {
         }
         return age;
     }
+   
     
 }
 
