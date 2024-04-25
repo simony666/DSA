@@ -8,6 +8,7 @@ import adt.ArrayList;
 import adt.LinkedList;
 import control.AssignmentTeamCrtl;
 import control.CourseMenu;
+import control.StudentController;
 import entity.AssignmentTeam;
 import entity.Course;
 import entity.Student;
@@ -246,9 +247,57 @@ public class AssignmentTeamUI {
                 break;
             case 2:
                 //Tutorial Group
+                if (team.getStudentCount()>0){
+                    System.out.println("Unable to change! Student List Must Be Empty!");
+                    return null;
+                }
+                ArrayList<TutorialGroup> TGList = TutorialGroup.getTutorialGroupList();
+                int TGchoice = 0;
+                while (TGchoice == 0){
+                    int result = MessageUI.displayList(TGList);
+                    System.out.println("\nPlease Enter Team Index or \"-1\" to cancel:");
+                    TGchoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (TGchoice == -1){
+                        System.out.println("Modification of Tutorial Group for assignment team cancelled.");
+                        return null;
+                    }else if (TGchoice < 0 || TGchoice > result){
+                        MessageUI.clearScreen();
+                        MessageUI.displayInvalidChoiceMessage();
+                        choice = 0;
+                    }
+                }
+                TutorialGroup TG = TGList.getEntry(TGchoice);
+                team.setTutorialGroup(TG);
+                System.out.println("Assignment Team's Tutorial Group Changed!");
                 break;
             case 3:
+                if (team.getStudentCount()>0){
+                    System.out.println("Unable to change! Student List Must Be Empty!");
+                }
                 //Course
+                
+                LinkedList<Course> CList = CourseMenu.courseMap.getAllValue();
+                int Cchoice = 0;
+                while (Cchoice == 0){
+                    int total = MessageUI.displayList(CList);
+                    System.out.println("Please Select A Course For this Team [1-"+total +"] or \"-1\" to cancel");
+                    Cchoice = scanner.nextInt();
+                    scanner.nextLine();
+                    if(Cchoice == -1){
+                        System.out.println("Modification of Course for assignment team cancelled.");
+                        return null;
+                    }else if (Cchoice<=0 || Cchoice >=total){
+                        //set choice to invalid to display again
+                        MessageUI.clearScreen();
+                        MessageUI.displayInvalidChoiceMessage();
+                        choice = 0;
+                    }
+                }
+                Course course = CList.getEntry(choice);
+                team.setCourse(course);
+                System.out.println("Assignment Team's Course Changed!");
                 break;
             case 4:
                 //Student Limit
@@ -318,5 +367,25 @@ public class AssignmentTeamUI {
             
         }
         return team;
+    }
+
+    public Student getStudent() {
+        Student stu = null;
+        StudentController StuCrtl = new StudentController();
+        
+        System.out.println("Please Enter Student's ID or \"cancel\" to exit:");
+        while (stu == null){
+            String studentID = scanner.nextLine().trim();
+
+            if (studentID.equals("cancel")){
+                return null;
+            }
+            stu = StuCrtl.getStudent(studentID);
+            if (stu == null){
+                MessageUI.clearScreen();
+                System.out.println("Please Enter A Valid Student's ID or \"cancel\" to exit");
+            }
+        }
+        return stu;
     }
 }

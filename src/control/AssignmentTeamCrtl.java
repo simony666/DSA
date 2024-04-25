@@ -109,17 +109,29 @@ public class AssignmentTeamCrtl {
     
     //case 4
     public void AddStudentCrtl() {
-        //getStudent(Student stu);
-
-        //ask assigment id / display all assignment if enter 999 / filter 
-        //
-        //ask student id
-        //get from getstudent controller
-        //if student exist
+        System.out.println("Please Select A Team To Add Student");
+        AssignmentTeam at1 = ui.getTeam();
+        
+        Student stu = ui.getStudent();
+        if (stu != null){
+            //check student course == at course
+            if (stu.getCourseList().contains(at1.getCourse())){
+                at1.addStudent(stu);
+                System.out.println("Success Add Student!");
+            }else {
+                //else student.course not same, cancel!
+                System.out.println("Student is not under this course! Cancelled!");
+            }
+            
+        }//else student == null, user cancel, return to main menu      
+        
+        entry();
     }
     
     //case 5
     public void RemoveStudentCrtl() {
+        System.out.println("Please Select A Team To Add Student");
+        AssignmentTeam at1 = ui.getTeam();
         //getStudent(Student stu);
 
         //ask assigment id / display all assignment if enter 999 / filter 

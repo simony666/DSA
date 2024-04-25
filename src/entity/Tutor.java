@@ -14,6 +14,7 @@ public class Tutor{
     private ArrayList<Course> practicalList = new ArrayList<>();
     private ArrayList<Course> lectureList = new ArrayList<>();
     
+    
     //store all current entity
     private static ArrayList<Tutor> tutorList = new ArrayList<>();
     

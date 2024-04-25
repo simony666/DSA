@@ -413,9 +413,15 @@ public class StudentController {
     
     
     //assigment team 
-    private void getStudent(){
+    public Student getStudent(String id){
+        for (int i=1;i<=this.studentList.getNumberOfEntries();i++){
+            if(this.studentList.getEntry(i).getStudentID() == id){
+                return this.studentList.getEntry(i);
+            }
+        }
         //using student id to find the student and return the student all detail(student object)
         //if no found return null
+        return null;
     }
     
     public static void main(String[] args) {
