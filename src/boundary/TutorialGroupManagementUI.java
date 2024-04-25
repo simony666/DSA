@@ -21,10 +21,11 @@ public class TutorialGroupManagementUI {
         System.out.println("5. Remove a student from a tutorial group");
         System.out.println("6. Change the tutorial group for a student");
         System.out.println("7. List all students in a tutorial group and a programme");
-        System.out.println("8. Merge tutorial groups based on criteria"); // (not sure, maybe is search tutors)
+        System.out.println("8. Merge tutorial groups based on criteria");
         System.out.println("9. Generate Reports");
         System.out.println("0. Quit");
-        System.out.print("Enter choice (1-9): ");
+        System.out.println("========================================");
+        System.out.print("Enter choice (0-9): ");
 
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -32,13 +33,30 @@ public class TutorialGroupManagementUI {
         return choice;
     }
     
+    //Display Exists Tutotial Group.
     public void displayTG(){
-        for (int i = 1; i <= TutorialGroup.getTutorialGroupList().getNumberOfEntries(); i++) {
-               TutorialGroup group = TutorialGroup.getTutorialGroupList().getEntry(i);
+        for (int i = 1; i <= TutorialGroupManagement.getTutorialGroupList().getNumberOfEntries(); i++) {
+               TutorialGroup group = TutorialGroupManagement.getTutorialGroupList().getEntry(i);
                System.out.println(i + ". " + group.getTutorGroupID() + "-" + group.getTutorGroupName());
            }
     }
+    //Display Exists Programs
+    public void displayPG() {
+        // Display all existing programme
+    for (int i = 1; i <= Programme.getProgramList().getNumberOfEntries(); i++) {
+        System.out.println(i + ". " + Programme.getProgramList().getEntry(i));
+        }
+    }
     
+    //Display Exists Students.
+    public void displayStudent() {
+        for(int i = 1; i <= StudentController.getStudentList().getNumberOfEntries(); i++) {
+            System.out.println(i + "." + StudentController.getStudentList().getEntry(i));
+        }
+    }
+    
+
+   
     
 }
     

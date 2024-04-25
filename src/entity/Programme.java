@@ -3,6 +3,7 @@ package entity;
 import adt.ArrayList;
 import adt.ListInterface;
 import dao.ProgramInitializer;
+import dao.TGInitializer;
 
 public class Programme {
 
@@ -10,8 +11,9 @@ public class Programme {
     private String programName;
     private String faculty;
     public static ArrayList<Programme> programList = new ArrayList<>();
-    private ArrayList<String> linkedCourses;
-
+    private ArrayList<String> linkedCourses; 
+    public static ArrayList<TutorialGroup> tutorialGroupList = TGInitializer.initializeGroup();
+    
     static {
         initializePrograms(programList);
     }
@@ -27,6 +29,15 @@ public class Programme {
         this.linkedCourses = new ArrayList<>();
 
     }
+
+    private String progID;
+    private String progName;
+
+    //store all current entity
+    public static ArrayList<Programme> programmeList = new ArrayList<>();
+    
+    //private static ListInterface<Programme> programmeList = new ArrayList<>();
+    
 
     public String getProgramCode() {
         return programCode;
@@ -47,6 +58,9 @@ public class Programme {
     public String getFaculty() {
         return faculty;
     }
+    public void setProgName(String progName) {
+        this.progName = progName;
+    }    
 
     public void setFaculty(String faculty) {
         this.faculty = faculty;
@@ -82,11 +96,19 @@ public class Programme {
         } else {
             System.out.println("Course code cannot be null or empty.");
         }
+    public static ArrayList<TutorialGroup> getTutorialGroupList() {
+        return tutorialGroupList;
     }
 
+    public static void setTutorialGroupList(ArrayList<TutorialGroup> tutorialGroupList) {
+        Programme.tutorialGroupList = tutorialGroupList;
+    }
+    
     @Override
     public String toString() {
-        return "Programme{" + "programCode=" + programCode + ", programName=" + programName + ", faculty=" + faculty + '}';
-    }
-
+        return String.format("%-5s %-20s %5s", programCode, programName, faculty);
+        }     
+    
 }
+
+

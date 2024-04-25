@@ -14,26 +14,44 @@ public class TutorialGroup {
     
     private Tutor tutor;
     
-    private String programmeId; //This Id is to compare Id with Programme's program id in (removeGroup)
-    private String studentId; //This Id is to compare Id with Student's studentID in (removeStudnet)
+    private String programmeCODE; //This Id is to compare Id with Programme's program id in (removeGroup)
 
     //store all student belong to this entity
-    private ArrayList<Student> studentList = new ArrayList<>();
+    public LinkedList<Student> studentList = new LinkedList<>();
     
-    //store all current entity
-    private static ArrayList<TutorialGroup> tutorialGroupList = new ArrayList<>();
+    
     
     //store all Course & Tutor belong to this entity 
-    private static HashMap<Course, ArrayList<Tutor>> TutorialGrpTeachingList= new HashMap();
-
-    public TutorialGroup() {
-    }
+    private static HashMap<Course, ArrayList<Tutor>> TutorialGrpTeachingList = new HashMap(); 
+            
    
     
-    public TutorialGroup(String tutorGroupID, String tutorGroupName, String studentId) {
+    public TutorialGroup(String tutorGroupID, String tutorGroupName,String programmeCODE) {
         this.tutorGroupID = tutorGroupID;
         this.tutorGroupName = tutorGroupName;
-        this.studentId = studentId;
+//        this.studentId = studentId;
+        this.programmeCODE = programmeCODE;
+//        this.studentList = new ArrayList<>();
+    }
+    
+    public boolean addStudent(Student stu) {
+        if(this.studentList.contains(stu)) {
+            return true;
+        }
+        this.studentList.add(stu);
+        
+        return true;
+    }
+    
+    public boolean removeStudent (Student stu) {
+        if(!this.studentList.contains(stu)) {
+            return true;
+        }
+        
+        int position = this.studentList.indexOf(stu);
+        this.studentList.remove(position);
+        
+        return true;
     }
 
     public String getTutorGroupID() {
@@ -51,38 +69,31 @@ public class TutorialGroup {
     public void setTutorGroupName(String tutorGroupName) {
         this.tutorGroupName = tutorGroupName;
     }
-    
-    public String getProgrammeId() {
-        return programmeId;
+
+    public String getProgrammeCODE() {
+        return programmeCODE;
     }
 
-    public void setProgrammeId(String programmeId) {
-        this.programmeId = programmeId;
+    public void setProgrammeCODE(String programmeCODE) {
+        this.programmeCODE = programmeCODE;
     }
 
-    public String getStudentId() {
-        return studentId;
-    }
+//    public String getStudentId() {
+//        return studentId;
+//    }
+//
+//    public void setStudentId(String studentId) {
+//        this.studentId = studentId;
+//    }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
-    }
-    
-    public static ArrayList<TutorialGroup> getTutorialGroupList() {
-        return tutorialGroupList;
-    }
-
-    public static void setTutorialGroupList(ArrayList<TutorialGroup> tutorialGroupList) {
-        TutorialGroup.tutorialGroupList = tutorialGroupList;
-    }
-
-    public ArrayList<Student> getStudentList() {
+    public LinkedList<Student> getStudentList() {
         return studentList;
     }
 
-    public void setStudentList(ArrayList<Student> studentList) {
+    public void setStudentList(LinkedList<Student> studentList) {
         this.studentList = studentList;
     }
+
 
     public Tutor getTutor() {
         return tutor;
@@ -102,7 +113,7 @@ public class TutorialGroup {
 
     @Override
     public String toString() {
-        return "TutorialGroup{" + "tutorGroupID=" + tutorGroupID + ", tutorGroupName=" + tutorGroupName + ", programmeId=" + programmeId + '}';
+        return String.format("%-10s %-10s %-10s",tutorGroupID,tutorGroupName,programmeCODE);
     }
 
     

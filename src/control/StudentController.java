@@ -20,7 +20,7 @@ public class StudentController {
     Scanner sc = new Scanner(System.in);
     StudentUI studentUI = new StudentUI(); 
     
-    private ListInterface<Student> studentList = new LinkedList<>();
+    public static ListInterface<Student> studentList = new LinkedList<>();
     // private ListInterface<Enrollment> enrollments = new LinkedList<>();
     // private ListInterface<Programme> programmeList = new LinkedList<>();
     //private ListInterface<Course> courseList = new LinkedList<>();
@@ -423,6 +423,15 @@ public class StudentController {
         //if no found return null
         return null;
     }
+
+    public static ListInterface<Student> getStudentList() {
+        return studentList;
+    }
+
+    public static void setStudentList(ListInterface<Student> studentList) {
+        StudentController.studentList = studentList;
+    }
+    
     
     public static void main(String[] args) {
         new StudentController().runStudentController();

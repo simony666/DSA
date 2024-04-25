@@ -314,7 +314,7 @@ public class CourseMenu {
             String courseCode = CourseUI.promptString("Course Code", 10);
 
             if (programme.getLinkedCourses().contains(courseCode)) {
-                programme.removeLinkedCourse(courseCode);
+//                programme.removeLinkedCourse(courseCode);
                 System.out.println("Course removed from program successfully.");
             } else {
                 System.out.println("Course is not associated with the program.");
