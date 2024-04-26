@@ -11,12 +11,17 @@ import boundary.*;
 import dao.MainDao;
 import java.util.Scanner;
 import utility.MessageUI;
+import control.MainCrtl;
 
 public class StudentController {
 
     Scanner sc = new Scanner(System.in);
+    
     StudentUI studentUI = new StudentUI();
     CourseUI courseUI = new CourseUI();
+    
+    MainCrtl mainController = new MainCrtl();
+    
 
     public static LinkedList<Student> studentList = new LinkedList<>();
     // private ListInterface<Enrollment> enrollments = new LinkedList<>();
@@ -29,11 +34,9 @@ public class StudentController {
             choice = studentUI.getMenuChoice();
             switch (choice) {
                 case 0:
-                    //MessageUI.displayExitMessage();
+                    MessageUI.displayExitMessage();
                     MessageUI.clearScreen();
-                    viewAllStudent();
-                    MessageUI.pressEnter();
-                    runStudentController();
+                    mainController.entry();
                     break;
                 case 1:
                     MessageUI.clearScreen();
@@ -79,9 +82,11 @@ public class StudentController {
                     generateReport();
                     MessageUI.pressEnter();
                     break;
-//                case 10:
-//                    MessageUI.cls();
-//                    break;
+                case 10:
+                    MessageUI.clearScreen();
+                    viewAllStudent();
+                    MessageUI.pressEnter();
+                    runStudentController();
 //                case 11:
 //                    MessageUI.cls();
 //                    break;
@@ -283,7 +288,7 @@ public class StudentController {
                 MessageUI.displayNotRelated();
                 System.out.print("Do you want continue modify student detail? <Y|N> : ");
                 boolean answer = MessageUI.enterComfirm();
-                if (answer = true) {
+                if (answer == true) {
                     modifyStudentDetail();
                 } else {
                     runStudentController();
@@ -317,7 +322,7 @@ public class StudentController {
                 MessageUI.displayNotRelated();
                 System.out.print("Do you want continue search student for registered courses? <Y|N> : ");
                 boolean answer = MessageUI.enterComfirm();
-                if (answer = true) {
+                if (answer == true) {
                     searchStudentRegisteredCourse();
                 } else {
                     runStudentController();
@@ -441,7 +446,7 @@ public class StudentController {
                     MessageUI.displayEmpty();
                     System.out.print("Do you want select student again? <Y/N> : ");
                     boolean answer = MessageUI.enterComfirm();
-                    if (answer = true) {
+                    if (answer == true) {
                         removeFromCourse();
                     } else {
                         MessageUI.displayExitMessage();
@@ -482,7 +487,7 @@ public class StudentController {
 
                     System.out.print("\n\nDo you want search other student for calculate fee again? <Y/N> : ");
                     boolean answer = MessageUI.enterComfirm();
-                    if (answer = true) {
+                    if (answer == true) {
                         calculateFee();
                     } else {
                         MessageUI.displayExitMessage();
