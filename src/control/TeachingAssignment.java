@@ -23,36 +23,11 @@ public class TeachingAssignment {
 
     ArrayList<TutorialGroup> tutorialGroupList = TutorialGroupManagement.getTutorialGroupList();
     
+    MainCrtl mainController = new MainCrtl();
+    
 
     HashMap<String, Course> courseMap = CourseMenu.courseMap;
     private final TeachingAssignmentUI teachingAssignmentUI = new TeachingAssignmentUI();
-    
-       //----------------------------Testing--------------------------------------
-    
-    public void TestingValue() {
-        
- 
-       tutorList.add(new Tutor("1", "Tutor1"));
-       tutorList.add(new Tutor("2", "Tutor2"));
-       tutorList.add(new Tutor("3", "Tutor3"));
-        
-
-//        courseList.add(new Course("C1", "DSA", "SUPER", 10, "Yee"));
-//        courseList.add(new Course("C2", "RearchM", "MyGuru", 15, "WOW"));
-//        courseList.add(new Course("C3", "IS", "BAIDU" , 20, "Shit"));
-
-        tutorialGroupList.add(new TutorialGroup("TG1","tutorialGroup1", "S1"));
-        tutorialGroupList.add(new TutorialGroup("TG2","tutorialGroup2", "S2"));
-        tutorialGroupList.add(new TutorialGroup("TG3","tutorialGroup3", "S3"));
-    }
-    
-    public void displayTesting() {
-        System.out.println(tutorList.toString());
-        System.out.println(courseList.toString());
-        System.out.println(tutorialGroupList.toString());
-    }
-    
-       //----------------------------Testing--------------------------------------
 
     public void entry() {
         boolean transferCourseData = false;
@@ -64,9 +39,9 @@ public class TeachingAssignment {
             switch (choice) {
                 case 0:
                     MessageUI.displayExitMessage();
+                     mainController.entry();
                     break;
                 case 1: // Assign tutor to course 
-                        //Assign it for make sure tutor to validate courseType p, t, l and available
                     
                     assignTutorToCourse();
                     break;
@@ -342,9 +317,6 @@ public class TeachingAssignment {
             
 
             System.out.println("Successfully assigned tutorial group " + selectedTutorialGroup.getTutorGroupName() + " to tutor " + selectedTutor.getTutorName());
-            //Testing Output
-            
-            System.out.println(selectedTutorialGroup.getTutor().getTutorName());
             
             
         } else {
@@ -641,7 +613,6 @@ public void searchCourseUnderTutor() {
                                     if (!courseGetEntry.getTutorialList().isEmpty()) {
                                     ++num;
                                                    
-                                    System.out.println( num  + ". " + courseGetEntry.getTutorialList());
                                     System.out.println( num  + ". Tutorial Tutor: " + courseGetEntry.getTutorialList());
                                     }
                                 }
@@ -650,7 +621,7 @@ public void searchCourseUnderTutor() {
                                     if (!courseGetEntry.getPracticalList().isEmpty()) {
                                     ++num;
                                                    
-                                    System.out.println( num  + ". " + courseGetEntry.getPracticalList());
+
                                     System.out.println( num  + ". Practical Tutor: " + courseGetEntry.getPracticalList());
                                     }
                                 }
@@ -659,7 +630,6 @@ public void searchCourseUnderTutor() {
                                     if (!courseGetEntry.getLectureList().isEmpty()) {
                                     ++num;
                                                    
-                                    System.out.println( num  + ". " + courseGetEntry.getLectureList());
                                     System.out.println( num  + ". Lecture Tutor: " + courseGetEntry.getLectureList());
                                 }
             }
@@ -1660,16 +1630,16 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
     return true;
     }   
 
-    public static void main(String[] args) {        
-        
-        //TeachingAssignment taUI = new TeachingAssignment();
-        
-        //taUI.TestingValue();
-        //taUI.displayTesting();
-        new MainDao().generate();
-        new TeachingAssignment().entry();      
-         
-         
-    }
+//    public static void main(String[] args) {        
+//        
+//        //TeachingAssignment taUI = new TeachingAssignment();
+//        
+//        //taUI.TestingValue();
+//        //taUI.displayTesting();
+//        new MainDao().generate();
+//        new TeachingAssignment().entry();      
+//         
+//         
+//    }
     
 }
