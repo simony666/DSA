@@ -32,7 +32,7 @@ public class CourseMenu {
             try {
                 System.out.print("Enter your choice: ");
                 choice = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
@@ -60,7 +60,7 @@ public class CourseMenu {
                         removeCourseFromProgram(scanner, programList);
                         break;
                     case 9:
-                        generateSummaryReport();
+                        generateSummaryReport(scanner);
                         break;
                     case 0:
                         System.out.println("Returning to Main menu...\n");
@@ -112,7 +112,26 @@ public class CourseMenu {
 
             ProgramMenu.removeCourseFromPrograms(courseCode);
         } else {
-            System.out.println("Course not found.");
+            System.out.println("Course not found. Please enter a valid course code or press 0 to exit.");
+
+            String input;
+            do {
+                System.out.print("Enter course code or press 0 to exit: ");
+                input = scanner.nextLine();
+
+                if (input.equals("0")) {
+                    return; // Exit the method if the user enters 0
+                }
+
+                removedCourse = courseMap.remove(input);
+                if (removedCourse != null) {
+                    System.out.println("Course removed successfully.");
+                    ProgramMenu.removeCourseFromPrograms(input);
+                    return; // Exit the method after successfully removing the course
+                } else {
+                    System.out.println("Course not found. Please try again.");
+                }
+            } while (true); // Repeat until a valid course code is entered or the user chooses to exit
         }
     }
 
@@ -316,7 +335,7 @@ public class CourseMenu {
             String courseCode = CourseUI.promptString("Course Code", 10);
 
             if (programme.getLinkedCourses().contains(courseCode)) {
-//                programme.removeLinkedCourse(courseCode);
+                programme.removeLinkedCourse(courseCode);
                 System.out.println("Course removed from program successfully.");
             } else {
                 System.out.println("Course is not associated with the program.");
@@ -327,8 +346,34 @@ public class CourseMenu {
     }
 
     //9.Generate Summary Report
-    private static void generateSummaryReport() {
-        System.out.println("\n                                                Summary Report:");
+    private static void generateSummaryReport(Scanner scanner) {
+        int reportChoice;
+        do {
+            System.out.println("\n======================================");
+            System.out.println("\tSelect a Summary Report");
+            System.out.println("======================================");
+            System.out.println("1. Course Summary Report");
+            System.out.println("2. Programme Summary Report");
+            System.out.println("======================================");
+            System.out.print("Enter (1-2): ");
+            reportChoice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (reportChoice) {
+                case 1:
+                    generateCourseReport();
+                    break;
+                case 2:
+                    generateProgrammeReport();
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please enter 1 or 2.");
+            }
+        } while (reportChoice != 1 && reportChoice != 2);
+    }
+
+    private static void generateCourseReport() {
+        System.out.println("\n                                             Course Summary Report:");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
         System.out.println("Generated at: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy, h:mma")));
         System.err.println(CourseUI.listHeader());
@@ -353,6 +398,47 @@ public class CourseMenu {
         }
 
         System.out.println("\n\n                                       End Of Course Summary Report");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+    }
+
+    private static void generateProgrammeReport() {
+        System.out.println("\n                                             Programme Summary Report:");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+        System.out.println("Generated at: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy, h:mma")));
+
+        System.err.println(CourseUI.programSummaryHeader());
+        for (Programme programme : programList) {
+            System.out.printf("| %-12s | %-70s | %-10s |\n", programme.getProgramCode(), programme.getProgramName(), programme.getFaculty());
+        }
+        System.out.println("======================================================================================================\n");
+
+        System.out.println("Programmes and their Linked Courses:");
+        for (Programme programme : programList) {
+            System.out.println("\nProgram Code: " + programme.getProgramCode() + " - Program Name: " + programme.getProgramName());
+            System.out.println(CourseUI.listHeader());
+
+            int totalCreditHours = 0;
+            int totalProgramFee = 0;
+
+            for (String courseCode : programme.getLinkedCourses()) {
+                Course course = courseMap.get(courseCode);
+                if (course != null) {
+                    System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
+                            course.getCourseCode(), course.getCourseName(),
+                            course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
+                    totalCreditHours += course.getCreditHours();
+                    totalProgramFee += course.getCourseFee();
+
+                }
+            }
+            System.out.println(CourseUI.listSeperator());
+
+            System.out.println("Total Credit Hours for Program " + programme.getProgramCode() + ": " + totalCreditHours + " Hours");
+            System.out.println("Total Fee for Program " + programme.getProgramCode() + ": RM " + totalProgramFee);
+
+        }
+
+        System.out.println("\n\n                                       End Of Programme Summary Report");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
     }
 
