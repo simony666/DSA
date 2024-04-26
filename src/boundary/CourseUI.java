@@ -32,27 +32,23 @@ public class CourseUI {
         return prompt;
     }
 
-    public static int promptCH(String name) {
+    public static String promptSemester(String name) {
         Scanner scanner = new Scanner(System.in);
-
-        int creditHours;
+        String semester;
 
         while (true) {
             try {
-                System.out.printf("\nEnter %s (1-5): ", name);
-                creditHours = Integer.parseInt(scanner.nextLine().trim());
+                System.out.printf("\nEnter %s semester: ", name);
+                semester = scanner.nextLine().trim();
 
-                if (creditHours >= 1 && creditHours <= 5) {
-                    break;
-                } else {
-                    System.out.println("Error: Credit hours should be a single digit (1-5).");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Please enter a valid integer.");
+                // Add any validation logic here if needed
+                break; // Exit the loop if input is valid
+            } catch (Exception e) {
+                System.out.println("Error: Please enter a valid semester.");
             }
         }
 
-        return creditHours;
+        return semester;
     }
 
     public static String promptCourseStatus(String courseStatus) {
@@ -98,7 +94,7 @@ public class CourseUI {
         return String.format("==================================================================================================================\n"
                 + "| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n"
                 + "==================================================================================================================",
-                "Code", "Course Name", "Faculty", "Credit Hours", "Status", "Course Fee");
+                "Code", "Course Name", "Faculty", "Semester", "Status", "Course Fee");
     }
 
     public static String listSeperator() {
@@ -110,7 +106,7 @@ public class CourseUI {
         System.out.println("1. Course Code");
         System.out.println("2. Course Name");
         System.out.println("3. Faculty");
-        System.out.println("4. Credit Hours");
+        System.out.println("4. Semester");
         System.out.println("5. Course Fee");
         System.out.println("0. Cancel Amendment");
         System.out.print("Enter your choice: ");

@@ -94,11 +94,11 @@ public class CourseMenu {
         } while (courseMap.containsKey(courseCode));
         String courseName = CourseUI.promptString("Course Name", 40);
         String faculty = CourseUI.promptString("Faculty", 10);
-        int creditHours = CourseUI.promptCH("Credit Hours");
+        String semester = CourseUI.promptSemester("Semester");
         String courseStatus = CourseUI.promptCourseStatus("Course Status");
         int courseFee = CourseUI.promptCourseFee("Course Fee");
 
-        Course newCourse = new Course(courseCode, courseName, faculty, creditHours, courseStatus, courseFee);
+        Course newCourse = new Course(courseCode, courseName, faculty, semester , courseStatus, courseFee);
         courseMap.put(courseCode, newCourse);
 
         System.out.println("Course added successfully.");
@@ -154,7 +154,7 @@ public class CourseMenu {
         if (foundCourse != null) {
             System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     foundCourse.getCourseCode(), foundCourse.getCourseName(),
-                    foundCourse.getFaculty(), foundCourse.getCreditHours(), foundCourse.getCourseStatus(), foundCourse.getCourseFee());
+                    foundCourse.getFaculty(), foundCourse.getSemester(), foundCourse.getCourseStatus(), foundCourse.getCourseFee());
             System.out.println(CourseUI.listSeperator());
         } else {
             System.out.println("Course not found.");
@@ -176,7 +176,7 @@ public class CourseMenu {
             System.out.println(CourseUI.listHeader());
             System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     courseToAmend.getCourseCode(), courseToAmend.getCourseName(),
-                    courseToAmend.getFaculty(), courseToAmend.getCreditHours(), courseToAmend.getCourseStatus(),
+                    courseToAmend.getFaculty(), courseToAmend.getSemester(), courseToAmend.getCourseStatus(),
                     courseToAmend.getCourseFee());
             System.out.println(CourseUI.listSeperator());
 
@@ -217,9 +217,9 @@ public class CourseMenu {
                             break;
 
                         case 4:
-                            int newCreditHours = CourseUI.promptCH("new Credit Hours");
-                            courseToAmend.setCreditHours(newCreditHours);
-                            System.out.println("Credit hours amended successfully.");
+                            String newSemester = CourseUI.promptSemester("new semester");
+                            courseToAmend.setSemester(newSemester);
+                            System.out.println("Semester amended successfully.");
                             break;
 
                         case 5:
@@ -262,7 +262,7 @@ public class CourseMenu {
                 found = true;
                 System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                         course.getCourseCode(), course.getCourseName(),
-                        course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
+                        course.getFaculty(), course.getSemester(), course.getCourseStatus(), course.getCourseFee());
             }
         }
 
@@ -298,7 +298,7 @@ public class CourseMenu {
                     if (course != null) {
                         System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                                 course.getCourseCode(), course.getCourseName(),
-                                course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
+                                course.getFaculty(), course.getSemester(), course.getCourseStatus(), course.getCourseFee());
                     }
                 }
 
@@ -394,7 +394,7 @@ public class CourseMenu {
             Course course = entry.getValue();
             System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     course.getCourseCode(), course.getCourseName(),
-                    course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
+                    course.getFaculty(), course.getSemester(), course.getCourseStatus(), course.getCourseFee());
         }
         System.err.println(CourseUI.listSeperator());
 
@@ -430,7 +430,6 @@ public class CourseMenu {
             System.out.println("\nProgram Code: " + programme.getProgramCode() + " - Program Name: " + programme.getProgramName());
             System.out.println(CourseUI.listHeader());
 
-            int totalCreditHours = 0;
             int totalProgramFee = 0;
 
             for (String courseCode : programme.getLinkedCourses()) {
@@ -438,15 +437,13 @@ public class CourseMenu {
                 if (course != null) {
                     System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                             course.getCourseCode(), course.getCourseName(),
-                            course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
-                    totalCreditHours += course.getCreditHours();
+                            course.getFaculty(), course.getSemester(), course.getCourseStatus(), course.getCourseFee());
                     totalProgramFee += course.getCourseFee();
 
                 }
             }
             System.out.println(CourseUI.listSeperator());
 
-            System.out.println("Total Credit Hours for Program " + programme.getProgramCode() + ": " + totalCreditHours + " Hours");
             System.out.println("Total Fee for Program " + programme.getProgramCode() + ": RM " + totalProgramFee);
 
         }
