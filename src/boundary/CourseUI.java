@@ -7,14 +7,14 @@ public class CourseUI {
 
     public static void displayMenu() {
         System.out.println("\nCourse Management Subsystem");
-        System.out.println("1. Add a new course");
-        System.out.println("2. Remove a course");
-        System.out.println("3. Search courses offered");
-        System.out.println("4. Amend course details");
-        System.out.println("5. List courses taken by different faculties");
-        System.out.println("6. List all courses for a program");
-        System.out.println("7. Add course to a program");
-        System.out.println("8. Remove a course from a program");
+        System.out.println("1. Add a programme to a course");
+        System.out.println("2. Remove a programme from a course");
+        System.out.println("3. Add new course to a programme");
+        System.out.println("4. Remove a course from a programme");
+        System.out.println("5. Search a course in a semester");
+        System.out.println("6. Amend course details for a programme");
+        System.out.println("7. List courses taken by diffrent faculty");
+        System.out.println("8. List all courses for a programme");
         System.out.println("9. Generate summary reports");
         System.out.println("0. Exit");
     }
@@ -32,27 +32,21 @@ public class CourseUI {
         return prompt;
     }
 
-    public static int promptCH(String name) {
+    public static String promptSemester(String name) {
         Scanner scanner = new Scanner(System.in);
-
-        int creditHours;
+        String semester;
 
         while (true) {
             try {
-                System.out.printf("\nEnter %s (1-5): ", name);
-                creditHours = Integer.parseInt(scanner.nextLine().trim());
-
-                if (creditHours >= 1 && creditHours <= 5) {
-                    break;
-                } else {
-                    System.out.println("Error: Credit hours should be a single digit (1-5).");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Error: Please enter a valid integer.");
+                System.out.printf("\nEnter %s semester: ", name);
+                semester = scanner.nextLine().trim();
+                break; // Exit the loop if input is valid
+            } catch (Exception e) {
+                System.out.println("Error: Please enter a valid semester.");
             }
         }
 
-        return creditHours;
+        return semester;
     }
 
     public static String promptCourseStatus(String courseStatus) {
@@ -98,7 +92,7 @@ public class CourseUI {
         return String.format("==================================================================================================================\n"
                 + "| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n"
                 + "==================================================================================================================",
-                "Code", "Course Name", "Faculty", "Credit Hours", "Status", "Course Fee");
+                "Code", "Course Name", "Faculty", "Semester", "Status", "Course Fee");
     }
 
     public static String listSeperator() {
@@ -110,7 +104,7 @@ public class CourseUI {
         System.out.println("1. Course Code");
         System.out.println("2. Course Name");
         System.out.println("3. Faculty");
-        System.out.println("4. Credit Hours");
+        System.out.println("4. Semester");
         System.out.println("5. Course Fee");
         System.out.println("0. Cancel Amendment");
         System.out.print("Enter your choice: ");

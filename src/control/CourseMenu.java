@@ -17,8 +17,8 @@ public class CourseMenu {
 
     public static HashMap<String, Course> courseMap = new HashMap<>();
     public static ListInterface<Programme> programList = ProgramMenu.programList;
-    
-    MainCrtl  mainController = new MainCrtl();
+
+    MainCrtl mainController = new MainCrtl();
 
     public void updateCourseMap(HashMap<String, Course> newCourseMap) {
         this.courseMap = newCourseMap;
@@ -38,28 +38,28 @@ public class CourseMenu {
 
                 switch (choice) {
                     case 1:
-                        addCourse();
+                        addProgrammeToCourse(scanner);
                         break;
                     case 2:
-                        removeCourse(scanner);
+                        removeProgrammeFromCourse(scanner);
                         break;
                     case 3:
-                        searchCourses(scanner);
-                        break;
-                    case 4:
-                        amendCourseDetails(scanner);
-                        break;
-                    case 5:
-                        listCoursesByFaculty();
-                        break;
-                    case 6:
-                        listCoursesForProgram(programList, courseMap);
-                        break;
-                    case 7:
                         addCourseToProgram(scanner, programList);
                         break;
-                    case 8:
+                    case 4:
                         removeCourseFromProgram(scanner, programList);
+                        break;
+                    case 5:
+                        searchSemesterForCourse(scanner);
+                        break;
+                    case 6:
+                        amendCourseDetails(scanner);
+                        break;
+                    case 7:
+                        listCoursesByFaculty();
+                        break;
+                    case 8:
+                        listCoursesForProgram(programList, courseMap);
                         break;
                     case 9:
                         generateSummaryReport(scanner);
@@ -82,70 +82,142 @@ public class CourseMenu {
         scanner.close();
     }
 
-    //1.Add Course
-    private static void addCourse() {
-        String courseCode;
-        do {
-            courseCode = CourseUI.promptString("Course Code", 10);
+    //1.Add Course To Programme
+    private void addProgrammeToCourse(Scanner scanner) {
+        // Display all available programs
+        System.out.println("Available Programs:");
+        for (Programme program : programList) {
+            System.out.println(program.getProgramCode() + " - " + program.getProgramName());
+        }
 
-            if (courseMap.containsKey(courseCode)) {
-                System.out.println("Course code already exists. Please enter a unique course code.");
+        // Get program code from the user
+        String programCode = CourseUI.promptString("Program Code", 10);
+        Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
+
+        if (programme != null) {
+            // Display courses not linked to the selected program
+            System.out.println("\nCourses Available to Add:");
+
+            for (KeyValuePair<String, Course> entry : courseMap.getAllEntries()) {
+                Course course = entry.getValue();
+                if (!programme.getLinkedCourses().contains(course.getCourseCode())) {
+                    System.out.println(course.getCourseCode() + " - " + course.getCourseName());
+                }
             }
-        } while (courseMap.containsKey(courseCode));
-        String courseName = CourseUI.promptString("Course Name", 40);
-        String faculty = CourseUI.promptString("Faculty", 10);
-        int creditHours = CourseUI.promptCH("Credit Hours");
-        String courseStatus = CourseUI.promptCourseStatus("Course Status");
-        int courseFee = CourseUI.promptCourseFee("Course Fee");
 
-        Course newCourse = new Course(courseCode, courseName, faculty, creditHours, courseStatus, courseFee);
-        courseMap.put(courseCode, newCourse);
-
-        System.out.println("Course added successfully.");
-    }
-
-    //2.Remove Course
-    private static void removeCourse(Scanner scanner) {
-        // Display all courses
-        System.out.println("\nAvailable Courses:");
-        for (Course course : courseMap.getAllValue()) {
-            System.out.println(course.getCourseCode() + " - " + course.getCourseName());
-        }
-
-        System.out.print("\nEnter course code to remove: ");
-        String courseCode = scanner.nextLine();
-
-        Course removedCourse = courseMap.remove(courseCode);
-        if (removedCourse != null) {
-            System.out.println("Course removed successfully.");
-            ProgramMenu.removeCourseFromPrograms(courseCode);
-        } else {
-            System.out.println("Course not found. Please enter a valid course code or press 0 to exit.");
-
-            String input;
+            String courseCode;
             do {
-                System.out.print("Enter course code or press 0 to exit: ");
-                input = scanner.nextLine();
+                courseCode = CourseUI.promptString("Course Code", 10);
 
-                if (input.equals("0")) {
-                    return; // Exit the method if the user enters 0
+                if (!courseMap.containsKey(courseCode)) {
+                    System.out.println("Course code doesn't exist. Please enter an existing course code.");
+                } else if (programme.getLinkedCourses().contains(courseCode)) {
+                    System.out.println("Course is already associated with the program.");
                 }
+            } while (!courseMap.containsKey(courseCode) || programme.getLinkedCourses().contains(courseCode));
 
-                removedCourse = courseMap.remove(input);
-                if (removedCourse != null) {
-                    System.out.println("Course removed successfully.");
-                    ProgramMenu.removeCourseFromPrograms(input);
-                    return; // Exit the method after successfully removing the course
-                } else {
-                    System.out.println("Course not found. Please try again.");
-                }
-            } while (true); // Repeat until a valid course code is entered or the user chooses to exit
+            programme.addLinkedCourse(courseCode);
+            System.out.println("Course added to program successfully.");
+        } else {
+            System.out.println("Program not found.");
         }
     }
 
-    //3.Search Course
-    private static void searchCourses(Scanner scanner) {
-        System.out.println("\nEnter course code to search: ");
+    //2.Remove Programme From Course
+    private static void removeProgrammeFromCourse(Scanner scanner) {
+        // Display all programs and their linked courses
+        System.out.println("\nPrograms and their Linked Courses:");
+        for (Programme programme : programList) {
+            System.out.println("\nProgram Code: " + programme.getProgramCode() + " - Program Name: " + programme.getProgramName());
+            ArrayList<String> linkedCourses = programme.getLinkedCourses();
+            if (!linkedCourses.isEmpty()) {
+                System.out.println("Linked Courses:");
+                for (String courseCode : linkedCourses) {
+                    Course course = courseMap.get(courseCode);
+                    if (course != null) {
+                        System.out.println(course.getCourseCode() + " - " + course.getCourseName());
+                    }
+                }
+            } else {
+                System.out.println("No linked courses.");
+            }
+        }
+
+        // Get program code from the user
+        String programCode = CourseUI.promptString("Program Code", 10);
+        Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
+
+        // Check if the program is found and proceed with removing the course
+        if (programme != null) {
+            String courseCode;
+            do {
+                courseCode = CourseUI.promptString("Course Code", 10);
+
+                if (!courseMap.containsKey(courseCode)) {
+                    System.out.println("Course code doesn't exist. Please enter an existing course code.");
+                }
+            } while (!courseMap.containsKey(courseCode));
+
+            if (programme.getLinkedCourses().contains(courseCode)) {
+                programme.removeLinkedCourse(courseCode);
+                System.out.println("Course removed from program successfully.");
+            } else {
+                System.out.println("Course is not associated with the program.");
+            }
+        } else {
+            System.out.println("Program not found.");
+        }
+    }
+
+    //3.Add Course To Program
+    private static void addCourseToProgram(Scanner scanner, ListInterface<Programme> programList) {
+        String programCode = CourseUI.promptString("Program Code", 10);
+        Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
+
+        if (programme != null) {
+            String courseCode;
+            do {
+                courseCode = CourseUI.promptString("Course Code", 10);
+
+                if (!courseMap.containsKey(courseCode)) {
+                    System.out.println("Course code doesn't exit. Please enter an existing course code.");
+                }
+            } while (!courseMap.containsKey(courseCode));
+
+            if (!programme.getLinkedCourses().contains(courseCode)) {
+                programme.addLinkedCourse(courseCode);
+                System.out.println("Course added to program successfully.");
+            } else {
+                System.out.println("Course is already associated with the program.");
+            }
+        } else {
+            System.out.println("Program not found.");
+        }
+
+    }
+
+    //4.Remove Course From Program
+    private static void removeCourseFromProgram(Scanner scanner, ListInterface<Programme> programList) {
+        String programCode = CourseUI.promptString("Program Code", 10);
+        Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
+
+        if (programme != null) {
+            String courseCode = CourseUI.promptString("Course Code", 10);
+
+            if (programme.getLinkedCourses().contains(courseCode)) {
+                programme.removeLinkedCourse(courseCode);
+                System.out.println("Course removed from program successfully.");
+            } else {
+                System.out.println("Course is not associated with the program.");
+            }
+        } else {
+            System.out.println("Program not found.");
+        }
+    }
+
+    //5.Search Course
+    private static void searchSemesterForCourse(Scanner scanner) {
+        System.out.println("\nEnter course code to search semester: ");
         String courseCode = scanner.nextLine();
 
         Course foundCourse = courseMap.get(courseCode);
@@ -154,14 +226,14 @@ public class CourseMenu {
         if (foundCourse != null) {
             System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     foundCourse.getCourseCode(), foundCourse.getCourseName(),
-                    foundCourse.getFaculty(), foundCourse.getCreditHours(), foundCourse.getCourseStatus(), foundCourse.getCourseFee());
+                    foundCourse.getFaculty(), foundCourse.getSemester(), foundCourse.getCourseStatus(), foundCourse.getCourseFee());
             System.out.println(CourseUI.listSeperator());
         } else {
             System.out.println("Course not found.");
         }
     }
 
-    //4.Amend Course Details
+    //6.Amend Course Details
     private static void amendCourseDetails(Scanner scanner) {
         System.out.println("\nAvailable Courses:");
         for (Course course : courseMap.getAllValue()) {
@@ -176,7 +248,7 @@ public class CourseMenu {
             System.out.println(CourseUI.listHeader());
             System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     courseToAmend.getCourseCode(), courseToAmend.getCourseName(),
-                    courseToAmend.getFaculty(), courseToAmend.getCreditHours(), courseToAmend.getCourseStatus(),
+                    courseToAmend.getFaculty(), courseToAmend.getSemester(), courseToAmend.getCourseStatus(),
                     courseToAmend.getCourseFee());
             System.out.println(CourseUI.listSeperator());
 
@@ -217,9 +289,9 @@ public class CourseMenu {
                             break;
 
                         case 4:
-                            int newCreditHours = CourseUI.promptCH("new Credit Hours");
-                            courseToAmend.setCreditHours(newCreditHours);
-                            System.out.println("Credit hours amended successfully.");
+                            String newSemester = CourseUI.promptSemester("new semester");
+                            courseToAmend.setSemester(newSemester);
+                            System.out.println("Semester amended successfully.");
                             break;
 
                         case 5:
@@ -247,7 +319,7 @@ public class CourseMenu {
         }
     }
 
-    //5.List Courses By Faculty
+    //7.List Courses By Faculty
     private static void listCoursesByFaculty() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter faculty name: ");
@@ -262,7 +334,7 @@ public class CourseMenu {
                 found = true;
                 System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                         course.getCourseCode(), course.getCourseName(),
-                        course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
+                        course.getFaculty(), course.getSemester(), course.getCourseStatus(), course.getCourseFee());
             }
         }
 
@@ -273,87 +345,29 @@ public class CourseMenu {
         System.out.println(CourseUI.listSeperator());
     }
 
-    //6.List Courses For Program
+    //8.List All Courses For Program
     private static void listCoursesForProgram(ListInterface<Programme> programList, HashMap<String, Course> courseMap) {
-        Scanner scanner = new Scanner(System.in);
-
-        // Get program code from the user
-        System.out.print("Enter program code to list courses: ");
-        String programCode = scanner.nextLine();
-
-        // Find the program in the programList
-        Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
-
-        if (programme != null) {
-            // Get the linked courses from the program
-            ArrayList<String> linkedCourses = programme.getLinkedCourses();
-
-            if (!linkedCourses.isEmpty()) {
-                System.out.println("\nCourses for Program " + programCode + ":");
-                System.out.println(CourseUI.listHeader());
-
-                // Display details of each linked course
-                for (String courseCode : linkedCourses) {
-                    Course course = courseMap.get(courseCode);
-                    if (course != null) {
-                        System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
-                                course.getCourseCode(), course.getCourseName(),
-                                course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
-                    }
-                }
-
-                System.out.println(CourseUI.listSeperator());
-            } else {
-                System.out.println("No courses linked to the program.");
-            }
-        } else {
-            System.out.println("Program not found.");
+        System.err.println(CourseUI.programSummaryHeader());
+        for (Programme programme : programList) {
+            System.out.printf("| %-12s | %-70s | %-10s |\n", programme.getProgramCode(), programme.getProgramName(), programme.getFaculty());
         }
-    }
+        System.out.println("======================================================================================================\n");
 
-    //7.Add Course To Program
-    private static void addCourseToProgram(Scanner scanner, ListInterface<Programme> programList) {
-        String programCode = CourseUI.promptString("Program Code", 10);
-        Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
+        System.out.println("Programmes and their Linked Courses:");
+        for (Programme programme : programList) {
+            System.out.println("\nProgram Code: " + programme.getProgramCode() + " - Program Name: " + programme.getProgramName());
+            System.out.println(CourseUI.listHeader());
 
-        if (programme != null) {
-            String courseCode;
-            do {
-                courseCode = CourseUI.promptString("Course Code", 10);
+            for (String courseCode : programme.getLinkedCourses()) {
+                Course course = courseMap.get(courseCode);
+                if (course != null) {
+                    System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
+                            course.getCourseCode(), course.getCourseName(),
+                            course.getFaculty(), course.getSemester(), course.getCourseStatus(), course.getCourseFee());
 
-                if (!courseMap.containsKey(courseCode)) {
-                    System.out.println("Course code doesn't exit. Please enter an existing course code.");
                 }
-            } while (!courseMap.containsKey(courseCode));
-
-            if (!programme.getLinkedCourses().contains(courseCode)) {
-                programme.addLinkedCourse(courseCode);
-                System.out.println("Course added to program successfully.");
-            } else {
-                System.out.println("Course is already associated with the program.");
             }
-        } else {
-            System.out.println("Program not found.");
-        }
-
-    }
-
-    //8.Remove Course From Program
-    private static void removeCourseFromProgram(Scanner scanner, ListInterface<Programme> programList) {
-        String programCode = CourseUI.promptString("Program Code", 10);
-        Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
-
-        if (programme != null) {
-            String courseCode = CourseUI.promptString("Course Code", 10);
-
-            if (programme.getLinkedCourses().contains(courseCode)) {
-                programme.removeLinkedCourse(courseCode);
-                System.out.println("Course removed from program successfully.");
-            } else {
-                System.out.println("Course is not associated with the program.");
-            }
-        } else {
-            System.out.println("Program not found.");
+            System.out.println(CourseUI.listSeperator());
         }
     }
 
@@ -394,7 +408,7 @@ public class CourseMenu {
             Course course = entry.getValue();
             System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                     course.getCourseCode(), course.getCourseName(),
-                    course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
+                    course.getFaculty(), course.getSemester(), course.getCourseStatus(), course.getCourseFee());
         }
         System.err.println(CourseUI.listSeperator());
 
@@ -430,7 +444,6 @@ public class CourseMenu {
             System.out.println("\nProgram Code: " + programme.getProgramCode() + " - Program Name: " + programme.getProgramName());
             System.out.println(CourseUI.listHeader());
 
-            int totalCreditHours = 0;
             int totalProgramFee = 0;
 
             for (String courseCode : programme.getLinkedCourses()) {
@@ -438,15 +451,13 @@ public class CourseMenu {
                 if (course != null) {
                     System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n",
                             course.getCourseCode(), course.getCourseName(),
-                            course.getFaculty(), course.getCreditHours(), course.getCourseStatus(), course.getCourseFee());
-                    totalCreditHours += course.getCreditHours();
+                            course.getFaculty(), course.getSemester(), course.getCourseStatus(), course.getCourseFee());
                     totalProgramFee += course.getCourseFee();
 
                 }
             }
             System.out.println(CourseUI.listSeperator());
 
-            System.out.println("Total Credit Hours for Program " + programme.getProgramCode() + ": " + totalCreditHours + " Hours");
             System.out.println("Total Fee for Program " + programme.getProgramCode() + ": RM " + totalProgramFee);
 
         }
