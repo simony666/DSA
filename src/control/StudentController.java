@@ -553,51 +553,71 @@ public class StudentController {
 //    }
     
     private void generateReport2() {
-    // Create ArrayLists to store counts for programs and faculties
-    ArrayList<String> programCodes = new ArrayList<>();
-    ArrayList<Integer> programCounts = new ArrayList<>();
-    ArrayList<String> faculties = new ArrayList<>();
-    ArrayList<Integer> facultyCounts = new ArrayList<>();
-
-    // Initialize counts to zero
-    for (Programme program : CourseMenu.programList) {
-        String programCode = program.getProgramCode();
-        programCodes.add(programCode);
-        programCounts.add(0);
-    }
-
-    // Count students for each program and faculty
-    for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
-        Student student = studentList.getEntry(i);
-        String programCode = student.getProgramme().getProgramCode();
-        int programIndex = programCodes.getNumberOfEntries();
-        if (programIndex != -1) {
-            int count = programCounts.getEntry(programIndex);
-            programCounts.add(programIndex, count + 1);
+        ListInterface<Programme> programList = CourseMenu.programList;
+        for (int i = 1; i <= programList.getNumberOfEntries(); i++){
+            Programme programmeCode = programList.getEntry(i);
+            int totalProgramme = totalProgramme(programmeCode);
+            System.out.println("Total student from " + programmeCode.getProgramCode() + " = " + totalProgramme);
         }
-
-        String faculty = student.getProgramme().getFaculty();
-        int facultyIndex = faculties.getNumberOfEntries();
-        if (facultyIndex != -1) {
-            int count = facultyCounts.getEntry(facultyIndex);
-            facultyCounts.add(facultyIndex, count + 1);
+        
+    }
+    
+    private int totalProgramme(Programme programmeCode){
+        int totalProgramme =0;
+        for(int i =1; i <= studentList.getNumberOfEntries(); i++){
+            if(programmeCode.equals(studentList.getEntry(i).getProgramme())){
+                totalProgramme +=1;
+            }
         }
+        return totalProgramme;
     }
-
-    // Display the report for programs
-    System.out.println("Programme Report:");
-    System.out.println("-----------------");
-    for (int i = 0; i < programCodes.getNumberOfEntries(); i++) {
-        System.out.println(programCodes.getEntry(i) + ": " + programCounts.getEntry(i) + " students");
-    }
-
-    // Display the report for faculties
-    System.out.println("\nFaculty Report:");
-    System.out.println("----------------");
-    for (int i = 0; i < faculties.getNumberOfEntries(); i++) {
-        System.out.println(faculties.getEntry(i) + ": " + facultyCounts.getEntry(i) + " students");
-    }
-}
+    
+//    private void generateReport2(){
+    
+//    // Create ArrayLists to store counts for programs and faculties
+//    ArrayList<String> programCodes = new ArrayList<>();
+//    ArrayList<Integer> programCounts = new ArrayList<>();
+//    ArrayList<String> faculties = new ArrayList<>();
+//    ArrayList<Integer> facultyCounts = new ArrayList<>();
+//    // Initialize counts to zero
+//    for (Programme program : CourseMenu.programList) {
+//        String programCode = program.getProgramCode();
+//        programCodes.add(programCode);
+//        programCounts.add(0);
+//    }
+//
+//    // Count students for each program and faculty
+//    for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
+//        Student student = studentList.getEntry(i);
+//        String programCode = student.getProgramme().getProgramCode();
+//        int programIndex = programCodes.getNumberOfEntries();
+//        if (programIndex != -1) {
+//            int count = programCounts.getEntry(programIndex);
+//            programCounts.add(programIndex, count + 1);
+//        }
+//
+//        String faculty = student.getProgramme().getFaculty();
+//        int facultyIndex = faculties.getNumberOfEntries();
+//        if (facultyIndex != -1) {
+//            int count = facultyCounts.getEntry(facultyIndex);
+//            facultyCounts.add(facultyIndex, count + 1);
+//        }
+//    }
+//
+//    // Display the report for programs
+//    System.out.println("Programme Report:");
+//    System.out.println("-----------------");
+//    for (int i = 0; i < programCodes.getNumberOfEntries(); i++) {
+//        System.out.println(programCodes.getEntry(i) + ": " + programCounts.getEntry(i) + " students");
+//    }
+//
+//    // Display the report for faculties
+//    System.out.println("\nFaculty Report:");
+//    System.out.println("----------------");
+//    for (int i = 0; i < faculties.getNumberOfEntries(); i++) {
+//        System.out.println(faculties.getEntry(i) + ": " + facultyCounts.getEntry(i) + " students");
+//    }
+//}
 
     private void searchStudentName() {
         ArrayList<Student> filteredStudent = new ArrayList<>();

@@ -90,6 +90,10 @@ public class MainDao {
         Student s5 = new Student("Eddie Chua",20,program2);
         Student s6 = new Student("Chu Ren",18,program3);
         Student s7 = new Student("Zheng Hao",20,program3);
+        Student s8 = new Student("Chuy Mon",22,program3);
+        Student s9 = new Student("Zhi Yen",21,program4);
+        Student s10 = new Student("Zhi Yee",22,program4);
+        Student s11 = new Student("Adeline",40,program4);
         
         studentList.add(s1);
         studentList.add(s2);
@@ -98,6 +102,10 @@ public class MainDao {
         studentList.add(s5);
         studentList.add(s6);
         studentList.add(s7);
+        studentList.add(s8);
+        studentList.add(s9);
+        studentList.add(s10);
+        studentList.add(s11);
         
 
         TutorialGroup tg1 = new TutorialGroup("G1","Group 1", program1.getProgramCode());

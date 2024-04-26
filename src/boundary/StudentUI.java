@@ -29,7 +29,6 @@ public class StudentUI {
         System.out.println("*-----------------------------------------------------------------------------------*");
         System.out.println("|                                    Student                                        |");
         System.out.println("|-----------------------------------------------------------------------------------|");
-        System.out.println("| 0. Return to main page                                                            |");
         System.out.println("| 1. Add new students                                                               |");
         System.out.println("| 2. Remove a student                                                               |");
         System.out.println("| 3. Ammend student details                                                         |");
@@ -38,8 +37,10 @@ public class StudentUI {
         System.out.println("| 6. Remove student from a courses                                                  |");
         System.out.println("| 7. Fee paid for registered courses                                                |");
         System.out.println("| 8. Filters student                                                                |");
-        System.out.println("| 9. Generate summary report                                                        |");
-        System.out.println("| 10. View all Student                                                               ");
+        System.out.println("| 9. Generate summary report 1                                                      |");
+        System.out.println("| 10. Generate summary report 2                                                     |");
+        System.out.println("| 11. View all Student                                                              |");
+        System.out.println("| 0. Return to main page                                                            |");
         System.out.println("*-----------------------------------------------------------------------------------*");
         System.out.print("Select number: ");
 
