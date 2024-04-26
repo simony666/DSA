@@ -139,8 +139,8 @@ public class MainDao {
         s5.setTutorialGroup(tg4);
         tg5.getStudentList().add(s6);
         s6.setTutorialGroup(tg5);
-
-//        tg5.getStudentList().add(s7);
+        tg5.getStudentList().add(s7);
+        s7.setTutorialGroup(tg5);
 
 
 
