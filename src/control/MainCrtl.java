@@ -21,7 +21,7 @@ public class MainCrtl {
                 new StudentController().runStudentController();
                 break;
             case 2:
-                CourseMenu.courseMenu();
+                new CourseMenu().courseMenu();
                 break;
             case 3:
                 new TeachingAssignment().entry();
@@ -68,8 +68,7 @@ public class MainCrtl {
     
     public static void main(String[] args) {
         new MainDao().generate();
-        MainCrtl mainController = new MainCrtl();
-        mainController.entry();
+        new MainCrtl().entry();
     }
     
 }

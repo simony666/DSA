@@ -8,6 +8,8 @@ import java.util.Scanner;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TeachingAssignmentUI {
     
@@ -73,14 +75,14 @@ public class TeachingAssignmentUI {
     
     public String generateReport1(String content) {
         String BuildString ="";
-        BuildString += ReportTop() + ReportTitle();
+        BuildString += ReportTop() + ReportTitle() + getCurrentDateTime();
         
         return BuildString;
     }
     
     public String generateReport2(String content) {
         String BuildString ="";
-        BuildString += ReportTop() + ReportTitle();
+        BuildString += ReportTop() + ReportTitle() + getCurrentDateTime();
         
         return BuildString;
     }
@@ -110,11 +112,30 @@ public class TeachingAssignmentUI {
     }
     
     public String SeparateLine(){
-        String output = "";
+        String BuildString = "";
         
-        output += "\n------------------------------------------------------------------------------------\n";
+        BuildString += "\n------------------------------------------------------------------------------------\n";
         
-        return output;
+        return BuildString;
+    }
+    
+    public String getCurrentDateTime() {
+        String BuildString  = "";
+
+        // Get the current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // Define a custom date and time format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, h:mma");
+
+        // Format the current date and time using the formatter
+        String formattedDateTime = currentDateTime.format(formatter);
+
+        // Print the formatted date
+        
+        BuildString += "\nGenerated Report at: " + formattedDateTime + "\n\n";
+        
+        return BuildString;
     }
     
     public void generateConsoleReport(String report){
@@ -231,13 +252,6 @@ public class TeachingAssignmentUI {
         
     }
     
-    public String getSearchInput() {
-        
-        String searchInput = scanner.nextLine();
-        return searchInput;
-    }
-    
-    
     public Tutor inputTutorDetails() {
         String tutorID = inputTutorID();
         String tutorName = inputTutorName();
@@ -251,13 +265,6 @@ public class TeachingAssignmentUI {
     return "Successfully assigned tutor " + selectedTutor.getTutorName() 
             + " to course " + selectedCourse.getCourseName();
 }
-    
-    
-//    public Courses inputAssignTutorGrpToTutor() {
-//        String courseName = inputTutorCourse();
-//        System.out.println();
-//        return new Courses("",courseName);
-//    } 
     
     //Course & Tutorial Groups UITesting
     public void listAllCourse(String outputCourseList) {

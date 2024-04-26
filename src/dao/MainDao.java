@@ -98,6 +98,7 @@ public class MainDao {
         studentList.add(s5);
         studentList.add(s6);
         studentList.add(s7);
+        
 
         TutorialGroup tg1 = new TutorialGroup("G1","Group 1", program1.getProgramCode());
         TutorialGroup tg2 = new TutorialGroup("G2","Group 2", program1.getProgramCode());
@@ -110,6 +111,38 @@ public class MainDao {
         tgList.add(tg3);
         tgList.add(tg4);
         tgList.add(tg5);
+        
+        program1.getTutorialGroupList().add(tg1);
+        program1.getTutorialGroupList().add(tg2);
+        program1.getTutorialGroupList().add(tg3);
+        program2.getTutorialGroupList().add(tg1);
+        program2.getTutorialGroupList().add(tg2);
+        program2.getTutorialGroupList().add(tg3);
+        program3.getTutorialGroupList().add(tg1);
+        program3.getTutorialGroupList().add(tg2);
+        program3.getTutorialGroupList().add(tg3);
+        program4.getTutorialGroupList().add(tg1);
+        program4.getTutorialGroupList().add(tg2);
+        program4.getTutorialGroupList().add(tg3);
+        
+      
+
+        tg1.getStudentList().add(s1);
+        s1.setTutorialGroup(tg1);
+        tg1.getStudentList().add(s2);
+        s2.setTutorialGroup(tg1);
+        tg2.getStudentList().add(s3);
+        s3.setTutorialGroup(tg2);
+        tg3.getStudentList().add(s4);
+        s4.setTutorialGroup(tg3);
+        tg4.getStudentList().add(s5);
+        s5.setTutorialGroup(tg4);
+        tg5.getStudentList().add(s6);
+        s6.setTutorialGroup(tg5);
+
+//        tg5.getStudentList().add(s7);
+
+
 
         Tutor t1 = new Tutor("T001","Poh Chu Ren");
         Tutor t2 = new Tutor("T002","Poh Ren Ren");

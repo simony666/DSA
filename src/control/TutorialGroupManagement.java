@@ -5,11 +5,15 @@ import adt.LinkedList;
 import adt.ListInterface;
 import java.util.Scanner;
 import boundary.TutorialGroupManagementUI;
+import dao.MainDao;
 import entity.TutorialGroup;
 import entity.Programme;
 import entity.Tutor;
 import entity.Student;
 import utility.MessageUI;
+import javax.swing.*;
+import java.awt.*;
+
 
 public class TutorialGroupManagement {
 
@@ -215,14 +219,15 @@ public class TutorialGroupManagement {
                 System.out.println("\nSelected Group: " + selectedTutorialGroup.getTutorGroupName() + " in " + selectedTutorialGroup.getProgrammeCODE());
 
                 // Confirm the removal
-                System.out.println("Are you sure you want to remove? (yes/no): ");
+                System.out.print("Are you sure you want to remove? (yes/no): ");
                 String input = scan.nextLine();
 
                 // Remove the group from the programme
                 if (input.equals("yes")) {
                     TGList.remove(selectedGroupIndex);
-                    System.out.println("The Group has been successfully removed from group " + " IN " + selectedTutorialGroup.getProgrammeCODE() + "!");
-
+                    System.out.println("\nThe Group has been successfully removed from group " + " IN " + selectedTutorialGroup.getProgrammeCODE() + "!");
+                    System.out.println("Press \"Enter\" to Continue...");
+                    scan.nextLine();
                 } else {
                     System.out.println("Removal cancelled. Please type exactly \"yes\".");
                 }
@@ -251,7 +256,7 @@ public class TutorialGroupManagement {
             System.out.println("Invalid programme number.");
             return;
         }
-
+        
         // Get the selected programme
         Programme selectedProgramme = ProgramMenu.getProgramList().getEntry(programmeIndex);
 
@@ -282,9 +287,9 @@ public class TutorialGroupManagement {
 
         // Display initialized students
         int totalStudent = studentList.getNumberOfEntries();
-        System.out.println("\n=======================================");
-        System.out.println("Select Student to Add To Tutorial Group");
-        System.out.println("=======================================");
+        System.out.println("===============================================================================");
+        System.out.println("                       Select Student to Add To Tutorial Group");
+        System.out.println("===============================================================================");
 
         // Loop to Find and Display Students
         for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
@@ -293,7 +298,7 @@ public class TutorialGroupManagement {
 
         // User selects a Student
         System.out.println("===========================");
-        System.out.printf("Enter [1-" + totalStudent + "]:");
+        System.out.printf("Enter [1-" + totalStudent + "]: ");
         int selectedIndex = scan.nextInt();
         scan.nextLine();
 
@@ -308,33 +313,65 @@ public class TutorialGroupManagement {
         // Select a Group
         if (selectedIndex >= 1 && selectedIndex <= totalStudent) {
             Student selectedStudent = studentList.getEntry(selectedIndex);
+
+            // Get the program associated with the selected student
+            Programme studentProgram = selectedStudent.getProgramme();
+
+            // Continue with the process of adding the student to a tutorial group
             System.out.println("\nSelected Student: " + selectedStudent);
             System.out.println("===========================================");
             System.out.println("Enter the index of the Tutorial Group to add the student to: ");
-            System.out.println("1. Group 1");
-            System.out.println("2. Group 2");
-            System.out.println("3. Group 3");
-            System.out.println("4. Group 4");
-            System.out.println("5. Group 5");
-            System.out.println("=====================");
-            System.out.printf("Enter [1-5]: ");
-            int input = scan.nextInt();
-            scan.nextLine();
 
-            // Validate input
-            if (input < 1 || input > 5) {
-                System.out.println("\nInvalid Input! Please enter a number between \"1-5\".");
+            // Display tutorial groups for the student's program
+            int groupCounter = 0;
+            for (int i = 1; i <= tutorialGroupList.getNumberOfEntries(); i++) {
+                TutorialGroup group = tutorialGroupList.getEntry(i);
+                if (group.getProgrammeCODE().equals(studentProgram.getProgramCode())) {
+                    groupCounter++;
+                    System.out.println(groupCounter + ". " + group.getTutorGroupName());
+                }
+            }
+
+            if (groupCounter == 0) {
+                System.out.println("No tutorial groups available for " + studentProgram.getProgramName());
                 System.out.println("Press \"Enter\" to continue...");
                 scan.nextLine();
                 return;
             }
 
-            // Add student to a tutorial group
-            TutorialGroup addStudent = new TutorialGroup("G" + input, "Group " + input, "");
-            tutorialGroupList.add(addStudent);
+            System.out.println("=====================");
+            System.out.printf("Enter [1-%d]: ", groupCounter);
+            int input = scan.nextInt();
+            scan.nextLine();
+
+            // Validate input
+            if (input < 1 || input > groupCounter) {
+                System.out.println("\nInvalid Input! Please enter a number between \"1-" + groupCounter + "\".");
+                System.out.println("Press \"Enter\" to continue...");
+                scan.nextLine();
+                return;
+            }
+
+            // Add student to the selected tutorial group
+            TutorialGroup selectedTutorialGroup = null;
+            int count = 0;
+            for (int i = 1; i <= tutorialGroupList.getNumberOfEntries(); i++) {
+                TutorialGroup group = tutorialGroupList.getEntry(i);
+                if (group.getProgrammeCODE().equals(studentProgram.getProgramCode())) {
+                    count++;
+                    if (count == input) {
+                        selectedTutorialGroup = group;
+                        break;
+                    }
+                }
+            }
+            //add student into TG
+            selectedTutorialGroup.getStudentList().add(selectedStudent);
+            //set stdent's TG
+            selectedStudent.setTutorialGroup(selectedTutorialGroup);
 
             System.out.println("=====================");
-            System.out.println("Successfully added " + selectedStudent.getStudentName() + " to Group " + input + ".");
+            System.out.println("Successfully added " + selectedStudent.getStudentName() + " to " + selectedTutorialGroup.getTutorGroupName() + ".");
             System.out.println("Press \"Enter\" to continue...");
             scan.nextLine();
         } else {
@@ -343,6 +380,9 @@ public class TutorialGroupManagement {
             scan.nextLine();
         }
     }
+
+
+
 
     //To remove a student from a tutorial group
     //1.Print all existing Tutorial Group.
@@ -358,7 +398,7 @@ public class TutorialGroupManagement {
 
         // Display all TGroup in tutorial groups
         for (int i = 1; i <= totalEntries; i++) {
-            System.out.println(i + "." + tutorialGroupList.getEntry(i));
+            System.out.println(i + "." + tutorialGroupList.getEntry(i).getTutorGroupName() + " IN " + tutorialGroupList.getEntry(i).getProgrammeCODE());
         }
 
         System.out.println("================================================");
@@ -367,7 +407,7 @@ public class TutorialGroupManagement {
         scan.nextLine();
 
         // Validate selected group
-        if (selectedGroup < 1 || selectedGroup > 5) {
+        if (selectedGroup < 1 || selectedGroup > totalEntries) {
             System.out.println("\nInvalid input. Please enter a number between 1 - 5" + ".");
             System.out.println("Press \"Enter\" to continue...");
             scan.nextLine();
@@ -389,7 +429,7 @@ public class TutorialGroupManagement {
         int totalStudent = StuList.getNumberOfEntries();  // Counter for displayed entries
         for (int j = 1; j <= totalStudent; j++) {
             Student findStudent = StuList.getEntry(j);
-            System.out.println(j + ". " + group.getTutorGroupID() + group.getTutorGroupName() + "\t" + findStudent);
+            System.out.println(j + ". " + group.getTutorGroupID() + "-" + group.getTutorGroupName() + "\t" + findStudent);
         }
 
         // Select a student
@@ -483,26 +523,24 @@ public class TutorialGroupManagement {
         System.out.print("Are you sure you want to change? (yes/no) : ");
         String confirm = scan.nextLine();
         if (confirm.equals("yes")) { // If yes, change the student's tutorial group
+
+            
             // Retrieve the selected tutorial group
             TutorialGroup selectedGroup = new TutorialGroup("G" + selectedGroupID, "Group " + selectedGroupID, "");
-
+                       
+            
             // Update the student's tutorial group
             selectedStudent.setTutorialGroup(selectedGroup);
-
-            // Update the corresponding tutorial group object in Programme.getTutorialGroupList()
-            /*for (int i = 1; i <= Programme.getTutorialGroupList().getNumberOfEntries(); i++) {
-                TutorialGroup group = Programme.getTutorialGroupList().getEntry(i);
-                if (group.equals(selectedGroup)) {
-                    Programme.getTutorialGroupList().replace(i, selectedGroup);
-                    break;
-                }
-            }*/
-
+            
+            // Add the student to the new tutorial group
+            selectedGroup.getStudentList().add(selectedStudent);
+            
             System.out.println("\nStudent has been successfully changed to group " + selectedGroupID + ".");
             System.out.println("Press \"Enter\" to continue...");
             scan.nextLine();
         }
     }
+
 
 ////        To List all students in a tutorial group and a programme. 
 ////        1.Display Exists Program to Choose.
@@ -532,14 +570,14 @@ public class TutorialGroupManagement {
 
         // Iterate over each tutorial group to find those belonging to the selected programme
         int groupCounter = 0; // Counter to keep track of displayed groups
-        /*for (int i = 1; i <= Programme.getTutorialGroupList().getNumberOfEntries(); i++) {
-            TutorialGroup group = Programme.getTutorialGroupList().getEntry(i);
+        for (int i = 1; i <= selectedProgramme.getTutorialGroupList().getNumberOfEntries(); i++) {
+            TutorialGroup group = selectedProgramme.getTutorialGroupList().getEntry(i);
             // Check if the group belongs to the selected programme
-            if (group.getProgrammeCODE().equals(selectedProgramme.getProgramCode())) {
-                groupCounter++;
-                System.out.println(groupCounter + ". " + group.getTutorGroupID() + "\t" + group.getTutorGroupName());
-            }
-        }*/
+            //if (group.getProgrammeCODE().equals(selectedProgramme.getProgramCode())) {
+            groupCounter++;
+            System.out.println(groupCounter + ". " + group.getTutorGroupID() + "\t" + group.getTutorGroupName());
+            //}
+        }
 
         // Prompt the user to select a tutorial group
         System.out.print("Enter the number of the tutorial group: ");
@@ -550,13 +588,14 @@ public class TutorialGroupManagement {
         if (groupIndex < 1 || groupIndex > groupCounter) {
             System.out.println("Invalid tutorial group number.");
             return;
+            
         }
 
         // Get the selected tutorial group
         TutorialGroup selectedGroup = null;
         int selectedGroupCount = 0;
-        /*for (int i = 1; i <= Programme.getTutorialGroupList().getNumberOfEntries(); i++) {
-            TutorialGroup group = Programme.getTutorialGroupList().getEntry(i);
+        for (int i = 1; i <= selectedProgramme.getTutorialGroupList().getNumberOfEntries(); i++) {
+            TutorialGroup group = selectedProgramme.getTutorialGroupList().getEntry(i);
             if (group.getProgrammeCODE().equals(selectedProgramme.getProgramCode())) {
                 selectedGroupCount++;
                 if (selectedGroupCount == groupIndex) {
@@ -564,7 +603,16 @@ public class TutorialGroupManagement {
                     break;
                 }
             }
-        }*/
+        }
+        
+        //Check if the selectedGroup is Null
+        if (selectedGroup == null) {
+            System.out.println("The number of students in the Group is \"Empty\" ");
+            System.out.println("Press \"Enter\" to continue...");
+            scan.nextLine();
+            return;
+            
+        }
 
         // Display all students in the selected tutorial group
         LinkedList<Student> stuList = selectedGroup.getStudentList();
@@ -581,80 +629,98 @@ public class TutorialGroupManagement {
 
 //        //To merge Tutorial Group based on criteria: Only able to Merge Within Same Programme.
     public void mergeGroup() {
-        // Get all existing tutorial groups
-        int totalGroup = tutorialGroupList.getNumberOfEntries();
+    // Get all existing tutorial groups
+    int totalGroup = tutorialGroupList.getNumberOfEntries();
 
-        // Prompt the user to select two tutorial groups to merge
-        System.out.println("Select \"two tutorial\" groups to merge:");
-        for (int i = 1; i <= totalGroup; i++) {
-            TutorialGroup group = tutorialGroupList.getEntry(i);
-            System.out.println(i + ". " + group.getTutorGroupID() + "-" + group.getTutorGroupName() + " (" + group.getProgrammeCODE() + ")");
-        }
+    // Prompt the user to select two tutorial groups to merge
+    System.out.println("Select two tutorial groups to merge:");
+    for (int i = 1; i <= totalGroup; i++) {
+        TutorialGroup group = tutorialGroupList.getEntry(i);
+        System.out.println(i + ". " + group.getTutorGroupID() + "-" + group.getTutorGroupName() + " (" + group.getProgrammeCODE() + ")");
+    }
 
-        // Select the first tutorial group
-        System.out.println("=======================================");
-        System.out.printf("Enter (1-%d): ", totalGroup);
-        int group1Index = scan.nextInt();
-        scan.nextLine();
+    // Select the first tutorial group
+    System.out.println("=======================================");
+    System.out.print("Enter the index of the first group to merge (1-" + totalGroup + "): ");
+    int group1Index = scan.nextInt();
+    scan.nextLine();
 
-        // Validate the first group selection
-        if (group1Index < 1 || group1Index > totalGroup) {
-            System.out.println("\nInvalid input. Please enter a number between 1 and " + totalGroup + ".");
-            System.out.println("Press \"Enter\" to continue...");
-            scan.nextLine();
-            return;
-        }
+    // Validate the first group selection
+    if (group1Index < 1 || group1Index > totalGroup) {
+        System.out.println("\nInvalid input. Please enter a number between 1 and " + totalGroup + ".");
+        return;
+    }
 
-        //group1index get entry to the list.
-        TutorialGroup group1 = tutorialGroupList.getEntry(group1Index);
+    TutorialGroup group1 = tutorialGroupList.getEntry(group1Index);
 
-        // Prompt the user to select another tutorial group
-        System.out.println("Select another tutorial group to merge with the first one:");
-        for (int i = 1; i <= totalGroup; i++) {
-            TutorialGroup group2 = tutorialGroupList.getEntry(i);
-            if (group2.getProgrammeCODE().equals(group1.getProgrammeCODE())) { // Only show groups within the same programme. Exp,RIT = RIT 
-                if (group2.getTutorGroupID().equals(group1.getTutorGroupID())) {
-                    continue; // Avoid selecting the same group. Continue is will skip if the id same.
-                }
-                System.out.println(i + ". " + group2.getTutorGroupID() + "-" + group2.getTutorGroupName());
-            }
-        }
-
-        // Select the second tutorial group
-        System.out.println("=======================================");
-        System.out.printf("Enter (1-%d): ", totalGroup - group1Index);
-        int group2Index = scan.nextInt();
-        scan.nextLine();
-
-        // Validate the second group selection
-        if (group2Index < 1 || group2Index > (totalGroup - group1Index)) {
-            System.out.println("\nInvalid input. Please enter a number between 1 and " + (totalGroup - group1Index) + ".");
-            System.out.println("Press \"Enter\" to continue...");
-            scan.nextLine();
-            return;
-        }
-
-        TutorialGroup group2 = tutorialGroupList.getEntry(group1Index + group2Index);
-
-        // Confirm the merge
-        System.out.print("Are you sure you want to merge tutorial groups " + group1.getTutorGroupID() + " and " + group2.getTutorGroupID() + "? (yes/no)");
-        String confirm = scan.nextLine();
-
-        // Merge the two tutorial groups if the user confirms
-        if (confirm.equalsIgnoreCase("yes")) {
-
-            // Clear the student list of the second group
-            group2.getStudentList().clear();
-
-            // Change the group ID and name of the second group to match the first group
-            group2.setTutorGroupID(group1.getTutorGroupID());
-            group2.setTutorGroupName(group1.getTutorGroupName());
-
-            System.out.println("Tutorial groups " + group1.getTutorGroupID() + " and " + group2.getTutorGroupID() + " have been merged.");
-        } else {
-            System.out.println("Merge cancelled.");
+    // Prompt the user to select another tutorial group
+    System.out.println("Select another tutorial group to merge with the first one:");
+    int availableGroupsCount = 0; // Count of available groups for selection
+    for (int i = 1; i <= totalGroup; i++) {
+        TutorialGroup group2 = tutorialGroupList.getEntry(i);
+        if (i != group1Index && group2.getProgrammeCODE().equals(group1.getProgrammeCODE())) {
+            availableGroupsCount++;
+            System.out.println(availableGroupsCount + ". " + group2.getTutorGroupID() + "-" + group2.getTutorGroupName());
         }
     }
+
+    // Select the second tutorial group
+    System.out.println("=======================================");
+    System.out.print("Enter the index of the second group to merge (1-" + availableGroupsCount + "): ");
+    int group2Index = scan.nextInt();
+    scan.nextLine();
+
+    // Validate the second group selection
+    if (group2Index < 1 || group2Index > availableGroupsCount) {
+        System.out.println("\nInvalid input. Please enter a number between 1 and " + availableGroupsCount + ".");
+        return;
+    }
+
+    // Find the actual index of the selected group in the tutorialGroupList
+    int actualGroup2Index = 0;
+    for (int i = 1, count = 0; i <= totalGroup; i++) {
+        if (i != group1Index) {
+            TutorialGroup group2 = tutorialGroupList.getEntry(i);
+            if (group2.getProgrammeCODE().equals(group1.getProgrammeCODE())) {
+                count++;
+                if (count == group2Index) {
+                    actualGroup2Index = i;
+                    break;
+                }
+            }
+        }
+    }
+
+    TutorialGroup group2 = tutorialGroupList.getEntry(actualGroup2Index);
+
+    // Confirm the merge
+    System.out.print("Are you sure you want to merge tutorial groups " + group1.getTutorGroupID() + " and " + group2.getTutorGroupID() + "? (yes/no) ");
+    String confirm = scan.nextLine();
+
+    // Merge the two tutorial groups if the user confirms
+    if (confirm.equalsIgnoreCase("yes")) {
+        // Move students from group2 to group1
+        for (Student student : group2.getStudentList()) {
+            group1.addStudent(student);
+        }
+        
+        // Clear the student list of the second group
+        group2.getStudentList().clear();
+        
+        // Change the group ID and name of the second group to match the first group
+        group2.setTutorGroupID(group1.getTutorGroupID());
+        group2.setTutorGroupName(group1.getTutorGroupName());
+        group2.getStudentList().remove(actualGroup2Index);
+
+        System.out.println("Tutorial groups " + group1.getTutorGroupID() + " and " + group2.getTutorGroupID() + " have been merged.");
+        System.out.println("Press \"Enter\" to continue...");
+        scan.nextLine();
+    } else {
+        System.out.println("Merge cancelled.");
+    }
+}
+
+
 //        
 //    //To Generate Summary Report (At Least 2)
 //    //1.Ask user to Select what Summary they want to see
@@ -662,73 +728,110 @@ public class TutorialGroupManagement {
 //    //3.If 1, print the 1 Report, if 2 print 2
 //    //4.Print Report.
 
-    public void generateReport() {
+        public void generateReport() {
+         System.out.println("=================================");
+         System.out.println("Select a Summary Report");
+         System.out.println("=================================");
+         System.out.println("1. Programme Summary Report");
+         System.out.println("2. Tutorial Group Summary Report");
+         System.out.println("================================================");
+         System.out.print("Enter (1-2): ");
 
-        System.out.println("==============================");
-        System.out.println("\tSelect a Summary Report");
-        System.out.println("==============================");
-        System.out.println("1. Tutorial Group Report");
-        System.out.println("2. Programme Report");
-        //get entry
-        System.out.println("==============================");
-        System.out.print("Enter (1-2): ");
-        int entry = scan.nextInt();
-        scan.nextLine();
+         int choice = scan.nextInt();
+         scan.nextLine();
 
-        //Validate entry
-        if (entry < 1 || entry > 2) {
-            System.out.println("\nInvalid input. Please enter a number between 1 - 2.");
-            System.out.println("Press \"Enter\" to continue...");
-            scan.nextLine();
-            return;
-        }
+         switch (choice) {
+             case 1:
+                 displayProgrammeSummaryReport();
+                 break;
+             case 2:
+                 displayTutorialGroupSummaryReport();
+                 break;
+             default:
+                 System.out.println("Invalid choice. Please enter 1 or 2.");
+                 break;
+         }
+     }
+   
+    public void displayProgrammeSummaryReport() {
+    // Programme Summary Report
+    System.out.println("===============================================================================================================================");
+    System.out.println("---------------------------------------------- Programme Summary Report  ---------------------------------------------------");
+    System.out.println("===============================================================================================================================");
 
-        if (entry == 1) {
-            // Get all existing tutorial groups
-            int totalEntries = tutorialGroupList.getNumberOfEntries();
+    System.out.printf("%-4s| %-25s| %-66s| %-30s%n", "No.", "Program Code", "Programme Name", "Faculty");
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
 
-            // Print the header
-            System.out.println("--------------------------------");
-            System.out.println("Tutorial Group Summary Report");
-            System.out.println("--------------------------------");
-
-            // Iterate through all the tutorial groups
-            // Display all TGroup in tutorial groups
-            for (int i = 1; i <= totalEntries; i++) {
-                System.out.println(i + "." + tutorialGroupList.getEntry(i));
-                TutorialGroup group = tutorialGroupList.getEntry(i);
-
-                // Print the group details
-                System.out.println("Group " + i + ":");
-                System.out.println("Group ID: " + group.getTutorGroupID());
-                System.out.println("Group Name: " + group.getTutorGroupName());
-                System.out.println("Number of Students: " + group.getStudentList().getNumberOfEntries());
-                System.out.println();
-            }
-        } else if (entry == 2) {
-            // Get all existing tutorial groups
-            int totalGroup = tutorialGroupList.getNumberOfEntries();
-
-            // Print the header
-            System.out.println("--------------------------------");
-            System.out.println("Programme Summary Report");
-            System.out.println("--------------------------------");
-
-            // Iterate through all the tutorial groups
-            for (int i = 1; i <= totalGroup; i++) {
-                TutorialGroup group = tutorialGroupList.getEntry(i);
-
-                // Print the group details
-                System.out.println("Programme: " + group.getProgrammeCODE());
-                System.out.println("Group " + i + ":");
-                System.out.println("Group ID: " + group.getTutorGroupID());
-                System.out.println("Group Name: " + group.getTutorGroupName());
-                System.out.println("Number of Students: " + group.getStudentList().getNumberOfEntries());
-                System.out.println("Tutor Name: " + group.getTutor().getTutorName());
-                System.out.println();
-            }
-        }
+    int totalProgramme = ProgramMenu.getProgramList().getNumberOfEntries();
+    int totalStudents = 0;
+    for (int i = 1; i <= totalProgramme; i++) {
+        Programme programme = ProgramMenu.getProgramList().getEntry(i);
+        int studentsInProgramme = countStudentsInProgramme(programme.getProgramCode());
+        totalStudents += studentsInProgramme;
+        System.out.printf("%-4d| %-25s| %-66s| %-30s%n", i, programme.getProgramCode(), programme.getProgramName(), programme.getFaculty());
     }
+
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+    System.out.println("SUM Of Student Enrolled In a Programme:");
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+    System.out.println("Total Programme:  " + totalProgramme);
+    System.out.println("Total Students Enrolled: " + totalStudents);
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+    System.out.println("Press \"Enter\" to continue...");
+    scan.nextLine();
+}
+
+public void displayTutorialGroupSummaryReport() {
+    // Tutorial Group Summary Report
+    System.out.println("===============================================================================================================================");
+    System.out.println("-------------------------------------------- Tutorial Group Summary Report  ---------------------------------------------------");
+    System.out.println("===============================================================================================================================");
+
+    System.out.printf("%-4s| %-25s| %-66s| %-30s%n", "No.", "Program Code", "Programme Name", "Faculty");
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+
+    int totalProgramme = ProgramMenu.getProgramList().getNumberOfEntries();
+    int totalGroups = 0;
+    for (int i = 1; i <= totalProgramme; i++) {
+        Programme programme = ProgramMenu.getProgramList().getEntry(i);
+        int groupsInProgramme = countGroupsInProgramme(programme.getProgramCode());
+        totalGroups += groupsInProgramme;
+        System.out.printf("%-4d| %-25s| %-66s| %-30s%n", i, programme.getProgramCode(), programme.getProgramName(), programme.getFaculty());
+    }
+
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+    System.out.println("SUM Of Tutorial Group In a Programme:");
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+    System.out.println("Total Programme:  " + totalProgramme);
+    System.out.println("Total Tutorial Groups: " + totalGroups);
+    System.out.println("-------------------------------------------------------------------------------------------------------------------------------");    
+    System.out.println("Press \"Enter\" to continue...");
+    scan.nextLine();
+}
+
+        private int countStudentsInProgramme(String programCode) {
+            
+            int totalStudents = 0;
+            for (int i = 1; i <= tutorialGroupList.getNumberOfEntries(); i++) {
+                TutorialGroup student = tutorialGroupList.getEntry(i);
+                if (student.getProgrammeCODE().equals(programCode)) {
+                   totalStudents += student.studentList.getNumberOfEntries();
+               }
+            }
+            return totalStudents;
+        }
+
+        private int countGroupsInProgramme(String programCode) {
+            int totalGroups = 0;
+            for (int i = 1; i <= ProgramMenu.getProgramList().getNumberOfEntries(); i++) {
+                Programme programme = ProgramMenu.getProgramList().getEntry(i);
+                if (programme.getProgramCode().equals(programCode)) {
+                    totalGroups += programme.getTutorialGroupList().getNumberOfEntries();
+                }
+            }
+            return totalGroups;
+        }
+
 
     public static ArrayList<TutorialGroup> getTutorialGroupList() {
         return tutorialGroupList;
@@ -739,6 +842,7 @@ public class TutorialGroupManagement {
     }
 
     public static void main(String[] args) {
+        new MainDao().generate();
         TutorialGroupManagement tgtgm = new TutorialGroupManagement();
         tgtgm.entry();
     }
