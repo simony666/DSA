@@ -682,7 +682,7 @@ public void searchTutorsForCourseType() {
 
     teachingAssignmentUI.listAllCourse(getAllCourse());
     
-        System.out.println("Enter course (T, P , l): ");
+        System.out.println("Enter course (T , P , L): ");
         String Input = teachingAssignmentUI.getInput();
     
         boolean TutorExist = false;
@@ -769,7 +769,7 @@ public void searchTutorsForCourseType() {
     }
     
     if (!TutorExist){
-            teachingAssignmentUI.CourseNotFound();
+            teachingAssignmentUI.TutorNotFound();
             return;
         }
     

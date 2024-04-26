@@ -11,7 +11,6 @@ import boundary.*;
 import dao.MainDao;
 import java.util.Scanner;
 import utility.MessageUI;
-import control.MainCrtl;
 
 public class StudentController {
 
@@ -87,9 +86,12 @@ public class StudentController {
                     viewAllStudent();
                     MessageUI.pressEnter();
                     runStudentController();
-//                case 11:
-//                    MessageUI.cls();
-//                    break;
+                case 11:
+                    MessageUI.clearScreen();
+                    generateReport2();
+                    MessageUI.pressEnter();
+                    runStudentController();
+                    break;
 //                case 12:
 //                    MessageUI.cls();
 //                    break;
@@ -542,6 +544,60 @@ public class StudentController {
             System.out.printf(" %-11s | %-17s |\n", countCourse, courseFee);
         }
     }
+    
+//    private void generateReport2(){
+//        ListInterface<Programme> programList = CourseMenu.programList;
+//        for (int i = 1; i <= programList.getNumberOfEntries(); i++){
+//            
+//        }
+//    }
+    
+    private void generateReport2() {
+    // Create ArrayLists to store counts for programs and faculties
+    ArrayList<String> programCodes = new ArrayList<>();
+    ArrayList<Integer> programCounts = new ArrayList<>();
+    ArrayList<String> faculties = new ArrayList<>();
+    ArrayList<Integer> facultyCounts = new ArrayList<>();
+
+    // Initialize counts to zero
+    for (Programme program : CourseMenu.programList) {
+        String programCode = program.getProgramCode();
+        programCodes.add(programCode);
+        programCounts.add(0);
+    }
+
+    // Count students for each program and faculty
+    for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
+        Student student = studentList.getEntry(i);
+        String programCode = student.getProgramme().getProgramCode();
+        int programIndex = programCodes.getNumberOfEntries();
+        if (programIndex != -1) {
+            int count = programCounts.getEntry(programIndex);
+            programCounts.add(programIndex, count + 1);
+        }
+
+        String faculty = student.getProgramme().getFaculty();
+        int facultyIndex = faculties.getNumberOfEntries();
+        if (facultyIndex != -1) {
+            int count = facultyCounts.getEntry(facultyIndex);
+            facultyCounts.add(facultyIndex, count + 1);
+        }
+    }
+
+    // Display the report for programs
+    System.out.println("Programme Report:");
+    System.out.println("-----------------");
+    for (int i = 0; i < programCodes.getNumberOfEntries(); i++) {
+        System.out.println(programCodes.getEntry(i) + ": " + programCounts.getEntry(i) + " students");
+    }
+
+    // Display the report for faculties
+    System.out.println("\nFaculty Report:");
+    System.out.println("----------------");
+    for (int i = 0; i < faculties.getNumberOfEntries(); i++) {
+        System.out.println(faculties.getEntry(i) + ": " + facultyCounts.getEntry(i) + " students");
+    }
+}
 
     private void searchStudentName() {
         ArrayList<Student> filteredStudent = new ArrayList<>();

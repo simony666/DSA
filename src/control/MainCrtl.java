@@ -21,7 +21,7 @@ public class MainCrtl {
                 new StudentController().runStudentController();
                 break;
             case 2:
-                CourseMenu.courseMenu();
+                new CourseMenu().courseMenu();
                 break;
             case 3:
                 new TeachingAssignment().entry();
