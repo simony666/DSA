@@ -38,7 +38,7 @@ public class StudentUI {
         System.out.println("| 6. Remove student from a courses                                                  |");
         System.out.println("| 7. Fee paid for registered courses                                                |");
         System.out.println("| 8. Filters student                                                                |");
-        System.out.println("| 9. Generate summary report                                                       |");
+        System.out.println("| 9. Generate summary report                                                        |");
         System.out.println("*-----------------------------------------------------------------------------------*");
         System.out.print("Select number: ");
 
@@ -48,34 +48,18 @@ public class StudentUI {
         //return MessageUI.getChoice();
     }
 
-    public void displayEditStudent() {
-        System.out.println("1. Edit student ID");
-        System.out.println("2. Edit student name");
-        System.out.println("3. Edit student age");
-        System.out.println("4. Edit programme");
-        System.out.println("5. Edit all details");
-
-        System.out.print("Enter your choice: ");
-    }
-
-    public void displayTryAgain() {
-        System.out.println("1. Try again");
-        System.out.println("2. Back to previous page");
-
-        System.out.print("Choose an option: ");
-    }
-
     public void displayFilterMenu() {
         System.out.println("Filter by:");
-        System.out.println("1. Student ID");
         System.out.println("2. Student Name");
+        System.out.println("2. Student Age");
         System.out.println("3. Programme");
-        System.out.println("4. Intake Semester");
+        System.out.println("4. Faculty");
         System.out.println("5. Course ID");
-        System.out.println("6. Course Status");
+//        System.out.println("6.Filter Student Tutorial Group");
 
-        System.out.print("Enter your choices (separated by commas): ");
+        System.out.print("Enter your choices : ");
     }
+
     
     public int verifyAge() {
         int age = 0;
@@ -100,6 +84,13 @@ public class StudentUI {
         return age;
     }
    
+    
+    public void report1Header(){
+        System.out.println("==================================================================================================================");
+        System.out.println("                   Report 1 =>   Total Course Registered by Student and Total Course Fee                          ");
+        System.out.println("==================================================================================================================");
+        System.out.printf("   | %-10s | %-20s | %-10s | %-10s | %-10s | %-10s | %-10s |\n", "Student ID", "Student Name", "Student Age", "Programme", "Faculty", "Count Course", "Total Course Fee");
+    }
     
 }
 

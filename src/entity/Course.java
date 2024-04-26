@@ -73,7 +73,7 @@ public class Course {
         this.courseStatus = courseStatus;
     }
 
-    public double getCourseFee() {
+    public int getCourseFee() {
         return courseFee;
     }
 

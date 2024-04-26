@@ -78,7 +78,7 @@ public class Student{
     
     @Override
     public String toString() {
-        return String.format("| %-10s | %-20s | %-11s | %-10s | %-10s |\n", studentID, studentName, age, programme.getProgramCode(), programme.getFaculty());
+        return String.format("| %-10s | %-20s | %-11s | %-10s | %-10s |", studentID, studentName, age, programme.getProgramCode(), programme.getFaculty());
     }
     
    
