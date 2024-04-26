@@ -92,7 +92,7 @@ public class AssignmentTeamUI {
             limit = Integer.parseInt(limitInput);
         }
         
-        System.out.println("Limit Set to" + limit);
+        System.out.println("Limit Set to " + limit);
         System.out.println("");
         
         //select Tutorial group
@@ -106,7 +106,7 @@ public class AssignmentTeamUI {
             if(choice == -1){
                 System.out.println("Creation of assignment team cancelled.");
                 return null;
-            }else if (choice<=0 || choice >=total){
+            }else if (choice<=0 || choice > total){
                 //set choice to invalid to display again
                 MessageUI.clearScreen();
                 MessageUI.displayInvalidChoiceMessage();
@@ -249,6 +249,7 @@ public class AssignmentTeamUI {
             case 2:
                 //Tutorial Group
                 if (team.getStudentCount()>0){
+                    MessageUI.clearScreen();
                     System.out.println("Unable to change! Student List Must Be Empty!");
                     return null;
                 }
@@ -296,7 +297,7 @@ public class AssignmentTeamUI {
                         choice = 0;
                     }
                 }
-                Course course = CList.getEntry(choice);
+                Course course = CList.getEntry(Cchoice);
                 team.setCourse(course);
                 System.out.println("Assignment Team's Course Changed!");
                 break;
@@ -304,7 +305,8 @@ public class AssignmentTeamUI {
                 //Student Limit
                 int limit = 0;
                 while (limit == 0){
-                    System.out.println("\nPlease Enter New Assignment Team Name or \"-1\" to cancel:");
+                    System.out.println("\nCurrent Limit: "+team.getLimit());
+                    System.out.println("\nPlease Enter New Limit or \"-1\" to cancel:");
                     limit = scanner.nextInt();
                     scanner.nextLine();
 
@@ -385,6 +387,8 @@ public class AssignmentTeamUI {
             if (stu == null){
                 MessageUI.clearScreen();
                 System.out.println("Please Enter A Valid Student's ID or \"cancel\" to exit");
+            }else{
+                break;
             }
         }
         return stu;

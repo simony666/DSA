@@ -32,7 +32,7 @@ public class MainDao {
         Course course9 = new Course("BAMS1613", "PROBABILITY AND STATISTICS", "FOCS", 3, "Main", 777);
         Course course10 = new Course("MPU-3322", "CONTEMPORARY MALAYSIAN ISSUES", "FOCS", 2, "Elective", 777);
         Course course11 = new Course("MPU-3133", "FALSAFAH DAN ISU SEMASA", "FAFB", 3, "Elective", 777);
-        Course course12 = new Course("MPU-3302", "INTEGRITY AND ANTI-CORRUPTION", "FAFB", 2, " Elective", 777);
+        Course course12 = new Course("MPU-3302", "INTEGRITY AND ANTI-CORRUPTION", "FAFB", 2, "Elective", 777);
         Course course13 = new Course("BBFA1113", "PRINCIPLES OF ACCOUNTING", "FAFB", 3, "Repeat", 777);
         Course course14 = new Course("BBBE1033", "ECONOMICS", "FAFB", 3, "Repeat", 777);
         Course course15 = new Course("BAMS1733", "QUANTITATIVE STUDIES", "FAFB", 3, "Resit", 50);

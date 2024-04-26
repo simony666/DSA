@@ -95,10 +95,10 @@ public class CourseUI {
     }
 
     public static String listHeader() {
-        return String.format("==================================================================================================================\n" + 
-                             "| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n" + 
-                             "==================================================================================================================", 
-                             "Code", "Course Name", "Faculty", "Credit Hours", "Status", "Course Fee");
+        return String.format("==================================================================================================================\n"
+                + "| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n"
+                + "==================================================================================================================",
+                "Code", "Course Name", "Faculty", "Credit Hours", "Status", "Course Fee");
     }
 
     public static String listSeperator() {
@@ -114,6 +114,13 @@ public class CourseUI {
         System.out.println("5. Course Fee");
         System.out.println("0. Cancel Amendment");
         System.out.print("Enter your choice: ");
+    }
+
+    public static String programSummaryHeader() {
+        return String.format("======================================================================================================\n"
+                + "| %-12s | %-70s | %-10s |\n"
+                + "======================================================================================================",
+                "Program Code", "Program Name", "Faculty");
     }
 
 }

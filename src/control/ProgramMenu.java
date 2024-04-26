@@ -4,14 +4,6 @@ import entity.Programme;
 
 import adt.ArrayList;
 import adt.ListInterface;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import java.util.Scanner;
-import adt.DynamicLinkedList;
-import adt.DynamicLinkedListInterface;
-import entity.Course;
-import entity.TutorialGroup;
 
 public class ProgramMenu {
 
