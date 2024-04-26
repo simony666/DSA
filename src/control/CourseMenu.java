@@ -103,13 +103,18 @@ public class CourseMenu {
 
     //2.Remove Course
     private static void removeCourse(Scanner scanner) {
-        System.out.print("Enter course code to remove: ");
+        // Display all courses
+        System.out.println("\nAvailable Courses:");
+        for (Course course : courseMap.getAllValue()) {
+            System.out.println(course.getCourseCode() + " - " + course.getCourseName());
+        }
+
+        System.out.print("\nEnter course code to remove: ");
         String courseCode = scanner.nextLine();
 
         Course removedCourse = courseMap.remove(courseCode);
         if (removedCourse != null) {
             System.out.println("Course removed successfully.");
-
             ProgramMenu.removeCourseFromPrograms(courseCode);
         } else {
             System.out.println("Course not found. Please enter a valid course code or press 0 to exit.");
@@ -155,6 +160,10 @@ public class CourseMenu {
 
     //4.Amend Course Details
     private static void amendCourseDetails(Scanner scanner) {
+        System.out.println("\nAvailable Courses:");
+        for (Course course : courseMap.getAllValue()) {
+            System.out.println(course.getCourseCode() + " - " + course.getCourseName());
+        }
         System.out.print("Enter course code to amend: ");
         String courseCode = scanner.nextLine();
 
@@ -376,6 +385,7 @@ public class CourseMenu {
         System.out.println("\n                                             Course Summary Report:");
         System.out.println("-------------------------------------------------------------------------------------------------------------------");
         System.out.println("Generated at: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("EEEE, d MMMM yyyy, h:mma")));
+
         System.err.println(CourseUI.listHeader());
         for (KeyValuePair<String, Course> entry : courseMap.getAllEntries()) {
             Course course = entry.getValue();
