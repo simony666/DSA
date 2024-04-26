@@ -95,21 +95,29 @@ public class CourseMenu {
         Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
 
         if (programme != null) {
+            // Display courses not linked to the selected program
+            System.out.println("\nCourses Available to Add:");
+
+            for (KeyValuePair<String, Course> entry : courseMap.getAllEntries()) {
+                Course course = entry.getValue();
+                if (!programme.getLinkedCourses().contains(course.getCourseCode())) {
+                    System.out.println(course.getCourseCode() + " - " + course.getCourseName());
+                }
+            }
+
             String courseCode;
             do {
                 courseCode = CourseUI.promptString("Course Code", 10);
 
                 if (!courseMap.containsKey(courseCode)) {
                     System.out.println("Course code doesn't exist. Please enter an existing course code.");
+                } else if (programme.getLinkedCourses().contains(courseCode)) {
+                    System.out.println("Course is already associated with the program.");
                 }
-            } while (!courseMap.containsKey(courseCode));
+            } while (!courseMap.containsKey(courseCode) || programme.getLinkedCourses().contains(courseCode));
 
-            if (!programme.getLinkedCourses().contains(courseCode)) {
-                programme.addLinkedCourse(courseCode);
-                System.out.println("Course added to program successfully.");
-            } else {
-                System.out.println("Course is already associated with the program.");
-            }
+            programme.addLinkedCourse(courseCode);
+            System.out.println("Course added to program successfully.");
         } else {
             System.out.println("Program not found.");
         }
