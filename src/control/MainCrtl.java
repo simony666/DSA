@@ -68,6 +68,8 @@ public class MainCrtl {
     
     public static void main(String[] args) {
         new MainDao().generate();
+        MainCrtl mainController = new MainCrtl();
+        mainController.entry();
     }
     
 }
