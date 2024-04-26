@@ -63,35 +63,35 @@ public int getTGMMenuChoice() {
         }
     }
     
-//        public void generateReportWindow(String reportContent){
-//        // Create a JFrame (window)
-//        JFrame frame = new JFrame("Report Generate");
-//
-//        // Create a JTextArea (text area) to display text
-//        JTextArea textArea = new JTextArea();
-//        textArea.setEditable(false); // Make the text area non-editable
-//
-//        // Set a monospaced font for the text area
-//        Font font = new Font(Font.MONOSPACED, Font.PLAIN, 12);
-//        textArea.setFont(font);
-//
-//        // Add the text area to a JScrollPane (scrollable pane)
-//        JScrollPane scrollPane = new JScrollPane(textArea);
-//
-//        // Add the scroll pane to the frame
-//        frame.getContentPane().add(scrollPane);
-//
-//        // Set the size and close operation of the frame
-//        frame.setSize(1200, 800); // Set the size of the window
-//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close operation
-//
-//        // Display the frame (window)
-//        frame.setVisible(true);
-//
-//        // Example: Set teext in the text area
-//        String outputText = reportContent;
-//        textArea.setText(outputText);
-//        }
+        public void generateReportWindow(String reportContent){
+        // Create a JFrame (window)
+        JFrame frame = new JFrame("Report Generate");
+
+        // Create a JTextArea (text area) to display text
+        JTextArea textArea = new JTextArea();
+        textArea.setEditable(false); // Make the text area non-editable
+
+        // Set a monospaced font for the text area
+        Font font = new Font(Font.MONOSPACED, Font.PLAIN, 12);
+        textArea.setFont(font);
+
+        // Add the text area to a JScrollPane (scrollable pane)
+        JScrollPane scrollPane = new JScrollPane(textArea);
+
+        // Add the scroll pane to the frame
+        frame.getContentPane().add(scrollPane);
+
+        // Set the size and close operation of the frame
+        frame.setSize(1200, 800); // Set the size of the window
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Close operation
+
+        // Display the frame (window)
+        frame.setVisible(true);
+
+        // Example: Set teext in the text area
+        String outputText = reportContent;
+        textArea.setText(outputText);
+        }
     
 
    
