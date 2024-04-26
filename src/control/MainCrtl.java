@@ -50,8 +50,8 @@ public class MainCrtl {
             System.out.println("1. Student");
             System.out.println("2. Course");
             System.out.println("3. Teaching Assignment");
-            System.out.println("4. Tutorial Group Management");
-            System.out.println("5. Assignment Team Management");
+            System.out.println("4. Teaching Assignment");
+            System.out.println("5. Tutorial Group Management");
             System.out.println("6. Exit");
             System.out.println("\nPlease Enter Menu Index(1-6):");
             choice = scanner.nextInt();
