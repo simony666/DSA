@@ -17,12 +17,14 @@ public class CourseMenu {
 
     public static HashMap<String, Course> courseMap = new HashMap<>();
     public static ListInterface<Programme> programList = ProgramMenu.programList;
+    
+    MainCrtl  mainController = new MainCrtl();
 
     public void updateCourseMap(HashMap<String, Course> newCourseMap) {
         this.courseMap = newCourseMap;
     }
 
-    public static void courseMenu() {
+    public void courseMenu() {
 
         Scanner scanner = new Scanner(System.in);
 
@@ -64,6 +66,7 @@ public class CourseMenu {
                         break;
                     case 0:
                         System.out.println("Returning to Main menu...\n");
+                        mainController.entry();
                         ;
                         break;
                     default:
