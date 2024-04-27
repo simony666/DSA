@@ -133,7 +133,7 @@ public class AssignmentTeamCrtl {
 
     //case 5
     public void RemoveStudentCrtl() {
-        System.out.println("Please Select A Team To Add Student");
+        System.out.println("Please Select A Team To Remove Student");
         AssignmentTeam at1 = ui.getTeam();
         if (at1 != null) {
             ArrayList<Student> StuList = at1.getStudentList();
@@ -255,9 +255,8 @@ public class AssignmentTeamCrtl {
     //case 8
     public void ListTeamMemberCrtl() {
         AssignmentTeam at = ui.getTeam();
-        //ui.displayATMemberList(at);
         if (at != null) {
-            System.out.println(String.valueOf(ui.displayATMemberList(at)));
+            ui.displayATMemberList(at);
 
             System.out.println("Press Enter to continue");
             scanner.nextLine();

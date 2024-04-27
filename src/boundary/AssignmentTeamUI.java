@@ -357,6 +357,7 @@ public class AssignmentTeamUI {
             result.put(key, ++count);
         }
         
+        System.out.println("Team Count By Student Count");
         System.out.printf("|%-15s|%-13s|%5s", "-".repeat(15), "-".repeat(13), "\n");
         System.out.printf("| %13s | %-11s |%5s", "Student Count", "Team Count", "\n");
         System.out.printf("|%13s|%-11s|%5s", "-".repeat(13), "-".repeat(11), "\n");
@@ -368,8 +369,7 @@ public class AssignmentTeamUI {
         
     }
     
-    public void Report2(){
-        //Team Count By Student Count
+    public void Report2(){        //Team Count By Student Count
         LinkedList<AssignmentTeam> Team = new AssignmentTeamCrtl().getAssignmentList();
         HashMap<String, Integer> result = new HashMap<>();
         
@@ -378,6 +378,7 @@ public class AssignmentTeamUI {
             int count = result.getOrDefault(key,0);
             result.put(key, ++count);
         }
+        System.out.println("Team Count By Course");
         System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
         System.out.printf("|%-40s|%-11s|%5s", "Course", "Team Count", "\n");
         System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
