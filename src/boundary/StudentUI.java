@@ -4,6 +4,8 @@
  */
 package boundary;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import utility.MessageUI;
@@ -21,6 +23,13 @@ public class StudentUI {
         System.out.println("================================================================================");
         System.out.printf("   | %-10s | %-20s | %-10s | %-10s | %-10s |\n", "Student ID", "Student Name", "Student Age", "Programme", "Faculty");
     }
+    
+    public void CourseHeader() {
+        System.out.println("==================================================================================================================");
+        System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n", "Code", "Course Name", "Faculty", "Semester", "Status", "Course Fee");
+        System.out.println("==================================================================================================================");
+                
+    }
 
     public int getMenuChoice() {
         System.out.println("                        Student Registration Management");
@@ -37,9 +46,8 @@ public class StudentUI {
         System.out.println("| 6. Remove student from a courses                                                  |");
         System.out.println("| 7. Fee paid for registered courses                                                |");
         System.out.println("| 8. Filters student                                                                |");
-        System.out.println("| 9. Generate summary report 1                                                      |");
-        System.out.println("| 10. Generate summary report 2                                                     |");
-        System.out.println("| 11. View all Student                                                              |");
+        System.out.println("| 9. Generate summary report                                                        |");
+        System.out.println("| 10. View all Student                                                              |");
         System.out.println("| 0. Return to main page                                                            |");
         System.out.println("*-----------------------------------------------------------------------------------*");
         System.out.print("Select number: ");
@@ -47,17 +55,29 @@ public class StudentUI {
         int index = sc.nextInt();
         sc.nextLine();
         return index;
-        //return MessageUI.getChoice();
+    }
+    
+    public int getreportChoie(){
+        System.out.println("=================================");
+        System.out.println("Select a Summary Report");
+        System.out.println("=================================");
+        System.out.println("1. Course Summary Report");
+        System.out.println("2. Student Summary Report");
+        System.out.println("================================================");
+        System.out.print("Enter (1-2): ");
+        
+        int index = sc.nextInt();
+        sc.nextLine();
+        return index;
     }
 
     public void displayFilterMenu() {
         System.out.println("Filter by:");
-        System.out.println("2. Student Name");
+        System.out.println("1. Student Name");
         System.out.println("2. Student Age");
         System.out.println("3. Programme");
         System.out.println("4. Faculty");
         System.out.println("5. Course ID");
-//        System.out.println("6.Filter Student Tutorial Group");
 
         System.out.print("Enter your choices : ");
     }
@@ -86,13 +106,78 @@ public class StudentUI {
         return age;
     }
    
-    
-    public void report1Header(){
-        System.out.println("==================================================================================================================");
-        System.out.println("                   Report 1 =>   Total Course Registered by Student and Total Course Fee                          ");
-        System.out.println("==================================================================================================================");
-        System.out.printf("   | %-10s | %-20s | %-10s | %-10s | %-10s | %-10s | %-10s |\n", "Student ID", "Student Name", "Student Age", "Programme", "Faculty", "Count Course", "Total Course Fee");
+    public void generateReportOne() {
+        ReportTopOne();
+        reportHeaderOne();
     }
     
+    public void generateReportTwo(){
+        reportHeaderTwo();
+    }
+    
+    public void ReportTopOne() {
+        seperateOne();
+        System.out.println("                          TUNKU ABDUL RAHMAN UNIVERSITY OF MANAGEMENT AND TECHNOLOGY                              ");
+        System.out.println("                                         STUDNET MANAGEMENT SUBSYSTEM");
+    }
+    
+    public void ReportTopTwo() {
+        seperateTwo();
+        System.out.println("          TUNKU ABDUL RAHMAN UNIVERSITY OF MANAGEMENT AND TECHNOLOGY                 ");
+        System.out.println("                       STUDNET MANAGEMENT SUBSYSTEM");
+    }
+    
+    
+    public void reportHeaderOne(){
+        System.out.println("\n            STUDENT SUMMARY REPORT 1 =>   TOTAL COURSE REGISTERED BY STUDENT AND TOTAL COURSE FEE                 ");
+        seperateOne();
+        getCurrentDateTime();
+        System.out.printf("   | %-10s | %-20s | %-10s | %-10s | %-10s | %-10s | %-10s |\n", "STUDENT ID", "STUDENT NAME", "STUDENT AGE", "PROGRAMME", "FACULTY", "COUNT COURSE", "TOTAL COURSE FEE");
+        seperateOne();
+    }
+    
+        public void reportHeaderTwo(){
+        System.out.println("\n            STUDENT SUMMARY REPORT 2 =>   STUDENT DEMOGRAPHICS");
+        seperateTwo();
+        getCurrentDateTime();
+        header();
+        seperateTwo();
+    }
+    
+    
+    
+    public void seperateOne(){
+        System.out.println("==================================================================================================================");
+    }
+    
+    public void seperateTwo(){
+        System.out.println("================================================================================");
+    }
+    
+    public void getCurrentDateTime() {
+
+        // Get the current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // Define a custom date and time format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, h:mma");
+
+        // Format the current date and time using the formatter
+        String formattedDateTime = currentDateTime.format(formatter);
+
+        // Print the formatted date
+        System.out.println("\nGenerated Report at: " + formattedDateTime + "\n\n");
+
+    }
+    
+    public void reportFototerOne(){
+        System.out.println("\n                                      END OF THE STUDENT SUMMARY REPORT");
+        seperateOne();
+    }
+    
+    public void reportFototerTwo(){
+        System.out.println("\n                       END OF THE STUDENT SUMMARY REPORT");
+        seperateTwo();
+    }
 }
 
