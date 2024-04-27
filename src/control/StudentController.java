@@ -761,9 +761,9 @@ public class StudentController {
     
 
     public Student getStudent(String id) {
-        for (int i = 1; i <= this.studentList.getNumberOfEntries(); i++) {
-            if (this.studentList.getEntry(i).getStudentID() == id) {
-                return this.studentList.getEntry(i);
+        for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
+            if (studentList.getEntry(i).getStudentID().equals(id)) {
+                return studentList.getEntry(i);
             }
         }
         //using student id to find the student and return the student all detail(student object)

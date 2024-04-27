@@ -79,7 +79,7 @@ public class CourseMenu {
             }
         } while (choice != 0);
 
-        scanner.close();
+        //scanner.close();
     }
 
     //1.Add Course To Programme
@@ -198,6 +198,24 @@ public class CourseMenu {
 
     //4.Remove Course From Program
     private static void removeCourseFromProgram(Scanner scanner, ListInterface<Programme> programList) {
+        // Display all programs and their linked courses
+        System.out.println("\nPrograms and their Linked Courses:");
+        for (Programme programme : programList) {
+            System.out.println("\nProgram Code: " + programme.getProgramCode() + " - Program Name: " + programme.getProgramName());
+            ArrayList<String> linkedCourses = programme.getLinkedCourses();
+            if (!linkedCourses.isEmpty()) {
+                System.out.println("Linked Courses:");
+                for (String courseCode : linkedCourses) {
+                    Course course = courseMap.get(courseCode);
+                    if (course != null) {
+                        System.out.println(course.getCourseCode() + " - " + course.getCourseName());
+                    }
+                }
+            } else {
+                System.out.println("No linked courses.");
+            }
+        }
+
         String programCode = CourseUI.promptString("Program Code", 10);
         Programme programme = ProgramMenu.findProgramByCode(programList, programCode);
 
