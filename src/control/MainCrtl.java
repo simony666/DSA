@@ -29,12 +29,12 @@ public class MainCrtl {
                 new TeachingAssignment().entry();
                 break;
             case 4:
-                new TeachingAssignment().entry();
+                new AssignmentTeamCrtl().entry();
                 break;
             case 5:
                 new TutorialGroupManagement().entry();
                 break;
-            case 10:
+            case 6:
                 MessageUI.displayExitMessage();
                 break;
             default:
@@ -52,7 +52,7 @@ public class MainCrtl {
             System.out.println("1. Student");
             System.out.println("2. Course");
             System.out.println("3. Teaching Assignment");
-            System.out.println("4. Teaching Assignment");
+            System.out.println("4. Assignment Team");
             System.out.println("5. Tutorial Group Management");
             System.out.println("6. Exit");
             System.out.println("\nPlease Enter Menu Index(1-6):");
