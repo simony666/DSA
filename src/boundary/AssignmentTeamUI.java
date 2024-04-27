@@ -2,6 +2,7 @@ package boundary;
 
 import adt.ArrayList;
 import adt.HashMap;
+import adt.KeyValuePair;
 import adt.LinkedList;
 import control.AssignmentTeamCrtl;
 import control.CourseMenu;
@@ -331,12 +332,45 @@ public class AssignmentTeamUI {
     
     public void Report1(){
         //Team Count By Student Count
-        Iterator<AssignmentTeam> Team = new AssignmentTeamCrtl().getAssignmentList().getIterator();
-        System.out.println();
+        LinkedList<AssignmentTeam> Team = new AssignmentTeamCrtl().getAssignmentList();
+        HashMap<String, Integer> result = new HashMap<>();
+        
+        for (int i = 1; i<= Team.getNumberOfEntries();i++){
+            String key = String.valueOf(Team.getEntry(i).getStudentCount());
+            int count = result.getOrDefault(key,0);
+            result.put(key, ++count);
+        }
+        
+        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
+        System.out.printf("|%13s|%-11s|%5s", "Student Count", "Team Count", "\n");
+        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
+        for (KeyValuePair<String, Integer> entry : result.getAllEntries()) {
+            System.out.printf("|%-13s|%-11s|%5s", entry.getKey(), String.valueOf(entry.getValue()), "\n");
+        }
+        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
+        MessageUI.pressEnter();
         
     }
+    
     public void Report2(){
-        //Team Count By Course
+        //Team Count By Student Count
+        LinkedList<AssignmentTeam> Team = new AssignmentTeamCrtl().getAssignmentList();
+        HashMap<String, Integer> result = new HashMap<>();
+        
+        for (int i = 1; i<= Team.getNumberOfEntries();i++){
+            String key = Team.getEntry(i).getCourse().getCourseName();
+            int count = result.getOrDefault(key,0);
+            result.put(key, ++count);
+        }
+        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
+        System.out.printf("|%-40s|%-11s|%5s", "Course", "Team Count", "\n");
+        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
+        for (KeyValuePair<String, Integer> entry : result.getAllEntries()) {
+            System.out.printf("|%-40s|%-11s|%5s", entry.getKey(), String.valueOf(entry.getValue()), "\n");
+        }
+        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
+        MessageUI.pressEnter();
+        
     }
     
     

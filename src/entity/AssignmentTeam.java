@@ -60,7 +60,7 @@ public class AssignmentTeam {
     }
     
     public int getStudentCount() {
-        return studentList.getNumberOfEntries();
+        return this.studentList.getNumberOfEntries();
     }
     
     
@@ -117,10 +117,10 @@ public class AssignmentTeam {
 
     @Override
     public String toString() {
-        return "[" + assignID + "] - " + assignName + " <"+tutorialGroup.getTutorGroupID()+">" +
-                    "(Member Count: "+ String.valueOf(this.getStudentCount()) + 
-                    ",Course: "+ course.getCourseName() +
-                    ")";
+        return String.format("[%5s] - %-10s <%-2s> (Member Count:%-2s,Course:%-10s)]",
+                assignID, assignName,tutorialGroup.getTutorGroupID(),
+                String.valueOf(this.getStudentCount()),course.getCourseName()
+        );
     }
 
     

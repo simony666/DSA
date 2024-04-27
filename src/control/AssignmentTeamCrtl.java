@@ -266,6 +266,8 @@ public class AssignmentTeamCrtl {
             System.out.println("1. Team Count By Student Count");
             System.out.println("2. Team Count By Course");
             System.out.println("3. Exit...");
+            choice = scanner.nextInt();
+            scanner.nextLine();
             
             if (choice <=0 || choice >3){
                 MessageUI.displayInvalidChoiceMessage();
