@@ -143,12 +143,13 @@ public class MainDao {
         s3.setTutorialGroup(tg2);
         tg3.getStudentList().add(s4);
         s4.setTutorialGroup(tg3);
-        tg4.getStudentList().add(s5);
-        s5.setTutorialGroup(tg4);
-        tg5.getStudentList().add(s6);
-        s6.setTutorialGroup(tg5);
-        tg5.getStudentList().add(s7);
-        s7.setTutorialGroup(tg5);
+        tg3.getStudentList().add(s5);
+        s5.setTutorialGroup(tg3);
+        tg2.getStudentList().add(s6);
+        s6.setTutorialGroup(tg2);
+        tg1.getStudentList().add(s7);
+        s7.setTutorialGroup(tg1);
+
 
 
 
