@@ -176,6 +176,7 @@ public class LinkedList<T> implements ListInterface<T> {
         return new LinkedListIterator();
     }
 
+    //author: Yong Choy Mun
     @Override
     public int indexOf(T element) {
         Node currentNode = firstNode;

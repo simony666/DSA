@@ -1,10 +1,7 @@
- /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package boundary;
 
 import adt.ArrayList;
+import adt.HashMap;
 import adt.LinkedList;
 import control.AssignmentTeamCrtl;
 import control.CourseMenu;
@@ -14,12 +11,13 @@ import entity.AssignmentTeam;
 import entity.Course;
 import entity.Student;
 import entity.TutorialGroup;
+import java.util.Iterator;
 import java.util.Scanner;
 import utility.MessageUI;
 
 /**
  *
- * @author yongc
+ * @author Yong Choy Mun
  */
 public class AssignmentTeamUI {
     //create assignment teams for a tutor group
@@ -119,6 +117,7 @@ public class AssignmentTeamUI {
         //select course
         //TODO: get course from a list
         LinkedList<Course> CList = CourseMenu.courseMap.getAllValue();
+        choice = 0;
         while(choice == 0){
             int total = MessageUI.displayList(CList);
             System.out.println("Please Select A Course For this Team [1-"+total +"] or \"-1\" to cancel");
@@ -329,6 +328,20 @@ public class AssignmentTeamUI {
         }
         return team;
     }
+    
+    public void Report1(){
+        //Team Count By Student Count
+        Iterator<AssignmentTeam> Team = new AssignmentTeamCrtl().getAssignmentList().getIterator();
+        System.out.println();
+        
+    }
+    public void Report2(){
+        //Team Count By Course
+    }
+    
+    
+    
+    //reuse func
     
     public int displayATList(){
         LinkedList<AssignmentTeam> list = new AssignmentTeamCrtl().getAssignmentList();

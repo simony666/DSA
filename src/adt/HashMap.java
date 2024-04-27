@@ -140,7 +140,8 @@ public class HashMap<K, V> implements MapInterface<K, V>, Serializable {
         return Math.abs(key.hashCode()) % tableLength;
     }
 
-    public static class Entry<K, V> implements KeyValuePair<K, V>{
+    public static class Entry<K, V> implements KeyValuePair<K, V> {
+
         private final K key;
         private V value;
         private Entry<K, V> next;
@@ -171,33 +172,32 @@ public class HashMap<K, V> implements MapInterface<K, V>, Serializable {
             this.next = next;
         }
     }
-    
-        public LinkedList<KeyValuePair<K, V>> getAllEntries() {
-            LinkedList<KeyValuePair<K, V>> entries = new LinkedList<>();
 
-            for (Entry<K, V> entry : table) {
-                while (entry != null) {
-                    entries.add(entry);
-                    entry = entry.getNext();
-                }
+    public LinkedList<KeyValuePair<K, V>> getAllEntries() {
+        LinkedList<KeyValuePair<K, V>> entries = new LinkedList<>();
+
+        for (Entry<K, V> entry : table) {
+            while (entry != null) {
+                entries.add(entry);
+                entry = entry.getNext();
             }
-
-            return entries;
         }
-        
-         public LinkedList<V> getAllValue() {
-            LinkedList<V> entries = new LinkedList<>();
 
-            for (Entry<K, V> entry : table) {
-                while (entry != null) {
-                    entries.add(entry.getValue());
-                    entry = entry.getNext();
-                }
-            }
-
-            return entries;
-        }
+        return entries;
+    }
     
+    //author: Yong Choy Mun
+    public LinkedList<V> getAllValue() {
+        LinkedList<V> entries = new LinkedList<>();
 
+        for (Entry<K, V> entry : table) {
+            while (entry != null) {
+                entries.add(entry.getValue());
+                entry = entry.getNext();
+            }
+        }
+
+        return entries;
+    }
 
 }
