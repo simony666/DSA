@@ -38,8 +38,8 @@ public class AssignmentTeamUI {
     //private AssignmentTeamCrtl ATCrtl = new AssignmentTeamCrtl();
     
     public int getMenuChoice(){
-        int choice = 0;
-        while(choice == 0){
+        int choice = -1;
+        while(choice == -1){
             System.out.println("===================================");
             System.out.println("=         Assignment Team         =");
             System.out.println("===================================");
@@ -52,15 +52,15 @@ public class AssignmentTeamUI {
             System.out.println("7. Display Assignment Team");
             System.out.println("8. Display Assignment Team Member");
             System.out.println("9. Report");
-            System.out.println("10. Exit");
+            System.out.println("0. Exit");
             System.out.println("\nPlease Enter Menu Index(1-10):");
             choice = scanner.nextInt();
             scanner.nextLine();
-            if (choice<1 || choice >10){
+            if (choice<0 || choice >9){
                 //set choice to invalid to display again
                 MessageUI.clearScreen();
                 MessageUI.displayInvalidChoiceMessage();
-                choice = 0;
+                choice = -1;
             }
         }
         return choice;

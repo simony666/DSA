@@ -23,6 +23,10 @@ public class AssignmentTeamCrtl {
     public void entry() {
         int choice = ui.getMenuChoice();
         switch (choice) {
+            case 0:
+                System.out.println("Returning to Main menu...\n");
+                new MainCrtl().entry();
+                return;
             case 1:
                 createTeamCrtl();
                 break;
@@ -49,9 +53,6 @@ public class AssignmentTeamCrtl {
                 break;
             case 9:
                 ReportCrtl();
-                break;
-            case 10:
-                MessageUI.displayExitMessage();
                 break;
             default:
                 System.out.println("Something went wrong!");

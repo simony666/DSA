@@ -13,32 +13,30 @@ public class MainCrtl {
     Scanner scanner = new Scanner(System.in);
 
     public void entry() {
-        int choice = 0;
-        while (choice == 0) {
-            choice = getMenuChoice();
-            switch (choice) {
-                case 1:
-                    new StudentController().runStudentController();
-                    break;
-                case 2:
-                    new CourseMenu().courseMenu();
-                    break;
-                case 3:
-                    new TeachingAssignment().entry();
-                    break;
-                case 4:
-                    new AssignmentTeamCrtl().entry();
-                    break;
-                case 5:
-                    new TutorialGroupManagement().entry();
-                    break;
-                case 6:
-                    MessageUI.displayExitMessage();
-                    return;
-                default:
-                    System.out.println("Something went wrong!");
-                    break;
-            }
+        int choice = getMenuChoice();
+        switch (choice) {
+            case 1:
+                new StudentController().runStudentController();
+                break;
+            case 2:
+                new CourseMenu().courseMenu();
+                break;
+            case 3:
+                new TeachingAssignment().entry();
+                break;
+            case 4:
+                new AssignmentTeamCrtl().entry();
+                break;
+            case 5:
+                new TutorialGroupManagement().entry();
+                break;
+            case 6:
+                MessageUI.displayExitMessage();
+                return;
+            default:
+                System.out.println("Something went wrong!");
+                break;
+
         }
     }
 
