@@ -95,6 +95,7 @@ public class AssignmentTeamUI {
         System.out.println("");
         
         //select Tutorial group
+        System.out.println("Tutorial Group List");
         int choice = 0;
         ArrayList<TutorialGroup> TGList = TutorialGroupManagement.getTutorialGroupList();
         while(choice == 0){
@@ -102,6 +103,7 @@ public class AssignmentTeamUI {
             System.out.println("Please Select A Tutorial Group For this Team [1-"+total +"] or \"-1\" to cancel");
             choice = scanner.nextInt();
             scanner.nextLine();
+            System.out.println("");
             if(choice == -1){
                 System.out.println("Creation of assignment team cancelled.");
                 return null;
@@ -117,6 +119,7 @@ public class AssignmentTeamUI {
 
         //select course
         //TODO: get course from a list
+        System.out.println("Avaiable Course List");
         LinkedList<Course> CList = CourseMenu.courseMap.getAllValue();
         choice = 0;
         while(choice == 0){
@@ -124,6 +127,7 @@ public class AssignmentTeamUI {
             System.out.println("Please Select A Course For this Team [1-"+total +"] or \"-1\" to cancel");
             choice = scanner.nextInt();
             scanner.nextLine();
+            System.out.println("");
             if(choice == -1){
                 System.out.println("Creation of assignment team cancelled.");
                 return null;
@@ -214,7 +218,7 @@ public class AssignmentTeamUI {
             System.out.println("===================================");
             System.out.println("=     Modify Assignment Team      =");
             System.out.println("===================================");
-            System.out.println("Selected Team: "+team.toString());
+            System.out.println("Selected Team: "+team.getAssignName());
             System.out.println("");
             System.out.println("1. Name");
             System.out.println("2. Tutorial Group");
@@ -224,6 +228,7 @@ public class AssignmentTeamUI {
             System.out.println("\nPlease Enter which part need to modify or \"-1\" to cancel:");
             choice = scanner.nextInt();
             scanner.nextLine();
+            System.out.println("");
             
             if (choice == -1){
                 System.out.println("Modification of assignment team cancelled.");
@@ -241,6 +246,9 @@ public class AssignmentTeamUI {
                 String name = scanner.nextLine().trim();
                 if (name.equals("cancel")){
                     System.out.println("Modification of assignment team cancelled.");
+                    return null;
+                }else if(name.isBlank()){
+                    System.out.println("Team Name Cannot Be Null");
                     return null;
                 }
                 team.setAssignName(name);
@@ -260,6 +268,7 @@ public class AssignmentTeamUI {
                     System.out.println("\nPlease Enter Team Index or \"-1\" to cancel:");
                     TGchoice = scanner.nextInt();
                     scanner.nextLine();
+                    System.out.println("");
 
                     if (TGchoice == -1){
                         System.out.println("Modification of Tutorial Group for assignment team cancelled.");
@@ -287,6 +296,8 @@ public class AssignmentTeamUI {
                     System.out.println("Please Select A Course For this Team [1-"+total +"] or \"-1\" to cancel");
                     Cchoice = scanner.nextInt();
                     scanner.nextLine();
+                    System.out.println("");
+                    
                     if(Cchoice == -1){
                         System.out.println("Modification of Course for assignment team cancelled.");
                         return null;
@@ -309,6 +320,7 @@ public class AssignmentTeamUI {
                     System.out.println("\nPlease Enter New Limit or \"-1\" to cancel:");
                     limit = scanner.nextInt();
                     scanner.nextLine();
+                    System.out.println("");
 
                     if (limit == -1){
                         System.out.println("Modification of assignment team cancelled.");
@@ -341,13 +353,13 @@ public class AssignmentTeamUI {
             result.put(key, ++count);
         }
         
-        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
-        System.out.printf("|%13s|%-11s|%5s", "Student Count", "Team Count", "\n");
-        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
+        System.out.printf("|%-15s|%-13s|%5s", "-".repeat(15), "-".repeat(13), "\n");
+        System.out.printf("| %13s | %-11s |%5s", "Student Count", "Team Count", "\n");
+        System.out.printf("|%13s|%-11s|%5s", "-".repeat(13), "-".repeat(11), "\n");
         for (KeyValuePair<String, Integer> entry : result.getAllEntries()) {
-            System.out.printf("|%-13s|%-11s|%5s", entry.getKey(), String.valueOf(entry.getValue()), "\n");
+            System.out.printf("|%8s User | %-11s |%5s", entry.getKey(), String.valueOf(entry.getValue()), "\n");
         }
-        System.out.printf("|%-40s|%-11s|%5s", "-".repeat(40), "-".repeat(11), "\n");
+        System.out.printf("|%-13s|%-11s|%5s", "-".repeat(13), "-".repeat(11), "\n");
         MessageUI.pressEnter();
         
     }
@@ -379,6 +391,7 @@ public class AssignmentTeamUI {
     
     public int displayATList(){
         LinkedList<AssignmentTeam> list = new AssignmentTeamCrtl().getAssignmentList();
+        System.out.printf("%3s  [%-5s] - %-20.20s <%-2s> (Member Count,Course)\n","" ,"ID","Name","Group");
         int result = MessageUI.displayList(list);
         if (result == 0){
             MessageUI.displayEmpty();

@@ -117,7 +117,7 @@ public class AssignmentTeam {
 
     @Override
     public String toString() {
-        return String.format("[%5s] - %-10s <%-2s> (Member Count:%-2s,Course:%-10s)]",
+        return String.format("[%5s] - %-20.20s <%-2s> (Member Count: %-2s, Course: %-10s)",
                 assignID, assignName,tutorialGroup.getTutorGroupID(),
                 String.valueOf(this.getStudentCount()),course.getCourseName()
         );

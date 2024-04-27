@@ -75,7 +75,10 @@ public class AssignmentTeamCrtl {
         AssignmentTeam newTeam = ui.getNewTeam();
         if (newTeam != null) {
             addAT(newTeam);
-            System.out.println("Assignment team with student limit to '" + String.valueOf(newTeam.getLimit()) + "' student created successfully.");
+            MessageUI.clearScreen();
+            System.out.println("Assignment team with student limit to " + String.valueOf(newTeam.getLimit()) + " student created successfully.");
+        }else{
+            MessageUI.clearScreen();
         }
 
         //alway redirect back to main menu
@@ -88,7 +91,10 @@ public class AssignmentTeamCrtl {
         AssignmentTeam oldTeam = ui.getRemoveTeam();
         if (oldTeam != null) {
             removeAT(oldTeam);
+            MessageUI.clearScreen();
             System.out.println("Assignment team " + oldTeam.getAssignName() + " remove successfully.");
+        }else{
+            MessageUI.clearScreen();
         }
 
         //alway redirect back to main menu

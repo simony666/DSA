@@ -195,12 +195,17 @@ public class MainDao {
 
     
         a.addStudent(s1);
-        b.addStudent(s2);
-        c.addStudent(s3);
-        d.addStudent(s4);
-        e.addStudent(s5);
-        f.addStudent(s6);
-        g.addStudent(s7);
+        a.addStudent(s2);
+        a.addStudent(s3);
+        b.addStudent(s4);
+        b.addStudent(s5);
+        c.addStudent(s6);
+        d.addStudent(s7);
+        e.addStudent(s8);
+        f.addStudent(s9);
+        g.addStudent(s10);
+        g.addStudent(s11);
+                
         
         AssignmentTeamCrtl crtl = new AssignmentTeamCrtl();
         
