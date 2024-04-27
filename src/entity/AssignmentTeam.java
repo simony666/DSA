@@ -39,7 +39,11 @@ public class AssignmentTeam {
     //own method
     
     public boolean addStudent(Student stu){
-        return this.studentList.add(stu);
+        if (this.studentList.contains(stu)){
+            return true;
+        }else{
+            return this.studentList.add(stu);
+        }
     }
     public boolean removeStudent(Student stu){
         int index = this.studentList.indexOf(stu);

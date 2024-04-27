@@ -53,7 +53,7 @@ public class AssignmentTeamUI {
             System.out.println("8. Display Assignment Team Member");
             System.out.println("9. Report");
             System.out.println("0. Exit");
-            System.out.println("\nPlease Enter Menu Index(1-10):");
+            System.out.println("\nPlease Enter Menu Index(0-9):");
             choice = scanner.nextInt();
             scanner.nextLine();
             if (choice<0 || choice >9){
@@ -250,6 +250,8 @@ public class AssignmentTeamUI {
                 }else if(name.isBlank()){
                     System.out.println("Team Name Cannot Be Null");
                     return null;
+                    
+                            
                 }
                 team.setAssignName(name);
                 System.out.println("Assignment Team Name Changed!");
@@ -285,7 +287,9 @@ public class AssignmentTeamUI {
                 break;
             case 3:
                 if (team.getStudentCount()>0){
+                    MessageUI.clearScreen();
                     System.out.println("Unable to change! Student List Must Be Empty!");
+                    return null;
                 }
                 //Course
                 

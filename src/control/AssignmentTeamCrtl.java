@@ -78,7 +78,7 @@ public class AssignmentTeamCrtl {
             addAT(newTeam);
             MessageUI.clearScreen();
             System.out.println("Assignment team with student limit to " + String.valueOf(newTeam.getLimit()) + " student created successfully.");
-        }else{
+        } else {
             MessageUI.clearScreen();
         }
 
@@ -94,7 +94,7 @@ public class AssignmentTeamCrtl {
             removeAT(oldTeam);
             MessageUI.clearScreen();
             System.out.println("Assignment team " + oldTeam.getAssignName() + " remove successfully.");
-        }else{
+        } else {
             MessageUI.clearScreen();
         }
 
@@ -255,10 +255,13 @@ public class AssignmentTeamCrtl {
     //case 8
     public void ListTeamMemberCrtl() {
         AssignmentTeam at = ui.getTeam();
-        ui.displayATMemberList(at);
+        //ui.displayATMemberList(at);
+        if (at != null) {
+            System.out.println(String.valueOf(ui.displayATMemberList(at)));
 
-        System.out.println("Press Enter to continue");
-        scanner.nextLine();
+            System.out.println("Press Enter to continue");
+            scanner.nextLine();
+        }
         MessageUI.clearScreen();
 
         //alway redirect back to main menu
@@ -268,34 +271,31 @@ public class AssignmentTeamCrtl {
     //case 9
     public void ReportCrtl() {
         int choice = 0;
-        while (choice == 0){
+        while (choice == 0) {
             System.out.println("Report Menu");
             System.out.println("1. Team Count By Student Count");
             System.out.println("2. Team Count By Course");
             System.out.println("3. Exit...");
             choice = scanner.nextInt();
             scanner.nextLine();
-            
-            if (choice <=0 || choice >3){
+
+            if (choice <= 0 || choice > 3) {
                 MessageUI.displayInvalidChoiceMessage();
                 MessageUI.clearScreen();
                 choice = 0;
             }
         }
-        
-        if (choice == 1){
+
+        if (choice == 1) {
             ui.Report1();
-        }else if (choice == 2){
+        } else if (choice == 2) {
             ui.Report2();
         }
         //else = exit
-        
-        
+
         //alway redirect back to main menu
         entry();
     }
-    
-    
 
     //own function
     public boolean addAT(AssignmentTeam at) {
