@@ -119,9 +119,8 @@ public class TeachingAssignment {
         teachingAssignmentUI.TutorIsEmpty();
         return;
     }
-
-
-    teachingAssignmentUI.printAllList(tutorList);
+    
+    teachingAssignmentUI.listAllTutors(getAllTutors());
     
     int selectedTutorIndex = teachingAssignmentUI.getIndex();
 
@@ -316,7 +315,7 @@ public class TeachingAssignment {
             selectedTutorialGroup.setTutor(selectedTutor);
             
 
-            System.out.println("Successfully assigned tutorial group " + selectedTutorialGroup.getTutorGroupName() + " to tutor " + selectedTutor.getTutorName());
+            System.out.println("Successfully assigned Tutorial group: " + selectedTutorialGroup.getTutorGroupName() + " to tutor: " + selectedTutor.getTutorName());
             
             
         } else {
@@ -405,7 +404,7 @@ public class TeachingAssignment {
                                     
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         selectedTutorialGroup.getTutorialGrpTutorialList().put(selectedCourse, selectedCourse.getTutorialList());
-                                        System.out.println( "Testing Tutorial " + selectedTutorialGroup.getTutorialGrpTutorialList().get(selectedCourse));
+
                                     }
                                 
                                 }
@@ -417,7 +416,7 @@ public class TeachingAssignment {
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         
                                         selectedTutorialGroup.getTutorialGrpTutorialList().put(selectedCourse, selectedCourse.getTutorialList());
-                                        System.out.println( "Testing Tutorial " + selectedTutorialGroup.getTutorialGrpTutorialList().get(selectedCourse));
+                                       
 
                                         
                                     }
@@ -470,7 +469,7 @@ public class TeachingAssignment {
                                     
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         selectedTutorialGroup.getTutorialGrpPracticalList().put(selectedCourse, selectedCourse.getPracticalList());
-                                        System.out.println( "Testing Practical " + selectedTutorialGroup.getTutorialGrpPracticalList().get(selectedCourse));
+                                        
                                     }
                                 
                                 }
@@ -482,7 +481,7 @@ public class TeachingAssignment {
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         
                                         selectedTutorialGroup.getTutorialGrpPracticalList().put(selectedCourse, selectedCourse.getPracticalList());
-                                        System.out.println( "Testing Practical " + selectedTutorialGroup.getTutorialGrpPracticalList().get(selectedCourse));
+
 
                                         
                                     }
@@ -533,7 +532,7 @@ public class TeachingAssignment {
                                     
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         selectedTutorialGroup.getTutorialGrpLectureList().put(selectedCourse, selectedCourse.getLectureList());
-                                        System.out.println( "Lecture " + selectedTutorialGroup.getTutorialGrpLectureList().get(selectedCourse));
+
                                     }
                                 
                                 }
@@ -545,7 +544,6 @@ public class TeachingAssignment {
                                     if (confirmChoice.equalsIgnoreCase("y")){
                                         
                                         selectedTutorialGroup.getTutorialGrpLectureList().put(selectedCourse, selectedCourse.getLectureList());
-                                        System.out.println( "Lecture " + selectedTutorialGroup.getTutorialGrpLectureList().get(selectedCourse));
 
                                         
                                     }
@@ -1371,23 +1369,28 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
         
         for (int i = 1; i <= tutorialGroupList.getNumberOfEntries(); i++){
             TutorialGroup getTutorialGroup = tutorialGroupList.getEntry(i);
-            for (int j = 1; j <= getTutorialGroup.getTutorialGrpTutorialList().size(); j++){
                 
-                if (getTutorialGroup.getTutorialGrpTutorialList().isEmpty()){
-                    continue;
-                }
+                
+                
                 for (int l = 1; l <= courseList.getNumberOfEntries(); l++){
+                    
+                    if (getTutorialGroup.getTutorialGrpTutorialList().isEmpty()){
+                        continue;
+                    }
+                    
                     Course getCourse = courseList.getEntry(l);
+                    
+                    
                     if (getTutorialGroup.getTutorialGrpTutorialList().containsKey(getCourse)
                             && !getTutorialGroup.getTutorialGrpTutorialList().get(getCourse).isEmpty()){
-                        if ( countCourse.containsKey(getCourse)){
+                        if ( countCourse.containsKey(getCourse) && countCourse.get(getCourse) != null){
                             
                             temporalNumber = countCourse.get(getCourse);
                             temporalNumber += 1;
                             countCourse.put(getCourse, temporalNumber);
                         }
                         
-                        else {countCourse.put(getCourse, + 1);}
+                        else {countCourse.put(getCourse, +1);}
                     }
                     
                     
@@ -1395,24 +1398,27 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
                 
                 
                 
-            }
+
             
-            for (int j = 1; j <= getTutorialGroup.getTutorialGrpPracticalList().size(); j++){
-                if (getTutorialGroup.getTutorialGrpPracticalList().isEmpty()){
+
+
+
+                
+                for (int k = 1; k <= courseList.getNumberOfEntries(); k++){
+                    if (getTutorialGroup.getTutorialGrpPracticalList().isEmpty()){
                     continue;
                 }
-                for (int l = 1; l <= courseList.getNumberOfEntries(); l++){
-                    Course getCourse = courseList.getEntry(l);
+                    Course getCourse = courseList.getEntry(k);
                     if (getTutorialGroup.getTutorialGrpPracticalList().containsKey(getCourse)
                             && !getTutorialGroup.getTutorialGrpPracticalList().get(getCourse).isEmpty()){
-                        if ( countCourse.containsKey(getCourse)){
-                            
+                        if ( countCourse.containsKey(getCourse) && countCourse.get(getCourse) != null){
+
                             temporalNumber = countCourse.get(getCourse);
                             temporalNumber += 1;
                             countCourse.put(getCourse, temporalNumber);
                         }
                         
-                        else {countCourse.put(getCourse, + 1);}
+                        else {countCourse.put(getCourse, +1);}
                     }
                     
                     
@@ -1420,30 +1426,27 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
                 
                 
                 
-            }
+
             
-            for (int j = 1; j <= getTutorialGroup.getTutorialGrpLectureList().size(); j++){
-                if (getTutorialGroup.getTutorialGrpLectureList().isEmpty()){
+
+
+                
+                for (int m = 1; m <= courseList.getNumberOfEntries(); m++){
+                    if (getTutorialGroup.getTutorialGrpLectureList().isEmpty()){
                     continue;
                 }
-                for (int l = 1; l <= courseList.getNumberOfEntries(); l++){
-                    Course getCourse = courseList.getEntry(l);
+                    Course getCourse = courseList.getEntry(m);
                     if (getTutorialGroup.getTutorialGrpLectureList().containsKey(getCourse)
                             && !getTutorialGroup.getTutorialGrpLectureList().get(getCourse).isEmpty()){
-                        if ( countCourse.containsKey(getCourse)){
-                            
+                        if ( countCourse.containsKey(getCourse) && countCourse.get(getCourse) != null){
+
                             temporalNumber = countCourse.get(getCourse);
                             temporalNumber += 1;
                             countCourse.put(getCourse, temporalNumber);
                         }
                         
-                        else {countCourse.put(getCourse, + 1);}
-                    }
-                    
-                    
-                }
-                
-                
+                        else {countCourse.put(getCourse, +1);}
+                    }    
                 
             }
            
@@ -1460,6 +1463,7 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
                Integer countInteger = countCourse.get(getCourse);
                 if (countInteger != null && course != null) {
                 int count = countInteger.intValue();
+                count = (count/4);
                 if (count > HighestNum) {
                 HighestNum = count;
                 highestCourse = getCourse;
@@ -1479,8 +1483,8 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
     }
     
     public String highestNumberOfTutor(){
-        int temporalNumber = 0;
         int HighestNum = 0;
+        int temporalNumber = 0;
         Tutor highestTutor = null;
                 
         String BuildString = "\n\nHighest Number Of Tutor: ";
@@ -1489,6 +1493,7 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
         
         for (int i = 1; i <= tutorialGroupList.getNumberOfEntries(); i++){
             TutorialGroup getTutorialGroup = tutorialGroupList.getEntry(i);
+            temporalNumber = 0;
             for (int j = 1; j <= getTutorialGroup.getTutorialGrpTutorialList().size(); j++){
                 if (getTutorialGroup.getTutorialGrpTutorialList() == null){
                     continue;
@@ -1586,6 +1591,7 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
                Integer countInteger = countTutor.get(getTutor);
                 if (countInteger != null && tutor != null) {
                 int count = countInteger.intValue();
+                count = (count/4);
                 if (count > HighestNum) {
                 HighestNum = count;
                 highestTutor = getTutor;
