@@ -79,7 +79,7 @@ public class CourseMenu {
             }
         } while (choice != 0);
 
-        scanner.close();
+        //scanner.close();
     }
 
     //1.Add Course To Programme

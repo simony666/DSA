@@ -13,7 +13,9 @@ import utility.MessageUI;
  * @author yongc
  */
 public class MainCrtl {
+
     Scanner scanner = new Scanner(System.in);
+
     public void entry() {
         int choice = getMenuChoice();
         switch (choice) {
@@ -40,10 +42,10 @@ public class MainCrtl {
                 break;
         }
     }
-    
-    private int getMenuChoice(){
+
+    private int getMenuChoice() {
         int choice = 0;
-        while(choice == 0){
+        while (choice == 0) {
             System.out.println("===================================");
             System.out.println("=     TARUM Management System     =");
             System.out.println("===================================");
@@ -56,7 +58,7 @@ public class MainCrtl {
             System.out.println("\nPlease Enter Menu Index(1-6):");
             choice = scanner.nextInt();
             scanner.nextLine();
-            if (choice<1 || choice >6){
+            if (choice < 1 || choice > 6) {
                 //set choice to invalid to display again
                 MessageUI.clearScreen();
                 MessageUI.displayInvalidChoiceMessage();
@@ -65,10 +67,10 @@ public class MainCrtl {
         }
         return choice;
     }
-    
+
     public static void main(String[] args) {
         new MainDao().generate();
         new MainCrtl().entry();
     }
-    
+
 }
