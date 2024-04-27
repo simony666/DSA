@@ -142,6 +142,7 @@ public class ArrayList<T> implements ListInterface<T> {
         return outputStr;
     }
 
+    //author: Yong Choy Mun
     @Override
     public int indexOf(T element) {
         if (element == null){

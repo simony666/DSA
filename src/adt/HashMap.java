@@ -199,5 +199,14 @@ public class HashMap<K, V> implements MapInterface<K, V>, Serializable {
 
         return entries;
     }
+    
+    //author: Yong Choy Mun
+    public V getOrDefault(K key, V defaultValue){
+        if(containsKey(key)){
+            return get(key);
+        }else{
+            return defaultValue;
+        }
+    }
 
 }
