@@ -123,17 +123,28 @@ public class MainDao {
         program1.getTutorialGroupList().add(tg1);
         program1.getTutorialGroupList().add(tg2);
         program1.getTutorialGroupList().add(tg3);
+        program1.getTutorialGroupList().add(tg4);
+        program1.getTutorialGroupList().add(tg5);       
+        
         program2.getTutorialGroupList().add(tg1);
         program2.getTutorialGroupList().add(tg2);
         program2.getTutorialGroupList().add(tg3);
+        program2.getTutorialGroupList().add(tg4);
+        program2.getTutorialGroupList().add(tg5);
+
         program3.getTutorialGroupList().add(tg1);
         program3.getTutorialGroupList().add(tg2);
         program3.getTutorialGroupList().add(tg3);
+        program3.getTutorialGroupList().add(tg4);
+        program3.getTutorialGroupList().add(tg5);
+
         program4.getTutorialGroupList().add(tg1);
         program4.getTutorialGroupList().add(tg2);
         program4.getTutorialGroupList().add(tg3);
+        program4.getTutorialGroupList().add(tg4);
+        program4.getTutorialGroupList().add(tg5);
+
         
-      
 
         tg1.getStudentList().add(s1);
         s1.setTutorialGroup(tg1);
@@ -141,16 +152,22 @@ public class MainDao {
         s2.setTutorialGroup(tg1);
         tg2.getStudentList().add(s3);
         s3.setTutorialGroup(tg2);
-        tg3.getStudentList().add(s4);
-        s4.setTutorialGroup(tg3);
+        tg2.getStudentList().add(s4);
+        s4.setTutorialGroup(tg2);
         tg3.getStudentList().add(s5);
         s5.setTutorialGroup(tg3);
         tg2.getStudentList().add(s6);
         s6.setTutorialGroup(tg2);
         tg1.getStudentList().add(s7);
         s7.setTutorialGroup(tg1);
-
-
+        tg2.getStudentList().add(s8);
+        s8.setTutorialGroup(tg2);
+        tg1.getStudentList().add(s9);
+        s9.setTutorialGroup(tg1);
+//        tg2.getStudentList().add(s10);
+//        s10.setTutorialGroup(tg2);
+//        tg3.getStudentList().add(s11);
+//        s11.setTutorialGroup(tg3);
 
 
         Tutor t1 = new Tutor("T001","Poh Chu Ren");
