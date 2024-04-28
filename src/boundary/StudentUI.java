@@ -17,12 +17,18 @@ public class StudentUI {
         System.out.println("================================================================================");
         System.out.println("                                    Student List                                ");
         System.out.println("================================================================================");
-        System.out.printf("   | %-10s | %-20s | %-10s | %-10s | %-10s |\n", "Student ID", "Student Name", "Student Age", "Programme", "Faculty");
+        studentHeader();
+    }
+    
+    public void studentHeader(){
+        System.out.printf("   | %-10s | %-20s | %-10s | %-10s | %-10s |\n", 
+                "Student ID", "Student Name", "Student Age", "Programme", "Faculty");
     }
     
     public void CourseHeader() {
         System.out.println("==================================================================================================================");
-        System.out.printf("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n", "Code", "Course Name", "Faculty", "Semester", "Status", "Course Fee");
+        System.out.printf("   | %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |\n", 
+                "Code", "Course Name", "Faculty", "Semester", "Status", "Course Fee");
         System.out.println("==================================================================================================================");
                 
     }
