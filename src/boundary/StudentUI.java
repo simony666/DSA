@@ -42,7 +42,7 @@ public class StudentUI {
         System.out.println("|-----------------------------------------------------------------------------------|");
         System.out.println("| 1. Add new students                                                               |");
         System.out.println("| 2. Remove a student                                                               |");
-        System.out.println("| 3. Ammend student details                                                         |");
+        System.out.println("| 3. Amend student details                                                         |");
         System.out.println("| 4. Search students for registered courses                                         |");
         System.out.println("| 5. Add Student to a few course                                                    |");
         System.out.println("| 6. Remove student from a courses                                                  |");
