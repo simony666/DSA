@@ -216,10 +216,22 @@ public class StudentController {
                 }
 
                 //modify age
+                System.out.print("Please enter student age (press Enter to keep current): ");
                 String ageInput = sc.nextLine().trim();
                 int newStudentAge = 0;
                 if (!ageInput.isEmpty()) {
-                    newStudentAge = studentUI.verifyAge();
+                    try {
+                        int intAge = Integer.parseInt(ageInput);
+                        if (intAge >= 18) {
+                            newStudentAge = intAge;
+                        } else {
+                            System.out.println("Invalid input. Please try again(Age must greater than or equal to 18)");
+                            newStudentAge = oldStudent.getAge();
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Please enter a numeric value for age.");
+                        newStudentAge = oldStudent.getAge();
+                    }
                 } else {
                     newStudentAge = oldStudent.getAge();
                 }
