@@ -16,7 +16,6 @@ import java.util.Iterator;
 import utility.MessageUI;
 
 public class TeachingAssignment {
-//    ArrayList<Course> courseList = Course.getCourseList();
     ArrayList<Course> courseList = new ArrayList<>();
 
     public static ArrayList<Tutor> tutorList = new ArrayList<>();
@@ -360,7 +359,7 @@ public class TeachingAssignment {
                 int choice = 0;
            do {
                     
-                    choice = teachingAssignmentUI.getCourseTypeChoice();
+                    choice = teachingAssignmentUI.getCourseTypeOfTutorChoice();
                     String confirmChoice = "NULL";
                 
                     switch (choice) {
@@ -662,10 +661,6 @@ public void searchTutorsForCourseType() {
                 }
     
     
-        
-//        if (courseGetEntry.getPracticalList().equals(Input)
-//                || courseGetEntry.getLectureList().equals(Input)
-//                || courseGetEntry.getTutorialList().equals(Input)) {
             if (Input.equalsIgnoreCase("TUTORIAL") || Input.equalsIgnoreCase("T")
                 || Input.equalsIgnoreCase("PRACTICAL") || Input.equalsIgnoreCase("P")
                 || Input.equalsIgnoreCase("LECTURE") || Input.equalsIgnoreCase("L")) {
@@ -684,7 +679,6 @@ public void searchTutorsForCourseType() {
                  
                 
                 
-//                String tutorString = String.format(tutorGetEntry);
                   
                 Tutor tutorGetEntry = tutorList.getEntry(j);
                 
@@ -870,7 +864,7 @@ public void listCourseForEachTutor() {
     }
 }
 
-public void filterTutorsBasedOnCriterion() { // need more improvement
+public void filterTutorsBasedOnCriterion() {
     System.out.println("Enter Criterion: ");
     String Searching = teachingAssignmentUI.getInput();
     int index = 0;
@@ -910,7 +904,7 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
       }
         
     
-    public void printTutorialList(Course selectedCourse){// I need delete
+    public void printTutorialList(Course selectedCourse){
         
         for (int i = 1; i <= courseList.getNumberOfEntries(); i++) {
             Course getCourse = courseList.getEntry(i);
@@ -918,7 +912,6 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
             for (int j = 1; j <= tutorList.getNumberOfEntries(); j++){
                 
                 Tutor getTutor = tutorList.getEntry(j);
-//                System.out.println( j + "TutorList" + tutorList.getEntry(j));
                 
                 if (getTutor.getTutorialList().equals(selectedCourse)){
 
@@ -1350,9 +1343,6 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
         content += teachingAssignmentUI.SeparateLine()
                 + highestNumberOfCourse()
                 + highestNumberOfTutor()
-//                + highestNumberOfTutorialCourse()
-//                + highestNumberOfPracticalCourse()
-//                + highestNumberOfLectureCourse()
                   + teachingAssignmentUI.ReportFooter();
         // generate it
         generateTypeChoice(content);
@@ -1638,17 +1628,5 @@ public void filterTutorsBasedOnCriterion() { // need more improvement
     
     return true;
     }   
-
-//    public static void main(String[] args) {        
-//        
-//        //TeachingAssignment taUI = new TeachingAssignment();
-//        
-//        //taUI.TestingValue();
-//        //taUI.displayTesting();
-//        new MainDao().generate();
-//        new TeachingAssignment().entry();      
-//         
-//         
-//    }
     
 }

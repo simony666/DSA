@@ -49,6 +49,21 @@ public class TeachingAssignmentUI {
         return choice;
     }
     
+    public int getCourseTypeOfTutorChoice() {
+        System.out.println("\nSelect Course Type of Tutor Menu");
+        System.out.println("1. Assign Tutorial Of Tutor");
+        System.out.println("2. Assign Practical Of Tutor");
+        System.out.println("3. Assign Lecture Of Tutor");
+        System.out.println("0. Cancel");
+        System.out.println("\n");
+        System.out.print("Enter choice: ");
+        
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println();
+        return choice;
+    }
+    
     public int reportMenu(){
         System.out.println();
         System.out.println("Report Generate Menu\n");
