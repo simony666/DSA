@@ -117,7 +117,6 @@ public class Course {
 
     @Override
     public String toString() {
-        // Modify this method to include programList in the output
-        return String.format("| %-10s | %-40s | %-10s | %-5s | %-10s | %-10s",courseCode,courseName,faculty, semester,courseStatus, courseFee);
+        return String.format("| %-10s | %-40s | %-10s | %-15s | %-10s | %-10s |",courseCode,courseName,faculty, semester,courseStatus, courseFee);
     }
 }
