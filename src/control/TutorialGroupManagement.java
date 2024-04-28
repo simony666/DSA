@@ -40,7 +40,8 @@ public class TutorialGroupManagement {
 
             switch (choice) {
                 case 0:
-                    MessageUI.displayExitMessage();
+                    System.out.println("Returning to Main menu...\n");
+                    new MainCrtl().entry();
                     break;
                 case 1: // Add a tutorial group to a programme
                     addGroup();

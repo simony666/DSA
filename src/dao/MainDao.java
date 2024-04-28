@@ -106,6 +106,34 @@ public class MainDao {
         studentList.add(s9);
         studentList.add(s10);
         studentList.add(s11);
+                
+        //FOCS Student
+        s1.getCourseList().add(course8);
+        s2.getCourseList().add(course8);
+        s3.getCourseList().add(course8);
+        s4.getCourseList().add(course8);
+        s5.getCourseList().add(course8);
+        s6.getCourseList().add(course8);
+        s7.getCourseList().add(course8);
+        s8.getCourseList().add(course8);
+        
+        s1.getCourseList().add(course4);
+        s2.getCourseList().add(course4);
+        s3.getCourseList().add(course4);
+        s4.getCourseList().add(course4);
+        s5.getCourseList().add(course4);
+        s6.getCourseList().add(course4);
+        s7.getCourseList().add(course4);
+        s8.getCourseList().add(course4);
+        
+        s1.getCourseList().add(course6);
+        s2.getCourseList().add(course6);
+        s3.getCourseList().add(course6);
+        
+        s9.getCourseList().add(course20);
+        s10.getCourseList().add(course20);
+        s11.getCourseList().add(course20);
+        
         
 
         TutorialGroup tg1 = new TutorialGroup("G1","Group 1", program1.getProgramCode());
@@ -192,15 +220,23 @@ public class MainDao {
         AssignmentTeam f = new AssignmentTeam("Assignment Team 6",tg3,course2);
         AssignmentTeam g = new AssignmentTeam("Assignment Team 7",tg3,course3);
         AssignmentTeam h = new AssignmentTeam("Assignment Team 8",tg3,course4);
+        AssignmentTeam i = new AssignmentTeam("Assignment Team 9",tg3,course8);
 
     
         a.addStudent(s1);
-        b.addStudent(s2);
-        c.addStudent(s3);
-        d.addStudent(s4);
-        e.addStudent(s5);
-        f.addStudent(s6);
-        g.addStudent(s7);
+        a.addStudent(s2);
+        a.addStudent(s3);
+        b.addStudent(s4);
+        b.addStudent(s5);
+        c.addStudent(s6);
+        d.addStudent(s7);
+        e.addStudent(s8);
+        f.addStudent(s9);
+        g.addStudent(s10);
+        g.addStudent(s11);
+        i.addStudent(s1);
+        i.addStudent(s2);
+                
         
         AssignmentTeamCrtl crtl = new AssignmentTeamCrtl();
         
@@ -212,6 +248,7 @@ public class MainDao {
         crtl.addAT(f);
         crtl.addAT(g);
         crtl.addAT(h);
+        crtl.addAT(i);
 
 
 

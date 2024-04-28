@@ -4,7 +4,6 @@ package control;
  *
  * @author Qin Long
  */
-
 import adt.*;
 import entity.*;
 import boundary.*;
@@ -15,12 +14,10 @@ import utility.MessageUI;
 public class StudentController {
 
     Scanner sc = new Scanner(System.in);
-    
+
     StudentUI studentUI = new StudentUI();
-    CourseUI courseUI = new CourseUI();
-    
+
     MainCrtl mainController = new MainCrtl();
-    
 
     public static LinkedList<Student> studentList = new LinkedList<>();
     // private ListInterface<Enrollment> enrollments = new LinkedList<>();
@@ -86,22 +83,25 @@ public class StudentController {
                     viewAllStudent();
                     MessageUI.pressEnter();
                     runStudentController();
-                case 11:
-                    MessageUI.clearScreen();
-                    generateReport2();
-                    MessageUI.pressEnter();
-                    runStudentController();
-                    break;
-//                case 12:
-//                    MessageUI.cls();
-//                    break;
-//                case 13:
-//                    MessageUI.cls();
-//                    break;
-//                case 14:
-//                    MessageUI.cls();
             }
         } while (choice != 0);
+    }
+
+    public void generateReport() {
+        int choice;
+        choice = studentUI.getreportChoie();
+
+        switch (choice) {
+            case 1:
+                displayReportOne();
+                break;
+            case 2:
+                displayReportTwo();
+                break;
+            default:
+                System.out.println("Invalid choice. Please enter 1 or 2.");
+                break;
+        }
     }
 
     private void viewAllStudent() {
@@ -157,20 +157,20 @@ public class StudentController {
     private void removeStudent() {
         if (studentList.getNumberOfEntries() >= 1) {
             viewAllStudent();
-            System.out.println("\nPlease select a student that you want to delete: ");
+            System.out.print("\nPlease select a student that you want to delete: ");
             int selectedIndex = sc.nextInt();
             sc.nextLine();
 
             if (selectedIndex >= 0 && selectedIndex <= studentList.getNumberOfEntries()) {
                 Student newStudent = studentList.getEntry(selectedIndex);
-                System.out.println("Student ID: " + newStudent.getStudentID() + "\nName: " + newStudent.getStudentName()
+                System.out.println("\nStudent ID: " + newStudent.getStudentID() + "\nName: " + newStudent.getStudentName()
                         + "\nAge: " + newStudent.getAge() + "\nProgramme: " + newStudent.getProgramme().getProgramCode()
                         + "\nFaculty: " + newStudent.getProgramme().getFaculty());
                 System.out.print("Course:");
                 for (int i = 1; i <= newStudent.getCourseList().getNumberOfEntries(); i++) {
-                    System.out.print(" " + newStudent.getCourseList().getEntry(i).getCourseCode());
+                    System.out.print(" <" + newStudent.getCourseList().getEntry(i).getCourseCode() + ">");
                 }
-                System.out.println("\nTutorial Group: " + newStudent.getTutorialGroup());
+                System.out.println("\nTutorial Group: " + newStudent.getTutorialGroup().getTutorGroupID());
                 boolean ans = MessageUI.comfirmationMessage();
                 if (ans == true) {
                     studentList.remove(selectedIndex);
@@ -236,7 +236,7 @@ public class StudentController {
                 }
 
                 //modify programme
-                System.out.println("All program");
+                System.out.println("\nAll program");
                 ListInterface<Programme> programList = CourseMenu.programList;
                 for (int i = 1; i <= programList.getNumberOfEntries(); i++) {
                     Programme program = programList.getEntry(i);
@@ -264,7 +264,7 @@ public class StudentController {
                     newProgramme.setFaculty(oldStudent.getProgramme().getFaculty());
                 }
 
-                System.out.println("Student ID: " + oldStudent.getStudentID()
+                System.out.println("\nStudent ID: " + oldStudent.getStudentID()
                         + "\nName: " + newStudentName + "\nAge: " + newStudentAge
                         + "\nProgramme: " + newProgramme.getProgramCode() + "\nFaculty: " + newProgramme.getFaculty());
                 boolean ans = MessageUI.comfirmationMessage();
@@ -304,9 +304,10 @@ public class StudentController {
     private void searchStudentRegisteredCourse() {
         if (studentList.getNumberOfEntries() >= 1) {
             viewAllStudent();
-            System.out.println("Please select a student that you want search for registed courses");
+            System.out.print("Please select a student that you want search for registed courses: ");
             int selectedIndex = sc.nextInt();
             sc.nextLine();
+            System.out.println("");
 
             //check the Index and display selected student detail
             if (selectedIndex <= studentList.getNumberOfEntries()) {
@@ -315,8 +316,10 @@ public class StudentController {
                     selectedStudent.toString();
 
                     ArrayList<Course> registeredCourse = selectedStudent.getCourseList();
-                    courseUI.listHeader();
-                    System.out.println(registeredCourse.toString());
+                    studentUI.CourseHeader();
+                    for (int i = 1; i <= registeredCourse.getNumberOfEntries(); i++) {
+                        System.out.println(i + ". " + registeredCourse.getEntry(i).toString());
+                    }
                 } else {
                     MessageUI.displayEmpty();
                 }
@@ -346,8 +349,8 @@ public class StudentController {
             if (selectedIndex >= 1 && selectedIndex <= studentList.getNumberOfEntries()) {
                 Student studentDetail = studentList.getEntry(selectedIndex);
 
-                System.out.println("Selected student detail: ");
-                studentUI.header();
+                System.out.println("\n\nSelected student detail: ");
+                studentUI.studentHeader();
                 System.out.println("   " + studentDetail);
 
                 ArrayList<Course> registeredCourse = studentDetail.getCourseList();
@@ -371,16 +374,17 @@ public class StudentController {
                 }
 
                 if (availableCourse.getNumberOfEntries() >= 1) {
-                    System.out.println("Available Course");
-                    courseUI.listHeader();
+                    System.out.println("\nAvailable Course");
+                    studentUI.CourseHeader();
                     for (int i = 1; i <= availableCourse.getNumberOfEntries(); i++) {
                         System.out.println(i + ". " + availableCourse.getEntry(i).toString());
                     }
-                    System.out.print("Please select a course that you want to register: ");
+                    System.out.print("\nPlease select a course that you want to register: ");
                     int courseIndex = sc.nextInt();
                     sc.nextLine();
 
-                    System.out.println("\n" + availableCourse.getEntry(courseIndex).toString());
+                    studentUI.CourseHeader();
+                    System.out.println("   " + availableCourse.getEntry(courseIndex).toString());
                     boolean ans = MessageUI.comfirmationMessage();
 
                     if (ans == true) {
@@ -417,17 +421,19 @@ public class StudentController {
             if (selectedIndex >= 1 && selectedIndex <= studentList.getNumberOfEntries()) {
                 Student studentDetail = studentList.getEntry(selectedIndex);
 
-                System.out.println("Selected student detail");
-                System.out.println(studentDetail + "\n");
+                System.out.println("\nSelected student detail");
+                studentUI.studentHeader();
+                System.out.println("   " + studentDetail + "\n");
                 if (!studentDetail.getCourseList().isEmpty()) {
-                    courseUI.listHeader();
+                    studentUI.CourseHeader();
                     for (int i = 1; i <= studentDetail.getCourseList().getNumberOfEntries(); i++) {
                         System.out.println(i + ". " + studentDetail.getCourseList().getEntry(i).toString());
                     }
-                    System.out.print("Please select a registered course that you want to delete: ");
+                    System.out.print("\nPlease select a registered course that you want to delete: ");
                     int courseIndex = sc.nextInt();
                     sc.nextLine();
-                    System.out.println("\n" + studentDetail.getCourseList().getEntry(courseIndex).toString());
+                    studentUI.CourseHeader();
+                    System.out.println("   " + studentDetail.getCourseList().getEntry(courseIndex).toString());
                     boolean ans = MessageUI.comfirmationMessage();
 
                     if (ans == true) {
@@ -468,7 +474,7 @@ public class StudentController {
     private void calculateFee() {
         if (studentList.getNumberOfEntries() >= 1) {
             viewAllStudent();
-            System.out.print("Please select a student that you want calculate total course fee for registered courses: ");
+            System.out.print("\nPlease select a student that you want calculate total course fee for registered courses: ");
             int selectedIndex = sc.nextInt();
             sc.nextLine();
             System.out.println("\n\n");
@@ -482,6 +488,7 @@ public class StudentController {
 
                 if (selectedStudent.getCourseList().getNumberOfEntries() >= 1) {
                     ArrayList<Course> registeredCourse = selectedStudent.getCourseList();
+                    studentUI.CourseHeader();
                     for (int i = 1; i <= registeredCourse.getNumberOfEntries(); i++) {
                         System.out.println(i + ". " + registeredCourse.getEntry(i).toString());
                     }
@@ -534,108 +541,112 @@ public class StudentController {
         }
     }
 
-    private void generateReport() {
-        studentUI.report1Header();
+    private void displayReportOne() {
+        studentUI.generateReportOne();
+
+        int maxCourseCount = 0;
+        Student studentCourse = null;
+
+        int maxCourseFee = 0;
+        Student studentCourseFee = null;
+
         for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
+
             int countCourse = countCourse(i);
+            if (countCourse > maxCourseCount) {
+                studentCourse = studentList.getEntry(i);
+                maxCourseCount = countCourse;
+            }
+
             int courseFee = totalCourseFee(i);
+            if (courseFee > maxCourseFee) {
+                studentCourseFee = studentList.getEntry(i);
+                maxCourseFee = courseFee;
+            }
 
             System.out.print(i + ". " + studentList.getEntry(i).toString());
             System.out.printf(" %-11s | %-17s |\n", countCourse, courseFee);
         }
+        studentUI.seperateOne();
+        System.out.println("\nHIGHTEST COURSE COUNT: " + maxCourseCount + "  << " + studentCourseFee.toString() + " >>");
+        System.out.println("\nHIGHTEST COURSE FEE: " + maxCourseFee + "  << " + studentCourseFee.toString() + " >>" + "\n");
+        studentUI.reportFototerOne();
+
     }
-    
-//    private void generateReport2(){
-//        ListInterface<Programme> programList = CourseMenu.programList;
-//        for (int i = 1; i <= programList.getNumberOfEntries(); i++){
-//            
-//        }
-//    }
-    
-    private void generateReport2() {
-        ListInterface<Programme> programList = CourseMenu.programList;
-        for (int i = 1; i <= programList.getNumberOfEntries(); i++){
-            Programme programmeCode = programList.getEntry(i);
-            int totalProgramme = totalProgramme(programmeCode);
-            System.out.println("Total student from " + programmeCode.getProgramCode() + " = " + totalProgramme);
-        }
-        
-    }
-    
-    private int totalProgramme(Programme programmeCode){
-        int totalProgramme =0;
-        for(int i =1; i <= studentList.getNumberOfEntries(); i++){
-            if(programmeCode.equals(studentList.getEntry(i).getProgramme())){
-                totalProgramme +=1;
+
+    private void displayReportTwo() {
+        studentUI.ReportTopTwo();
+        studentUI.reportHeaderTwo();
+
+        int ageLower = 0;
+        LinkedList<Student> ageLowerStudent = new LinkedList<>();
+
+        int ageMiddle = 0;
+        LinkedList<Student> ageMiddleStudent = new LinkedList<>();
+
+        int ageHigher = 0;
+        LinkedList<Student> ageHigherStudent = new LinkedList<>();
+
+        int totalAge = 0;
+        int totalStudent = studentList.getNumberOfEntries();
+
+        for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
+            Student student = studentList.getEntry(i);
+            int age = studentList.getEntry(i).getAge();
+
+            if (age >= 18 && age <= 20) {
+                ageLower += 1;
+                ageLowerStudent.add(student);
+            } else if (age >= 21 && age <= 25) {
+                ageMiddle += 1;
+                ageMiddleStudent.add(student);
+            } else {
+                ageHigher += 1;
+                ageHigherStudent.add(student);
             }
+
+            totalAge += age;
         }
-        return totalProgramme;
+
+        System.out.println("\nNUMBER OF STUDENTS IN AGE GROUP 18-20: " + ageLower + "\n");
+        for (int i = 1; i <= ageLowerStudent.getNumberOfEntries(); i++) {
+            System.out.println(i + ". " + ageLowerStudent.getEntry(i).toString());
+        }
+        studentUI.seperateTwo();
+
+        System.out.println("\nNUMBER OF STUDENTS IN AGE GROUP 21-25: " + ageMiddle + "\n");
+        for (int i = 1; i <= ageMiddleStudent.getNumberOfEntries(); i++) {
+            System.out.println(i + ". " + ageMiddleStudent.getEntry(i).toString());
+        }
+        studentUI.seperateTwo();
+
+        System.out.println("\nNUMBER OF STUDENTS IN AGE GROUP 26 AND ABOVE: " + ageHigher + "\n");
+        for (int i = 1; i <= ageHigherStudent.getNumberOfEntries(); i++) {
+            System.out.println(i + ". " + ageHigherStudent.getEntry(i).toString());
+        }
+        studentUI.seperateTwo();
+
+        System.out.println("\nTOTAL STUDENT: " + totalStudent);
+        System.out.println("\nAVERAGE AGE OF STUDENTS: " + totalAge / totalStudent + "\n");
+        studentUI.reportFototerTwo();
     }
-    
-//    private void generateReport2(){
-    
-//    // Create ArrayLists to store counts for programs and faculties
-//    ArrayList<String> programCodes = new ArrayList<>();
-//    ArrayList<Integer> programCounts = new ArrayList<>();
-//    ArrayList<String> faculties = new ArrayList<>();
-//    ArrayList<Integer> facultyCounts = new ArrayList<>();
-//    // Initialize counts to zero
-//    for (Programme program : CourseMenu.programList) {
-//        String programCode = program.getProgramCode();
-//        programCodes.add(programCode);
-//        programCounts.add(0);
-//    }
-//
-//    // Count students for each program and faculty
-//    for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
-//        Student student = studentList.getEntry(i);
-//        String programCode = student.getProgramme().getProgramCode();
-//        int programIndex = programCodes.getNumberOfEntries();
-//        if (programIndex != -1) {
-//            int count = programCounts.getEntry(programIndex);
-//            programCounts.add(programIndex, count + 1);
-//        }
-//
-//        String faculty = student.getProgramme().getFaculty();
-//        int facultyIndex = faculties.getNumberOfEntries();
-//        if (facultyIndex != -1) {
-//            int count = facultyCounts.getEntry(facultyIndex);
-//            facultyCounts.add(facultyIndex, count + 1);
-//        }
-//    }
-//
-//    // Display the report for programs
-//    System.out.println("Programme Report:");
-//    System.out.println("-----------------");
-//    for (int i = 0; i < programCodes.getNumberOfEntries(); i++) {
-//        System.out.println(programCodes.getEntry(i) + ": " + programCounts.getEntry(i) + " students");
-//    }
-//
-//    // Display the report for faculties
-//    System.out.println("\nFaculty Report:");
-//    System.out.println("----------------");
-//    for (int i = 0; i < faculties.getNumberOfEntries(); i++) {
-//        System.out.println(faculties.getEntry(i) + ": " + facultyCounts.getEntry(i) + " students");
-//    }
-//}
 
     private void searchStudentName() {
         ArrayList<Student> filteredStudent = new ArrayList<>();
 
-        System.out.print("Enter the partial of student name: ");
+        System.out.print("\nEnter the partial of student name: ");
         String partOfName = sc.nextLine();
 
         for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
-//            if (partOfName.contains(studentList.getEntry(i).getStudentName().toUpperCase())){
-//                filteredStudent.add(studentList.getEntry(i));
-//            }
-            String studentName = studentList.getEntry(i).getStudentName().toUpperCase(); // Convert to uppercase for case-insensitive comparison
+            String studentName = studentList.getEntry(i).getStudentName().toUpperCase();
             if (studentName.contains(partOfName.toUpperCase())) {
                 filteredStudent.add(studentList.getEntry(i));
             }
 
         }
         if (!filteredStudent.isEmpty()) {
+            System.out.println("");
+            studentUI.studentHeader();
             for (int i = 1; i <= filteredStudent.getNumberOfEntries(); i++) {
                 System.out.println(i + ". " + filteredStudent.getEntry(i).toString());
             }
@@ -657,6 +668,8 @@ public class StudentController {
             }
         }
         if (!filteredStudent.isEmpty()) {
+            System.out.println("");
+            studentUI.studentHeader();
             for (int i = 1; i <= filteredStudent.getNumberOfEntries(); i++) {
                 System.out.println(i + ". " + filteredStudent.getEntry(i).toString());
             }
@@ -677,6 +690,8 @@ public class StudentController {
             }
         }
         if (!filteredStudent.isEmpty()) {
+            System.out.println("");
+            studentUI.studentHeader();
             for (int i = 1; i <= filteredStudent.getNumberOfEntries(); i++) {
                 System.out.println(i + ". " + filteredStudent.getEntry(i).toString());
             }
@@ -697,6 +712,8 @@ public class StudentController {
             }
         }
         if (!filteredStudent.isEmpty()) {
+            System.out.println("");
+            studentUI.studentHeader();
             for (int i = 1; i <= filteredStudent.getNumberOfEntries(); i++) {
                 System.out.println(i + ". " + filteredStudent.getEntry(i).toString());
             }
@@ -709,23 +726,23 @@ public class StudentController {
         ArrayList<Student> filteredStudent = new ArrayList<>();
 
         System.out.print("Enter the student course code: ");
-        String studentCourse = sc.nextLine().toUpperCase();
+        String studentCourse = sc.nextLine().toUpperCase(); // Convert to uppercase for case-insensitive comparison
 
-//        for (int i = 1; i <=studentList.getNumberOfEntries(); i++){
-//            if (studentCourse.equals(courseList.getEntry(i).getCourseCode())){
-//                filteredStudent.add(studentList.getEntry(i));
-//            }
-//        }
-        ArrayList<Student> student = new ArrayList<>();
         for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
-            student.add(studentList.getEntry(i));
-            for (int j = 1; i <= student.getNumberOfEntries(); j++) {
-                if (studentCourse.toUpperCase().equals(studentList.getEntry(i).getCourseList().getEntry(j).getCourseCode())) {
-                    filteredStudent.add(studentList.getEntry(i));
+            Student student = studentList.getEntry(i);
+            ListInterface<Course> courseList = student.getCourseList();
+            for (int j = 1; j <= courseList.getNumberOfEntries(); j++) {
+                Course course = courseList.getEntry(j);
+                if (studentCourse.equals(course.getCourseCode().toUpperCase())) {
+                    filteredStudent.add(student);
+                    break; // No need to continue checking the other courses for this student
                 }
             }
         }
+
         if (!filteredStudent.isEmpty()) {
+            System.out.println("");
+            studentUI.studentHeader();
             for (int i = 1; i <= filteredStudent.getNumberOfEntries(); i++) {
                 System.out.println(i + ". " + filteredStudent.getEntry(i).toString());
             }
@@ -751,9 +768,9 @@ public class StudentController {
     }
 
     public Student getStudent(String id) {
-        for (int i = 1; i <= this.studentList.getNumberOfEntries(); i++) {
-            if (this.studentList.getEntry(i).getStudentID() == id) {
-                return this.studentList.getEntry(i);
+        for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
+            if (studentList.getEntry(i).getStudentID().equals(id)) {
+                return studentList.getEntry(i);
             }
         }
         //using student id to find the student and return the student all detail(student object)

@@ -39,7 +39,11 @@ public class AssignmentTeam {
     //own method
     
     public boolean addStudent(Student stu){
-        return this.studentList.add(stu);
+        if (this.studentList.contains(stu)){
+            return true;
+        }else{
+            return this.studentList.add(stu);
+        }
     }
     public boolean removeStudent(Student stu){
         int index = this.studentList.indexOf(stu);
@@ -60,7 +64,7 @@ public class AssignmentTeam {
     }
     
     public int getStudentCount() {
-        return studentList.getNumberOfEntries();
+        return this.studentList.getNumberOfEntries();
     }
     
     
@@ -117,10 +121,10 @@ public class AssignmentTeam {
 
     @Override
     public String toString() {
-        return "[" + assignID + "] - " + assignName + " <"+tutorialGroup.getTutorGroupID()+">" +
-                    "(Member Count: "+ String.valueOf(this.getStudentCount()) + 
-                    ",Course: "+ course.getCourseName() +
-                    ")";
+        return String.format("[%5s] - %-20.20s <%-2s> (Member Count: %-2s, Course: %-10s)",
+                assignID, assignName,tutorialGroup.getTutorGroupID(),
+                String.valueOf(this.getStudentCount()),course.getCourseName()
+        );
     }
 
     

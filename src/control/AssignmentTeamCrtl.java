@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package control;
 
 import adt.ArrayList;
@@ -27,6 +23,10 @@ public class AssignmentTeamCrtl {
     public void entry() {
         int choice = ui.getMenuChoice();
         switch (choice) {
+            case 0:
+                System.out.println("Returning to Main menu...\n");
+                new MainCrtl().entry();
+                return;
             case 1:
                 createTeamCrtl();
                 break;
@@ -54,9 +54,6 @@ public class AssignmentTeamCrtl {
             case 9:
                 ReportCrtl();
                 break;
-            case 10:
-                MessageUI.displayExitMessage();
-                break;
             default:
                 System.out.println("Something went wrong!");
                 break;
@@ -79,7 +76,10 @@ public class AssignmentTeamCrtl {
         AssignmentTeam newTeam = ui.getNewTeam();
         if (newTeam != null) {
             addAT(newTeam);
-            System.out.println("Assignment team with student limit to '" + String.valueOf(newTeam.getLimit()) + "' student created successfully.");
+            MessageUI.clearScreen();
+            System.out.println("Assignment team with student limit to " + String.valueOf(newTeam.getLimit()) + " student created successfully.");
+        } else {
+            MessageUI.clearScreen();
         }
 
         //alway redirect back to main menu
@@ -92,7 +92,10 @@ public class AssignmentTeamCrtl {
         AssignmentTeam oldTeam = ui.getRemoveTeam();
         if (oldTeam != null) {
             removeAT(oldTeam);
+            MessageUI.clearScreen();
             System.out.println("Assignment team " + oldTeam.getAssignName() + " remove successfully.");
+        } else {
+            MessageUI.clearScreen();
         }
 
         //alway redirect back to main menu
@@ -130,7 +133,7 @@ public class AssignmentTeamCrtl {
 
     //case 5
     public void RemoveStudentCrtl() {
-        System.out.println("Please Select A Team To Add Student");
+        System.out.println("Please Select A Team To Remove Student");
         AssignmentTeam at1 = ui.getTeam();
         if (at1 != null) {
             ArrayList<Student> StuList = at1.getStudentList();
@@ -163,6 +166,10 @@ public class AssignmentTeamCrtl {
 
 //case 6
     public void MergeTeamCrtl() {
+        //choose 2 team
+        //can merge if: 2 team is same course & tutorial group
+        //sum of student <= limit
+        //if over limit = cancel!
         System.out.println("Please Select A Team To Merge");
         AssignmentTeam at1 = ui.getTeam();
         AssignmentTeam at2 = null;
@@ -200,7 +207,7 @@ public class AssignmentTeamCrtl {
             int max = mergeTeam.getLimit();
             if (!canMerge) {
                 //unable to merge due to Programme or Course Not Same
-                System.out.println("Unable To Merge! Course and Programe");
+                System.out.println("Unable To Merge! Course and Tutorial Group are diffrence");
             } else if (sCount1 + sCount2 <= max) {
                 //able to merge
                 ArrayList<Student> sList = at1.getStudentList();
@@ -248,10 +255,12 @@ public class AssignmentTeamCrtl {
     //case 8
     public void ListTeamMemberCrtl() {
         AssignmentTeam at = ui.getTeam();
-        ui.displayATMemberList(at);
+        if (at != null) {
+            ui.displayATMemberList(at);
 
-        System.out.println("Press Enter to continue");
-        scanner.nextLine();
+            System.out.println("Press Enter to continue");
+            scanner.nextLine();
+        }
         MessageUI.clearScreen();
 
         //alway redirect back to main menu
@@ -260,6 +269,28 @@ public class AssignmentTeamCrtl {
 
     //case 9
     public void ReportCrtl() {
+        int choice = 0;
+        while (choice == 0) {
+            System.out.println("Report Menu");
+            System.out.println("1. Team Count By Student Count");
+            System.out.println("2. Team Count By Course");
+            System.out.println("3. Exit...");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choice <= 0 || choice > 3) {
+                MessageUI.displayInvalidChoiceMessage();
+                MessageUI.clearScreen();
+                choice = 0;
+            }
+        }
+
+        if (choice == 1) {
+            ui.Report1();
+        } else if (choice == 2) {
+            ui.Report2();
+        }
+        //else = exit
 
         //alway redirect back to main menu
         entry();

@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package control;
 
 import dao.MainDao;
@@ -10,7 +6,7 @@ import utility.MessageUI;
 
 /**
  *
- * @author yongc
+ * @author Yong Choy Mun
  */
 public class MainCrtl {
 
@@ -36,10 +32,11 @@ public class MainCrtl {
                 break;
             case 6:
                 MessageUI.displayExitMessage();
-                break;
+                return;
             default:
                 System.out.println("Something went wrong!");
                 break;
+
         }
     }
 

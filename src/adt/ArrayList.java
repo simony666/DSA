@@ -142,6 +142,7 @@ public class ArrayList<T> implements ListInterface<T> {
         return outputStr;
     }
 
+    //author: Yong Choy Mun
     @Override
     public int indexOf(T element) {
         if (element == null){
@@ -157,11 +158,6 @@ public class ArrayList<T> implements ListInterface<T> {
         return -1;
     }
 
-    /**
-     * Task: Makes room for a new entry at newPosition. Precondition: 1 <=
-     * newPosition <= numberOfEntries + 1; numberOfEntries is array's
-     * numberOfEntries before addition.
-     */
     private void makeRoom(int newPosition) {
         int newIndex = newPosition - 1;
         int lastIndex = numberOfEntries - 1;
@@ -173,12 +169,6 @@ public class ArrayList<T> implements ListInterface<T> {
         }
     }
 
-    /**
-     * Task: Shifts entries that are beyond the entry to be removed to the next
-     * lower position. Precondition: array is not empty; 1 <= givenPosition <
-     * numberOfEntries; numberOfEntries is array's numberOfEntries before
-     * removal.
-     */
     private void removeGap(int givenPosition) {
         // move each entry to next lower position starting at entry after the
         // one removed and continuing until end of array
