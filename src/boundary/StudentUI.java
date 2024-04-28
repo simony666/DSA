@@ -88,7 +88,7 @@ public class StudentUI {
     public int verifyAge() {
         int age = 0;
         try {
-            System.out.print("Please enter studnet age: ");
+            System.out.print("Please enter student age: ");
             age = sc.nextInt();
             sc.nextLine();
             if (age < 18 ) {

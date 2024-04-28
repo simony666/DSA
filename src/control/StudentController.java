@@ -20,7 +20,6 @@ public class StudentController {
     MainCrtl mainController = new MainCrtl();
 
     public static LinkedList<Student> studentList = new LinkedList<>();
-    // private ListInterface<Enrollment> enrollments = new LinkedList<>();
     private ArrayList<Course> courseList = new ArrayList<>();
 
     public void runStudentController() {
@@ -117,15 +116,15 @@ public class StudentController {
 
         int studentAge = studentUI.verifyAge();
 
-        //Display available programs
-        System.out.println("All program: ");
+        //Display available programmes
+        System.out.println("All programme: ");
         ListInterface<Programme> programList = CourseMenu.programList;
         for (int i = 1; i <= programList.getNumberOfEntries(); i++) {
             Programme program = programList.getEntry(i);
             System.out.println(i + ". " + program.getProgramCode());
         }
 
-        System.out.print("Select a program: ");
+        System.out.print("Select a programme: ");
         int selectedProgramIndex = sc.nextInt();
         sc.nextLine();
         String selectedProgramme = programList.getEntry(selectedProgramIndex).getProgramCode();
@@ -170,7 +169,7 @@ public class StudentController {
                 for (int i = 1; i <= newStudent.getCourseList().getNumberOfEntries(); i++) {
                     System.out.print(" <" + newStudent.getCourseList().getEntry(i).getCourseCode() + ">");
                 }
-                System.out.println("\nTutorial Group: " + newStudent.getTutorialGroup().getTutorGroupID());
+                System.out.println("\nTutorial Group: " + newStudent.getTutorialGroup());
                 boolean ans = MessageUI.comfirmationMessage();
                 if (ans == true) {
                     studentList.remove(selectedIndex);
@@ -217,33 +216,23 @@ public class StudentController {
                 }
 
                 //modify age
-                System.out.print("Please enter student age (press Enter to keep current): ");
                 String ageInput = sc.nextLine().trim();
                 int newStudentAge = 0;
                 if (!ageInput.isEmpty()) {
-                    try {
-                        int intAge = Integer.parseInt(ageInput);
-                        if (intAge >= 18) {
-                            newStudentAge = intAge;
-                        } else {
-                            System.out.println("Invalid input. Please try again(Age must greater than or equal to 18)");
-                        }
-                    } catch (NumberFormatException e) {
-                        System.out.println("Invalid input. Please enter a numeric value for age.");
-                    }
+                    newStudentAge = studentUI.verifyAge();
                 } else {
                     newStudentAge = oldStudent.getAge();
                 }
 
                 //modify programme
-                System.out.println("\nAll program");
+                System.out.println("\nAll programme");
                 ListInterface<Programme> programList = CourseMenu.programList;
                 for (int i = 1; i <= programList.getNumberOfEntries(); i++) {
                     Programme program = programList.getEntry(i);
                     System.out.println(i + ". " + program.getProgramCode());
                 }
 
-                System.out.print("Select a program (press Enter to keep current): ");
+                System.out.print("Select a programme (press Enter to keep current): ");
                 String programmeInput = sc.nextLine().trim();
                 Programme newProgramme = new Programme(null, null, null);
                 if (!programmeInput.isEmpty()) {
@@ -359,7 +348,7 @@ public class StudentController {
                 LinkedList<Course> allCourse = CourseMenu.courseMap.getAllValue();
 
                 for (Course course : allCourse) {
-                    if (course.getFaculty().equals(faculty)) {
+                    if (course.getFaculty().contains(faculty)) {
                         boolean alreadyRegistered = false;
                         for (Course registered : registeredCourse) {
                             if (course.equals(registered)) {
@@ -479,7 +468,6 @@ public class StudentController {
             sc.nextLine();
             System.out.println("\n\n");
 
-//            int totalCourseFee = 0;
             //check the Index and display selected student detail
             if (selectedIndex <= studentList.getNumberOfEntries()) {
                 Student selectedStudent = studentList.getEntry(selectedIndex);
@@ -685,7 +673,7 @@ public class StudentController {
         String studentProgramme = sc.nextLine();
 
         for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
-            if (studentProgramme.toUpperCase().equals((studentList.getEntry(i).getProgramme().getProgramCode()))) {
+            if (studentProgramme.toUpperCase().contains((studentList.getEntry(i).getProgramme().getProgramCode()))) {
                 filteredStudent.add(studentList.getEntry(i));
             }
         }
@@ -707,7 +695,7 @@ public class StudentController {
         String studentProgramme = sc.nextLine();
 
         for (int i = 1; i <= studentList.getNumberOfEntries(); i++) {
-            if (studentProgramme.toUpperCase().equals((studentList.getEntry(i).getProgramme().getFaculty()))) {
+            if (studentProgramme.toUpperCase().contains((studentList.getEntry(i).getProgramme().getFaculty()))) {
                 filteredStudent.add(studentList.getEntry(i));
             }
         }
@@ -733,7 +721,7 @@ public class StudentController {
             ListInterface<Course> courseList = student.getCourseList();
             for (int j = 1; j <= courseList.getNumberOfEntries(); j++) {
                 Course course = courseList.getEntry(j);
-                if (studentCourse.equals(course.getCourseCode().toUpperCase())) {
+                if (studentCourse.contains(course.getCourseCode().toUpperCase())) {
                     filteredStudent.add(student);
                     break; // No need to continue checking the other courses for this student
                 }
